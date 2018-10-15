@@ -7,13 +7,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TabHost;
 
 import com.google.gson.Gson;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.AuthPost;
 import com.shaq.skifme.data.AuthSaltResponse;
+import com.shaq.skifme.data.LoginParams;
+import com.shaq.skifme.data.LoginResponse;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
+import com.shaq.skifme.utils.Md5Convert;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,7 +50,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .build();
 
         mAPIService = retrofit.create(APIService.class);
-        //String MD5_Hash_String = Md5Convert.calcMd5("erverv3233","pas323232vvevev");
+
     }
 
     @Override
@@ -56,9 +60,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String email = login_et.getText().toString().trim();
                 String language = ConstantManager.POST_LANGUAGE;
                 String pass = password_et.getText().toString().trim();
+
+                String MD5_Hash_String = Md5Convert.calcMd5("fbf932e1-338c-4e28-aecd-d67295ce46a8",pass);
+
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(language)) {
                     sendPost(email, language);
+                    loginSubmit(email,MD5_Hash_String,language);
                 }
+
+
                 break;
         }
     }
@@ -85,6 +95,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
+    }
+
+    public void loginSubmit (String email, String hash, String language){
+
+        LoginParams loginBody = new LoginParams();
+        loginBody.setEmail(email);
+        loginBody.setHash(hash);
+        loginBody.setLanguage(language);
+
+        mAPIService.login(loginBody).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                Log.v(TAG,response.toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.e(TAG,t.toString());
+            }
+        });
     }
 
 
