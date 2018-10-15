@@ -1,0 +1,24 @@
+package com.shaq.skifme.ui.activities;
+
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.shaq.skifme.utils.ConstantManager;
+
+public class BaseActivity extends AppCompatActivity {
+
+    private static final String TAG = ConstantManager.TAG_PREFIX+"BaseActivity";
+
+    public void showError(String message, Exception error){
+        showToast(message);
+        Log.e(TAG, String.valueOf(error));
+    }
+
+    public void showToast(String message) {
+
+        Toast.makeText(this,message, Toast.LENGTH_LONG).show();
+    }
+
+
+}
