@@ -5,50 +5,53 @@ import android.util.Log;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
 public class Md5Convert {
 
 
-    public static String calcMd5(String s,String p) {
+
+    public static final String calcMd5(String s,String p) {
         try {
-            // Create MD5 Hash of salt and password
-            MessageDigest saltHash = java.security.MessageDigest.getInstance("MD5");
-            saltHash.update(s.getBytes());
-            byte saltMessageDigest[] = saltHash.digest();
 
-            MessageDigest passHash = java.security.MessageDigest.getInstance("MD5");
-            passHash.update(p.getBytes());
-            byte passMessageDigest[] = passHash.digest();
+            //salt hash string
+            final MessageDigest saltDigest = MessageDigest.getInstance("md5");
+            saltDigest.update(s.getBytes());
+            final byte[] saltBytes = saltDigest.digest();
+            final StringBuilder saltString = new StringBuilder();
+            for (int i = 0; i < saltBytes.length; i++) {
+                saltString.append(String.format("%02X", saltBytes[i]));
+            }
 
-
-            // Create Hex String for Salt and Pass
-            StringBuffer saltHexString = new StringBuffer();
-            for (int i=0; i<saltMessageDigest.length; i++)
-                saltHexString.append(Integer.toHexString(0xFF & saltMessageDigest[i]));
-            Log.e("salt",saltHexString.toString());
-
-            StringBuffer passHexString = new StringBuffer();
-            for (int i=0; i<passMessageDigest.length; i++)
-                passHexString.append(Integer.toHexString(0xFF & passMessageDigest[i]));
-
-            //Hex salt + Hex pass
-            String hexSum = saltHexString.toString() + passHexString.toString();
+            //pass hash string
+            final MessageDigest passDigest = MessageDigest.getInstance("md5");
+            passDigest.update(p.getBytes());
+            final byte[] passBytes = passDigest.digest();
+            final StringBuilder passString = new StringBuilder();
+            for (int i = 0; i < passBytes.length; i++) {
+                passString.append(String.format("%02X", passBytes[i]));
+            }
 
 
-            //Create MD5 hash for session hash
-            MessageDigest hexHash = java.security.MessageDigest.getInstance("MD5");
-            hexHash.update(hexSum.getBytes());
-            byte HashMessageDigest[] = hexHash.digest();
+            String hexSum = passString.toString().toLowerCase() + saltString.toString().toLowerCase();
+            Log.e("hashSum", hexSum);
 
-            //Create Hex string for session hash
-            StringBuffer SumHexString = new StringBuffer();
-            for (int i=0; i<passMessageDigest.length; i++)
-            SumHexString.append(Integer.toHexString(0xFF & HashMessageDigest[i]));
-            Log.e("sum",SumHexString.toString());
+            //Generate resultHash
+            final MessageDigest resultHashDigest = MessageDigest.getInstance("md5");
+            resultHashDigest.update(hexSum.getBytes());
+            final byte[] bytes = resultHashDigest.digest();
+            final StringBuilder resultString = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                resultString.append(String.format("%02X", bytes[i]));
+            }
 
-            return SumHexString.toString();
+            Log.e("hash",resultString.toString().toLowerCase());
+            return resultString.toString().toLowerCase();
 
-        }catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        }
+
+
+        catch (Exception exc) {
+            exc.printStackTrace();
         }
         return "";
     }

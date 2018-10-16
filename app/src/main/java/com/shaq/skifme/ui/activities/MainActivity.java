@@ -7,14 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TabHost;
 
-import com.google.gson.Gson;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.AuthPost;
 import com.shaq.skifme.data.AuthSaltResponse;
 import com.shaq.skifme.data.LoginParams;
-import com.shaq.skifme.data.LoginResponse;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
 import com.shaq.skifme.utils.Md5Convert;
@@ -29,9 +26,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private Button signIn_btn;
     private EditText login_et, password_et;
-    public static SharedPreferences sSharedPrefences;
     private APIService mAPIService;
     public static final String TAG ="MainActivity";
+
+    SharedPreferences mSettings;
+
+    public static String salt;
+
+    public static final String USER_PREFERENCES = "user_params";
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +49,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         signIn_btn.setOnClickListener(this);
 
+
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://skif.me/")
+                .baseUrl(ConstantManager.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         mAPIService = retrofit.create(APIService.class);
-
     }
 
     @Override
@@ -60,32 +66,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String email = login_et.getText().toString().trim();
                 String language = ConstantManager.POST_LANGUAGE;
                 String pass = password_et.getText().toString().trim();
+                //String salt = "fbf932e1-338c-4e28-aecd-d67295ce46a8";
 
-                String MD5_Hash_String = Md5Convert.calcMd5("fbf932e1-338c-4e28-aecd-d67295ce46a8",pass);
-
-                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(language)) {
+                if(!TextUtils.isEmpty(email)) {
                     sendPost(email, language);
-                    loginSubmit(email,MD5_Hash_String,language);
+                    loginSubmit(email, MainActivity.salt, pass, language);
                 }
-
 
                 break;
         }
     }
 
+
+    //Get salt
     public void sendPost(String email, String language) {
 
-        AuthPost post = new AuthPost();
-        post.setEmail(email);
-        post.setLanguage(language);
+        AuthPost postBody = new AuthPost();
+        postBody.setEmail(email);
+        postBody.setLanguage(language);
 
-        mAPIService.savePost(post).enqueue(new Callback<AuthSaltResponse>() {
+        mAPIService.savePost(postBody).enqueue(new Callback<AuthSaltResponse>() {
             @Override
             public void onResponse(Call<AuthSaltResponse> call, Response<AuthSaltResponse> response) {
-                showToast("200 OK");
-                String salt = response.body().getSalt();
-                Log.v(TAG,salt );
 
+                MainActivity.salt = response.body().getSalt();
+                Log.v(TAG,MainActivity.salt);
             }
 
             @Override
@@ -97,31 +102,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    public void loginSubmit (String email, String hash, String language){
+
+    //Create session
+    public void loginSubmit (String email, String salt, String pass, String language){
 
         LoginParams loginBody = new LoginParams();
         loginBody.setEmail(email);
+        String hash = Md5Convert.calcMd5(salt,pass);
         loginBody.setHash(hash);
+
         loginBody.setLanguage(language);
 
-        mAPIService.login(loginBody).enqueue(new Callback<LoginResponse>() {
+        mAPIService.login(loginBody).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                showToast(String.valueOf(response.code())+" Session ok");
                 Log.v(TAG,response.toString());
 
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.e(TAG,t.toString());
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("Fail",t.toString());
             }
         });
     }
 
 
 
-    public void loginSuccesfull(AuthPost response) {
 
-
-    }
 }

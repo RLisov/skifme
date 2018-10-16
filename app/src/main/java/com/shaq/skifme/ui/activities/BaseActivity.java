@@ -1,10 +1,12 @@
 package com.shaq.skifme.ui.activities;
 
+
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.shaq.skifme.utils.ConstantManager;
+
 
 public class BaseActivity extends AppCompatActivity {
 
