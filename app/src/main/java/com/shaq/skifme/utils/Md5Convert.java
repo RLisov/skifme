@@ -10,7 +10,7 @@ public class Md5Convert {
 
 
 
-    public static final String calcMd5(String s,String p) {
+    public static  String calcMd5(String s,String p) {
         try {
 
             //salt hash string
@@ -33,7 +33,7 @@ public class Md5Convert {
 
 
             String hexSum = passString.toString().toLowerCase() + saltString.toString().toLowerCase();
-            Log.e("hashSum", hexSum);
+            //Log.e("hashSum", hexSum);
 
             //Generate resultHash
             final MessageDigest resultHashDigest = MessageDigest.getInstance("md5");
@@ -44,7 +44,7 @@ public class Md5Convert {
                 resultString.append(String.format("%02X", bytes[i]));
             }
 
-            Log.e("hash",resultString.toString().toLowerCase());
+            //Log.e("hash",resultString.toString().toLowerCase());
             return resultString.toString().toLowerCase();
 
         }

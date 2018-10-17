@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">skif.me</string>
-    <string name="auth.password">Введите пароль</string>
-    <string name="auth.email">Введите e-mail</string>
-    <string name="auth.login">войти</string>
+    <string name="auth_password">Введите пароль</string>
+    <string name="auth_email">Введите e-mail</string>
+    <string name="auth_login">войти</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
