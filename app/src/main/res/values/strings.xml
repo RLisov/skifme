@@ -4,4 +4,19 @@
     <string name="auth_email">Введите e-mail</string>
     <string name="auth_login">войти</string>
     <string name="title_activity_maps">Map</string>
+    <string name="register">Регистрация</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="reg_name">Введите имя</string>
+    <string name="reg_email">Введите e-mail</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="reg_title_toolbar">Регистрация</string>
+    <string name="app_title">Skif.me</string>
+    <string name="reg_pass">Введите пароль</string>
+    <string name="en_lang">English</string>
+    <string name="kz_lang">Казахский</string>
+    <string name="ru_lang">Русский</string>
+    <string name="choose_lang">Выберите язык:</string>
+    <string name="main_scr_title">Главный экран</string>
+    <string name="new_device">Новое устройство</string>
+    <string name="new_geozone">Новая геозона</string>
 </resources>

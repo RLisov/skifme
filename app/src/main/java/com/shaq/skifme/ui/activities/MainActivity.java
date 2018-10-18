@@ -8,15 +8,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.AuthPost;
 import com.shaq.skifme.data.AuthSaltResponse;
+import com.shaq.skifme.data.Language;
+import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.data.LoginParams;
-import com.shaq.skifme.data.Sessions;
+import com.shaq.skifme.data.RegisterBody;
+import com.shaq.skifme.data.Timezone;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
 import com.shaq.skifme.utils.Md5Convert;
+
+import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +35,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private Button signIn_btn;
     private EditText login_et, password_et;
+    private TextView register_tv, forgot_pass_tv;
     private APIService mAPIService;
     public static final String TAG ="MainActivity";
     public static final String TAG_R = ConstantManager.RETROFIT_TAG;
@@ -35,11 +43,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     SharedPreferences mSettings;
 
     public static String salt;
-
-    public static final String USER_PREFERENCES = "user_params";
-
-
-
 
 
 
@@ -52,8 +55,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         signIn_btn = (Button) findViewById(R.id.login_btn);
         login_et = (EditText) findViewById(R.id.login_email_et);
         password_et = (EditText) findViewById(R.id.login_password_et);
+        register_tv = (TextView) findViewById(R.id.register_tv);
+        forgot_pass_tv = (TextView) findViewById(R.id.forgot_pass_tv);
 
         signIn_btn.setOnClickListener(this);
+        register_tv.setOnClickListener(this);
 
 
 
@@ -70,96 +76,86 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case    R.id.login_btn:
                 //String email = login_et.getText().toString().trim();
-                String language = ConstantManager.POST_LANGUAGE;
                 //String pass = password_et.getText().toString().trim();
-                //String salt = "fbf932e1-338c-4e28-aecd-d67295ce46a8";
-                String email = "karimvrus2@gmail.com";
-                String pass = "12mn17bh";
+                String email ="karimvrus2@gmail.com";
+                String pass = "123321";
+
                 if(!TextUtils.isEmpty(email)) {
-                    sendPost(email, language);
-                    if (MainActivity.salt !=null) {
-                        loginSubmit(email, MainActivity.salt, pass, language);
-                        startMapActivity();
-                    }
-                } else showToast("Введите e-mail");
+                    loginCommit(email, pass);
+                } else showToast("Введите данные");
+                break;
+            case R.id.register_tv:
+                startRegisterActivity();
 
                 break;
         }
     }
 
 
-    //Get salt
-    public void sendPost(String email, String language) {
+    //Login submit
+    public void loginCommit (String email, String pass) {
+        LoginBody loginBody = new LoginBody()
+                .withUserProviderId(email)
+                .withPassword(pass)
+                .withProviderKey(ConstantManager.PROVIDER_KEY);
 
-        AuthPost postBody = new AuthPost();
-        postBody.setEmail(email);
-        postBody.setLanguage(language);
+        Log.d(TAG,loginBody.toString());
 
-        mAPIService.savePost(postBody).enqueue(new Callback<AuthSaltResponse>() {
-            @Override
-            public void onResponse(Call<AuthSaltResponse> call, Response<AuthSaltResponse> response) {
-
-                MainActivity.salt = response.body().getSalt();
-                Log.v(TAG,MainActivity.salt);
-            }
-
-            @Override
-            public void onFailure(Call<AuthSaltResponse> call, Throwable t) {
-                showToast("error");
-                Log.e(TAG,"cannot resolve");
-            }
-        });
-
-    }
-
-
-    //Create session
-    public void loginSubmit (String email, String salt, String pass, String language){
-
-        LoginParams loginBody = new LoginParams();
-        loginBody.setEmail(email);
-        String hash = Md5Convert.calcMd5(salt,pass);
-        loginBody.setHash(hash);
-
-        loginBody.setLanguage(language);
-
-        mAPIService.login(loginBody).enqueue(new Callback<Void>() {
+        mAPIService.loginSubmit(loginBody).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                showToast(String.valueOf(response.code())+" Session ok");
-                Log.v(TAG,response.toString());
+                if(String.valueOf(response.code()).equals("200")) {
+                    startTopLevelActivity();
+                } else showToast("Не удалось авторизоваться");
 
 
+                Log.d(TAG, String.valueOf(response.code()+response.message()));
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("Fail",t.toString());
-            }
-        });
-    }
-
-    public void startMapActivity () {
-        Intent intent = new Intent(this, MapsActivity.class);
-               startActivity(intent);
-        Log.v(TAG,"Started Map");
-    }
-
-    // Get sessions body
-    public void getSessionResponse () {
-        mAPIService.getSessions().enqueue(new Callback<Sessions>() {
-            @Override
-            public void onResponse(Call<Sessions> call, Response<Sessions> response) {
-                Log.d(TAG_R+"get",response.toString());
-            }
-
-            @Override
-            public void onFailure(Call<Sessions> call, Throwable t) {
-                Log.d(TAG_R, t.toString());
 
             }
         });
+
     }
+
+
+
+
+
+
+    //Create session
+//    public void loginSubmit (String email, String salt, String pass, String language){
+//
+//        LoginParams loginBody = new LoginParams();
+//        loginBody.setEmail(email);
+//        String hash = Md5Convert.calcMd5(salt,pass);
+//        loginBody.setHash(hash);
+//
+//        loginBody.setLanguage(language);
+//
+//        mAPIService.login(loginBody).enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                showToast(String.valueOf(response.code())+" Session ok");
+//                Log.v(TAG,response.toString());
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                Log.e("Fail",t.toString());
+//            }
+//        });
+//    }
+
+
+
+
+
+
 
 
 

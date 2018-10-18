@@ -1,6 +1,7 @@
 package com.shaq.skifme.ui.activities;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,5 +23,14 @@ public class BaseActivity extends AppCompatActivity {
         Toast.makeText(this,message, Toast.LENGTH_LONG).show();
     }
 
+    public void startRegisterActivity () {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void startTopLevelActivity () {
+        Intent intent = new Intent(this, TopLevelActivity.class);
+        startActivity(intent);
+    }
 
 }
