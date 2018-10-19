@@ -2,8 +2,7 @@ package com.shaq.skifme.network;
 
 
 
-import com.shaq.skifme.data.AuthPost;
-import com.shaq.skifme.data.AuthSaltResponse;
+
 import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.data.RegisterBody;
 
@@ -16,9 +15,9 @@ import retrofit2.http.Path;
 
 public interface APIService {
 
-    @Headers("Content-type: application/json")
-    @POST("sessions/salt")
-    Call<AuthSaltResponse> savePost(@Body AuthPost post);
+//    @Headers("Content-type: application/json")
+//    @POST("sessions/salt")
+//    Call<AuthSaltResponse> savePost(@Body AuthPost post);
 //
 //    @Headers("Content-type: application/json")
 //    @POST("sessions")

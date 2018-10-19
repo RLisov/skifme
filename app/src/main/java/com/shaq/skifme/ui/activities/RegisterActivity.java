@@ -79,6 +79,7 @@ public class RegisterActivity extends BaseActivity {
                 String pass ="123321";
                 String lang_key = RegisterActivity.language;
                 registrationCommit(email, name, pass,lang_key);
+
             }
         });
     }
@@ -134,6 +135,7 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 showToast(String.valueOf(response.code())+String.valueOf(response.message()));
+
                 Log.d(TAG, String.valueOf(response.code())+String.valueOf(response.message()));
             }
 

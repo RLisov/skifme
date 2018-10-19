@@ -11,19 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.AuthPost;
-import com.shaq.skifme.data.AuthSaltResponse;
-import com.shaq.skifme.data.Language;
+
+
 import com.shaq.skifme.data.LoginBody;
-import com.shaq.skifme.data.LoginParams;
-import com.shaq.skifme.data.RegisterBody;
-import com.shaq.skifme.data.Timezone;
+
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
-import com.shaq.skifme.utils.Md5Convert;
-
-import java.util.Locale;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,6 +75,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 if(!TextUtils.isEmpty(email)) {
                     loginCommit(email, pass);
+                    showProgress();
                 } else showToast("Введите данные");
                 break;
             case R.id.register_tv:
