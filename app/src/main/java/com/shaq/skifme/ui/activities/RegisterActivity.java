@@ -112,41 +112,7 @@ public class RegisterActivity extends BaseActivity {
 
 
 
-    //Registration
-    public void registrationCommit (String email, String name, String pass, String lang_key ) {
 
-        Language lang = new Language();
-        lang.setKey(lang_key);
-
-        Timezone tzone = new Timezone();
-        tzone.setKey("UTC+3");
-
-        RegisterBody registrationBody = new RegisterBody();
-        registrationBody.setName(name);
-        registrationBody.setUserProviderId(email);
-        registrationBody.setProviderKey(ConstantManager.PROVIDER_KEY);
-        registrationBody.setType(ConstantManager.REG_TYPE);
-        registrationBody.setPassword(pass);
-        registrationBody.setLanguage(lang);
-        registrationBody.setTimezone(tzone);
-        Log.d(TAG, registrationBody.toString());
-
-        mAPIService.registrationSubmit(registrationBody).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                showToast(String.valueOf(response.code())+String.valueOf(response.message()));
-
-                Log.d(TAG, String.valueOf(response.code())+String.valueOf(response.message()));
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e(TAG,t.toString());
-            }
-        });
-
-
-    }
 
 
 }

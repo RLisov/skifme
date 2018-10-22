@@ -18,6 +18,12 @@ import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookieStore;
+import java.net.HttpCookie;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,15 +35,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button signIn_btn;
     private EditText login_et, password_et;
     private TextView register_tv, forgot_pass_tv;
-    private APIService mAPIService;
+
     public static final String TAG ="MainActivity";
-    public static final String TAG_R = ConstantManager.RETROFIT_TAG;
-
-    SharedPreferences mSettings;
-
-    public static String salt;
-
-
 
 
     @Override
@@ -56,12 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ConstantManager.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        mAPIService = retrofit.create(APIService.class);
     }
 
     @Override
@@ -86,33 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    //Login submit
-    public void loginCommit (String email, String pass) {
-        LoginBody loginBody = new LoginBody()
-                .withUserProviderId(email)
-                .withPassword(pass)
-                .withProviderKey(ConstantManager.PROVIDER_KEY);
 
-        Log.d(TAG,loginBody.toString());
-
-        mAPIService.loginSubmit(loginBody).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(String.valueOf(response.code()).equals("200")) {
-                    startTopLevelActivity();
-                } else showToast("Не удалось авторизоваться");
-
-
-                Log.d(TAG, String.valueOf(response.code()+response.message()));
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-            }
-        });
-
-    }
 
 
 

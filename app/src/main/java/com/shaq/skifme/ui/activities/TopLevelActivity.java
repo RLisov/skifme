@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,16 +24,33 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.shaq.skifme.R;
+import com.shaq.skifme.data.Tracks.Send.Auto;
+import com.shaq.skifme.data.LoginBody;
+
+import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
+import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
+import com.shaq.skifme.network.APIService;
+import com.shaq.skifme.utils.ConstantManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TopLevelActivity extends BaseActivity implements View.OnClickListener {
 
 
-    private Button map_btn;
+    private Button map_btn, get_tracks;
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
     private DrawerLayout mNavigationDrawer;
+    private final String TAG = "TopLevelAct";
+    private ArrayList<TracksResponseModel> dataTracks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +59,10 @@ public class TopLevelActivity extends BaseActivity implements View.OnClickListen
         mToolbar = (Toolbar) findViewById(R.id.top_level_toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
         map_btn = (Button) findViewById(R.id.button_map);
+        get_tracks = (Button) findViewById(R.id.get_tracks);
+        get_tracks.setOnClickListener(this);
         map_btn.setOnClickListener(this);
+
         setupToolbar();
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_container);
@@ -55,6 +76,9 @@ public class TopLevelActivity extends BaseActivity implements View.OnClickListen
             case    R.id.button_map:
                 startMapsActivity();
                 break;
+            case R.id.get_tracks:
+
+                //drawTracks();
         }
     }
 
@@ -80,6 +104,8 @@ public class TopLevelActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+
+
     private void showSnackbar(String message) {
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
@@ -92,6 +118,10 @@ public class TopLevelActivity extends BaseActivity implements View.OnClickListen
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+
+
+
 
 }
 

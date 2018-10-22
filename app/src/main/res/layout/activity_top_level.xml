@@ -39,6 +39,7 @@
             android:id="@+id/button_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="90dp"
             android:background="@color/grey"
             android:gravity="center_vertical|center_horizontal"
@@ -46,6 +47,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_level_toolbar" />
+
+        <Button
+            android:id="@+id/get_tracks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="150dp"
+            android:background="@color/grey"
+            android:text="Get Tracks" />
 
     </android.support.design.widget.CoordinatorLayout>
 
