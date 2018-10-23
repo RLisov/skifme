@@ -3,8 +3,13 @@ package com.shaq.skifme.ui.activities;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,11 +37,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
+public class MapsActivity extends BaseActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private static final String TAG = "MapsAct";
     private GoogleMap mMap;
     private APIService mAPIService;
+    private Button get_tracks_btn;
+    FloatingActionMenu materialDesignFAM;
+    FloatingActionButton fab_geozone, fab_device, fab_tracks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,16 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        fab_geozone = (FloatingActionButton) findViewById(R.id.fab_add_geozone);
+        fab_device = (FloatingActionButton) findViewById(R.id.fab_add_device);
+        fab_tracks = (FloatingActionButton) findViewById(R.id.fab_draw_tracks);
+
+        fab_tracks.setOnClickListener(this);
+        fab_geozone.setOnClickListener(this);
+
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantManager.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -55,7 +73,22 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
         mAPIService = retrofit.create(APIService.class);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case    R.id.fab_draw_tracks:
+                drawTracks();
+                materialDesignFAM.toggle(true);
+                break;
+            case  R.id.fab_add_geozone:
+                startGeozoneActivity();
+                materialDesignFAM.toggle(true);
+                break;
+            case R.id.fab_add_device:
+                break;
 
+        }
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -68,16 +101,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        drawTracks();
-//        Polyline line = mMap.addPolyline(new PolylineOptions()
-//                .add(new LatLng(51.5, -0.1))
-//                .add(new LatLng(72.7671966666667, -54.1274716666667))
-//                .add(new LatLng(72.767235,54.127585))
-//                .width(5)
-//                .color(Color.RED));
     }
+
+    public void drawGeozone(int opt) {
+
+    }
+
+
 
     public void drawTracks () {
 
@@ -110,7 +140,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
 
                 Log.d(TAG,String.valueOf(response.body().size()));
                 PolylineOptions options = new PolylineOptions().width(5).color(Color.RED);
-//
+
                 for (int i = 0; i < response.body().size() -1; i++) {
 
                     Double xPoint = response.body().get(i).getY();

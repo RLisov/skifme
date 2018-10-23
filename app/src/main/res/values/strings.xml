@@ -19,4 +19,5 @@
     <string name="main_scr_title">Главный экран</string>
     <string name="new_device">Новое устройство</string>
     <string name="new_geozone">Новая геозона</string>
+    <string name="geozone_title">Геозоны</string>
 </resources>

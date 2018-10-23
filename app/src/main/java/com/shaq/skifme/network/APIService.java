@@ -39,7 +39,7 @@ public interface APIService {
       Call<Void> registrationSubmit(@Body RegisterBody registerBody);
 
       @Headers({"Content-type: application/json",
-      "Cookie:PLAY_SESSION=84dd6e49a3bb529faad5f262643ee167d922b681-lang_code=ru&sessionid=1d9287f9-0e50-4bd5-97b0-ef87c318db42"})
+      "Cookie:PLAY_SESSION=f279cf2a33c0c80b5cc91d02d848f12f61d4a6fd-lang_code=ru&sessionid=ecdc72f0-8690-46fa-9f38-e6cca7409b36"})
       @POST("tracks")
       Call<List<TracksResponseModel>> getTracksPost(@Body PostTracksBody postTracksBody);
 

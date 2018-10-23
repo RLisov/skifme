@@ -53,9 +53,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         signIn_btn.setOnClickListener(this);
         register_tv.setOnClickListener(this);
 
-
-
-
     }
 
     @Override
@@ -78,48 +75,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
-
-
-
-
-
-
-
-
-
-    //Create session
-//    public void loginSubmit (String email, String salt, String pass, String language){
-//
-//        LoginParams loginBody = new LoginParams();
-//        loginBody.setEmail(email);
-//        String hash = Md5Convert.calcMd5(salt,pass);
-//        loginBody.setHash(hash);
-//
-//        loginBody.setLanguage(language);
-//
-//        mAPIService.login(loginBody).enqueue(new Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//                showToast(String.valueOf(response.code())+" Session ok");
-//                Log.v(TAG,response.toString());
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//                Log.e("Fail",t.toString());
-//            }
-//        });
-//    }
-
-
-
-
-
-
-
-
-
 
 }

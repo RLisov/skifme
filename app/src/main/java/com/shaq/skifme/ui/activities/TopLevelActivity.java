@@ -77,8 +77,8 @@ public class TopLevelActivity extends BaseActivity implements View.OnClickListen
                 startMapsActivity();
                 break;
             case R.id.get_tracks:
+            break;
 
-                //drawTracks();
         }
     }
 
@@ -103,24 +103,6 @@ public class TopLevelActivity extends BaseActivity implements View.OnClickListen
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
-    private void showSnackbar(String message) {
-        Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
-    }
-
-    private void setupToolbar() {
-        setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-
-
 
 
 }

@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class BaseActivity extends AppCompatActivity {
     protected ProgressDialog mProgressDialog;
     private APIService mAPIService;
     public GoogleMap mMap;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +81,11 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void startGeozoneActivity() {
+        Intent intent = new Intent(this, GeozoneActivity.class);
+        startActivity(intent);
+    }
+
     public void showProgress() {
         if (mProgressDialog==null) {
             mProgressDialog = new ProgressDialog(this, R.style.custom_dialog);
@@ -99,6 +107,15 @@ public class BaseActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void setupToolbar() {
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     //Login submit
