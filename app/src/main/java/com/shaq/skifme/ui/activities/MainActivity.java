@@ -11,24 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.shaq.skifme.R;
-
-
-import com.shaq.skifme.data.LoginBody;
-
-import com.shaq.skifme.network.APIService;
-import com.shaq.skifme.utils.ConstantManager;
-
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.CookieStore;
-import java.net.HttpCookie;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.shaq.skifme.data.managers.DataManager;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -37,6 +20,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView register_tv, forgot_pass_tv;
 
     public static final String TAG ="MainActivity";
+    private DataManager mDataManager;
 
 
     @Override
@@ -52,6 +36,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         signIn_btn.setOnClickListener(this);
         register_tv.setOnClickListener(this);
+        mDataManager = DataManager.getInstance();
 
     }
 
@@ -63,6 +48,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 //String pass = password_et.getText().toString().trim();
                 String email ="karimvrus2@gmail.com";
                 String pass = "123321";
+                mDataManager.getPreferencesManager().setCachedAuthParams(email,pass);
 
                 if(!TextUtils.isEmpty(email)) {
                     loginCommit(email, pass);

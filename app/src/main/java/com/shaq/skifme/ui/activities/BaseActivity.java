@@ -24,9 +24,13 @@ import com.shaq.skifme.data.RegisterBody;
 import com.shaq.skifme.data.Timezone;
 import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
 import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
+import com.shaq.skifme.data.managers.DataManager;
+import com.shaq.skifme.data.res.UserInfoMe;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
+import com.shaq.skifme.utils.SkifApplication;
 
+import java.util.HashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -43,6 +47,8 @@ public class BaseActivity extends AppCompatActivity {
     private APIService mAPIService;
     public GoogleMap mMap;
     private Toolbar mToolbar;
+    private DataManager mDataManager;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class BaseActivity extends AppCompatActivity {
                 .build();
 
         mAPIService = retrofit.create(APIService.class);
+        mDataManager = DataManager.getInstance();
     }
 
     public void showError(String message, Exception error){
@@ -86,6 +93,8 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+
     public void showProgress() {
         if (mProgressDialog==null) {
             mProgressDialog = new ProgressDialog(this, R.style.custom_dialog);
@@ -109,13 +118,32 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void setupToolbar() {
-        setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+    public void getUserInfoMe () {
+        mAPIService.getUserInfo(mDataManager.getPreferencesManager().getCookie()).enqueue(new Callback<UserInfoMe>() {
+            @Override
+            public void onResponse(Call<UserInfoMe> call, Response<UserInfoMe> response) {
+                if(String.valueOf(response.code()).equals("200")) {
+                    Log.d(TAG, response.body().toString());
+                } else {
+                    loginCommit(mDataManager.getPreferencesManager().getCachedAuthEmail(),mDataManager.getPreferencesManager().getCachedAuthPass());
+                }
+
+                Log.d(TAG, String.valueOf(response.code()+response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<UserInfoMe> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void loginSuccess ( Response<Void> response) {
+        showToast("Логин ок");
+        Log.d(TAG, response.raw().headers().get(ConstantManager.COOKIES));
+
+        mDataManager.getPreferencesManager().saveCookie(response.raw().headers().get(ConstantManager.COOKIES));
+        startTopLevelActivity();
     }
 
     //Login submit
@@ -132,9 +160,12 @@ public class BaseActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
 
                 if(String.valueOf(response.code()).equals("200")) {
-                    startTopLevelActivity();
-                } else showToast("Не удалось авторизоваться");
-
+                    loginSuccess(response);
+                } else if (response.code() == 403) {
+                    showToast("Неверный логин или пароль");
+                } else {
+                    showToast("Проверьте данные");
+                }
 
                 Log.d(TAG, String.valueOf(response.code()+response.message()));
             }

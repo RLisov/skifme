@@ -26,6 +26,7 @@ import com.shaq.skifme.data.Tracks.Send.Auto;
 import com.shaq.skifme.data.Tracks.Send.NorthEast;
 import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
 import com.shaq.skifme.data.Tracks.Send.SouthWest;
+import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
 
@@ -43,6 +44,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Vi
     private GoogleMap mMap;
     private APIService mAPIService;
     private Button get_tracks_btn;
+    private DataManager mDataManager;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton fab_geozone, fab_device, fab_tracks;
 
@@ -71,6 +73,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Vi
                 .build();
 
         mAPIService = retrofit.create(APIService.class);
+
+        mDataManager = DataManager.getInstance();
     }
 
     @Override
@@ -103,9 +107,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Vi
         mMap = googleMap;
     }
 
-    public void drawGeozone(int opt) {
-
-    }
 
 
 
@@ -131,10 +132,12 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Vi
         postTracksBody.setType("mobile");
         postTracksBody.setZoom(13);
 
-
         Log.d(TAG,postTracksBody.toString());
 
-        mAPIService.getTracksPost(postTracksBody).enqueue(new Callback<List<TracksResponseModel>>() {
+        String cookie = mDataManager.getPreferencesManager().getCookie();
+
+
+        mAPIService.getTracksPost(cookie,postTracksBody).enqueue(new Callback<List<TracksResponseModel>>() {
             @Override
             public void onResponse(Call<List<TracksResponseModel>> call, Response<List<TracksResponseModel>> response) {
 

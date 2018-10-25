@@ -9,4 +9,6 @@ public interface ConstantManager {
     String LANGUAGE_KEY = "kz_KZ";
     String REG_TAG = "RegActivity";
     String REG_TYPE = "SKIF";
+    String COOKIES = "Set-cookie";
+    String CACHED_EMAIL ="CachedEmail";
 }
