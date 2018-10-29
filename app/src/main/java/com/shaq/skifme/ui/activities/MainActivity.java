@@ -1,11 +1,13 @@
 package com.shaq.skifme.ui.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,7 +15,7 @@ import android.widget.TextView;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.managers.DataManager;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
     private Button signIn_btn;
     private EditText login_et, password_et;
@@ -36,6 +38,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         signIn_btn.setOnClickListener(this);
         register_tv.setOnClickListener(this);
+        login_et.setOnFocusChangeListener(this);
+        password_et.setOnFocusChangeListener(this);
         mDataManager = DataManager.getInstance();
 
     }
@@ -60,6 +64,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 break;
         }
+    }
+
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.login_email_et:
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+                break;
+            case R.id.login_password_et:
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+                break;
+
+        }
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.shaq.skifme.ui.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,14 +12,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.AdapterView;
+import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -60,10 +67,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
 
-    private Button map_btn;
-    private CoordinatorLayout mCoordinatorLayout;
+
     private Toolbar mToolbar;
-    private DrawerLayout mNavigationDrawer;
     private final String TAG = "TopLevelAct";
     private ArrayList<TracksResponseModel> dataTracks;
     private DataManager mDataManager;
@@ -71,6 +76,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton fab_geozone, fab_device, fab_tracks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,19 +90,14 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         mDataManager = DataManager.getInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.top_level_toolbar);
-        mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
-
         setupToolbar();
 
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_container);
 
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         fab_geozone = (FloatingActionButton) findViewById(R.id.fab_add_geozone);
         fab_device = (FloatingActionButton) findViewById(R.id.fab_add_device);
         fab_tracks = (FloatingActionButton) findViewById(R.id.fab_draw_tracks);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         fab_tracks.setOnClickListener(this);
         fab_geozone.setOnClickListener(this);
@@ -110,9 +111,12 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
 
 
-
     }
 
+    @Override
+    public void onBackPressed() {
+        //Disable back button
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -124,8 +128,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
                 break;
             }
         }
-        //close navigation drawer
-        mNavigationDrawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
@@ -156,10 +159,14 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.app_menu, menu);
-        return true;
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        MenuItem mSearch = menu.findItem(R.id.search);
+
+        return true ;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -169,7 +176,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
                 Toast.makeText(getApplicationContext(),"Item 1 Selected",Toast.LENGTH_LONG).show();
                 return true;
             case android.R.id.home:
-                mNavigationDrawer.openDrawer(GravityCompat.START);
+
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -187,10 +194,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
     public void setupToolbar() {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+
     }
 
 

@@ -6,12 +6,41 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorDark</item>
     </style>
-    
+
     <style name="custom_dialog">
         <item name="android:fullDark">@android:color/transparent</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="LoginEditTexts">
+        <item name="android:background">@drawable/custom_login_et</item>
+        <item name="android:textSize">@dimen/font_medium_16</item>
+        <item name="android:layout_width">320dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:textColor">@color/colorDark</item>
+        <item name="android:padding">@dimen/spacing_small_8</item>
+
+    </style>
+
+    <!--Bottom navigation text style-->
+    <style name="BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigationView.Inactive</item>
+    </style>
+    <style name="TextAppearance"/>
+
+    <style name="TextAppearance.BottomNavigationView"/>
+    <style name="TextAppearance.BottomNavigationView.Inactive">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TextAppearance.BottomNavigationView.Active">
+        <item name="android:textSize">12sp</item>
+    </style>
 
 </resources>

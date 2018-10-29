@@ -25,6 +25,7 @@ import com.shaq.skifme.data.Timezone;
 import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
 import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
 import com.shaq.skifme.data.managers.DataManager;
+import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.data.res.UserInfoMe;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
@@ -49,6 +50,8 @@ public class BaseActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private DataManager mDataManager;
 
+    public GeozonesRes dataSet;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class BaseActivity extends AppCompatActivity {
 
         mAPIService = retrofit.create(APIService.class);
         mDataManager = DataManager.getInstance();
+
     }
 
     public void showError(String message, Exception error){
@@ -172,6 +176,24 @@ public class BaseActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
+
+    public void getGeoList() {
+
+        mAPIService.getGeozonesList(mDataManager.getPreferencesManager().getCookie()).enqueue(new Callback<GeozonesRes>() {
+            @Override
+            public void onResponse(Call<GeozonesRes> call, Response<GeozonesRes> response) {
+                dataSet = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<GeozonesRes> call, Throwable t) {
 
             }
         });

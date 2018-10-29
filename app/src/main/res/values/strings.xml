@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">skif.me</string>
     <string name="auth_password">Введите пароль</string>
-    <string name="auth_email">Введите e-mail</string>
+    <string name="auth_email">Введите логин</string>
     <string name="auth_login">войти</string>
     <string name="register">Регистрация</string>
     <string name="forgot_password">Забыли пароль?</string>
@@ -25,35 +25,27 @@
     <string name="title_activity_maps_geo">Map</string>
     <string name="title_activity_maps">Выберите зону</string>
 
-    <!--new-->
-    <string name="zone_textView">Choose a zone type</string>
-    <string name="name_textView">Choose a name</string>
-    <string name="name_hint">Enter a name for the zone</string>
-    <string name="map_ButtonText">Choose zone on map</string>
-    <string name="gozone_button_text">Go</string>
-    <string name="nogozone_button_text">No-go</string>
-    <string name="cancel_button_text">Cancel</string>
-    <string name="submit_button_text">Submit</string>
-
-    <string name="hours_text">Hours per week (Optional)</string>
-    <string name="hours_hint">Enter # of hours to spend on this zone</string>
 
 
-    <string name="drawzone_text">Draw Zone</string>
-    <string name="Retry_text">Retry</string>
-    <string name="Done_text">Done</string>
-    <string name="Cancel_text">Cancel</string>
 
-    <string name="menu_item_add_zone_text">Add new zone</string>
-    <string name="menu_item_zone_list_text">Zone List</string>
-
-    <string name="food_btn">Give Food (60 pts)</string>
-    <string name="treat_btn">Give Treat (120 pts)</string>
-    <string name="milk_btn">Heal (180 pts)</string>
-
-    <string name="health_text">Health</string>
-    <string name="joy_text">Joy</string>
-    <string name="hunger_text">Hunger</string>
-    <string name="points_text">Points</string>
+    <string name="menu_title_map">Карта</string>
+    <string name="menu_title_devices">Устройства</string>
+    <string name="menu_title_geozones">Геозоны</string>
+    <string name="menu_title_menu">Меню</string>
+    <string name="search_title">Поиск устройств и геозон</string>
+    <string-array name="months_array">
+    <item>January</item>
+    <item>February</item>
+    <item>March</item>
+    <item>April</item>
+    <item>May</item>
+    <item>June</item>
+    <item>July</item>
+    <item>August</item>
+    <item>September</item>
+    <item>October</item>
+    <item>November</item>
+    <item>December</item>
+    </string-array>
 
 </resources>

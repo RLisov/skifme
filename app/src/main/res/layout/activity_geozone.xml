@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.GeozoneActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/geo_list_rv"
+        android:layout_width="274dp"
+        android:layout_height="399dp"
+        android:layout_marginTop="72dp"
+        android:background="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/geozone_toolbar" />
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -91,6 +102,15 @@
             android:src="@drawable/ic_add_device_24dp"
             fab:fab_label="По точкам"
             fab:fab_size="normal" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_geo_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_comment_black_24dp"
+            fab:fab_label="Список геозон"
+            fab:fab_size="normal" />
+
 
     </com.github.clans.fab.FloatingActionMenu>
 
