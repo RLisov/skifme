@@ -1,28 +1,17 @@
 package com.shaq.skifme.ui.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.Language;
-import com.shaq.skifme.data.LoginBody;
-import com.shaq.skifme.data.RegisterBody;
-import com.shaq.skifme.data.Timezone;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
 
-import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

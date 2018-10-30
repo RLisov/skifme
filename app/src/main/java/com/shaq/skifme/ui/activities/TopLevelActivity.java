@@ -1,50 +1,30 @@
 package com.shaq.skifme.ui.activities;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.AdapterView;
-import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.Tracks.Send.Auto;
-import com.shaq.skifme.data.LoginBody;
 
 import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
 import com.shaq.skifme.data.Tracks.Send.NorthEast;
@@ -52,10 +32,13 @@ import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
 import com.shaq.skifme.data.Tracks.Send.SouthWest;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.network.APIService;
+import com.shaq.skifme.ui.fragments.DevicesFragment;
+import com.shaq.skifme.ui.fragments.GeozonesFragment;
+import com.shaq.skifme.ui.fragments.MapFragment;
+import com.shaq.skifme.ui.fragments.MenuFragment;
 import com.shaq.skifme.utils.ConstantManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -64,7 +47,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback, View.OnClickListener,ViewPager.OnPageChangeListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
 
 
@@ -73,7 +56,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
     private ArrayList<TracksResponseModel> dataTracks;
     private DataManager mDataManager;
     private APIService mAPIService;
-
+    ViewPager viewPager;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton fab_geozone, fab_device, fab_tracks;
 
@@ -83,15 +66,15 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_level);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
+        BottomNavigationView navigation =  findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(this);
         mDataManager = DataManager.getInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.top_level_toolbar);
         setupToolbar();
 
+        //inflate activity on 1st start
+        loadFragment(new MapFragment());
 
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         fab_geozone = (FloatingActionButton) findViewById(R.id.fab_add_geozone);
@@ -110,7 +93,6 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         mAPIService = retrofit.create(APIService.class);
 
 
-
     }
 
     @Override
@@ -118,20 +100,17 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         //Disable back button
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        switch (item.getItemId()) {
-
-            case R.id.geozones: {
-
-                break;
-            }
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container,fragment)
+                    .commit();
+            return true;
         }
 
-        return true;
+        return false;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -149,6 +128,54 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
         }
     }
+
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+
+        Fragment fragment = null;
+
+        switch (item.getItemId()) {
+
+            case R.id.nav_menu_map:
+                fragment = new MapFragment();
+                break;
+            case R.id.nav_menu_devices:
+                fragment = new DevicesFragment();
+                break;
+            case R.id.nav_menu_geo:
+                fragment = new GeozonesFragment();
+                break;
+            case R.id.nav_menu_menu:
+                fragment = new MenuFragment();
+                break;
+        }
+
+        return loadFragment(fragment);
+    }
+
+
+
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+
+        Log.d("page", "onPageSelected: " + i);
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
+    }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

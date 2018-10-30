@@ -43,5 +43,5 @@ public interface APIService {
 
       @Headers("Content-type: application/json")
       @GET("geozones")
-      Call<GeozonesRes> getGeozonesList(@Header("Cookie") String cookie);
+      Call<List<GeozonesRes>> getGeozonesList(@Header("Cookie") String cookie);
 }

@@ -18,13 +18,11 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.Projection;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
 
 
@@ -32,9 +30,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.adapters.GeoAdapter;
-import com.shaq.skifme.data.res.GeozonesRes;
-
-import java.util.ArrayList;
 
 
 public class GeozoneActivity extends BaseActivity implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMapClickListener {
@@ -97,7 +92,7 @@ public class GeozoneActivity extends BaseActivity implements OnMapReadyCallback,
         geo_list_rv.setLayoutManager(mLayoutManager);
 
 
-        mAdapter = new GeoAdapter(dataSet);
+
         //geo_list_rv.setAdapter(mAdapter);
 
 

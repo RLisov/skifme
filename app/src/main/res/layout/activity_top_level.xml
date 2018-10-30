@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_drawer"
+    android:id="@+id/constraint_layout_toplvl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -14,8 +14,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_container">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
@@ -36,14 +37,15 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="548dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.0">
 
     </FrameLayout>
-
 
 
     <com.github.clans.fab.FloatingActionMenu
@@ -51,13 +53,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginStart="112dp"
-        android:layout_marginLeft="112dp"
-        android:layout_marginBottom="283dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintStart_toStartOf="@+id/appBarLayout"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         fab:menu_animationDelayPerItem="55"
         fab:menu_backgroundColor="@android:color/transparent"
         fab:menu_buttonSpacing="0dp"
@@ -92,7 +93,6 @@
             android:id="@+id/fab_add_geozone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_geozone_add_24dp"
             fab:fab_label="Добавить геозону"
             fab:fab_size="normal" />
 
@@ -100,7 +100,6 @@
             android:id="@+id/fab_add_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_device_24dp"
             fab:fab_label="Добавить устройство"
             fab:fab_size="normal" />
 
@@ -108,7 +107,6 @@
             android:id="@+id/fab_draw_tracks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_draw_tracks_24dp"
             fab:fab_label="Отрисовать трек"
             fab:fab_size="normal" />
     </com.github.clans.fab.FloatingActionMenu>
@@ -116,18 +114,17 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         style="@style/BottomNavigationView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="1dp"
         app:itemBackground="@color/darker_grey"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/material_design_android_floating_action_menu"
         app:menu="@menu/bottom_navigation_main" />
 
 

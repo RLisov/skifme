@@ -1,37 +1,32 @@
 package com.shaq.skifme.ui.activities;
 
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.Language;
 import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.data.RegisterBody;
 import com.shaq.skifme.data.Timezone;
 import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
-import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.data.res.UserInfoMe;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
-import com.shaq.skifme.utils.SkifApplication;
 
-import java.util.HashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -64,6 +59,7 @@ public class BaseActivity extends AppCompatActivity {
 
         mAPIService = retrofit.create(APIService.class);
         mDataManager = DataManager.getInstance();
+
 
     }
 
@@ -184,21 +180,7 @@ public class BaseActivity extends AppCompatActivity {
 
 
 
-    public void getGeoList() {
 
-        mAPIService.getGeozonesList(mDataManager.getPreferencesManager().getCookie()).enqueue(new Callback<GeozonesRes>() {
-            @Override
-            public void onResponse(Call<GeozonesRes> call, Response<GeozonesRes> response) {
-                dataSet = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<GeozonesRes> call, Throwable t) {
-
-            }
-        });
-
-    }
 
 //    public void getTracks () {
 //

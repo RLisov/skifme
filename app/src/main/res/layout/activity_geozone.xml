@@ -99,7 +99,6 @@
             android:id="@+id/fab_geo_polygon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_device_24dp"
             fab:fab_label="По точкам"
             fab:fab_size="normal" />
 
