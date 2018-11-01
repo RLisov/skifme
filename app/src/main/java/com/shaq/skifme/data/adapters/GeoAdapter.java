@@ -2,6 +2,7 @@ package com.shaq.skifme.data.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +13,24 @@ import com.shaq.skifme.data.res.GeozonesRes;
 
 import java.util.List;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
+public class GeoAdapter extends RecyclerView.Adapter<GeoAdapter.MyViewHolder> {
 
     private List<GeozonesRes> geozoneList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, year, genre;
+        public TextView title,type;
 
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.geo_name);
+            type = (TextView) view.findViewById(R.id.geo_type);
 
         }
     }
 
 
-    public MoviesAdapter(List<GeozonesRes> moviesList) {
-        this.geozoneList = moviesList;
+    public GeoAdapter(List<GeozonesRes> geozoneList) {
+        this.geozoneList = geozoneList;
     }
 
     @Override
@@ -43,10 +45,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
         GeozonesRes geozonesRes = geozoneList.get(position);
         holder.title.setText(geozonesRes.name);
+        holder.type.setText(geozonesRes.type.getValueRu());
     }
 
     @Override
     public int getItemCount() {
+
         return geozoneList.size();
+
     }
 }

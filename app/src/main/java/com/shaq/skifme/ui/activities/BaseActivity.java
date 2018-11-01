@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -72,6 +74,7 @@ public class BaseActivity extends AppCompatActivity {
 
         Toast.makeText(this,message, Toast.LENGTH_LONG).show();
     }
+
 
     public void startRegisterActivity () {
         Intent intent = new Intent(this, RegisterActivity.class);

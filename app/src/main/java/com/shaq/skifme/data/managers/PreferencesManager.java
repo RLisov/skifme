@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import com.shaq.skifme.utils.ConstantManager;
 import com.shaq.skifme.utils.SkifApplication;
 
+import java.util.List;
+
 public class PreferencesManager {
 
     private SharedPreferences mSharedPreferences;
@@ -29,6 +31,16 @@ public class PreferencesManager {
         editor.putString("CachedEmail",email);
         editor.putString("CachedPass",pass);
         editor.apply();
+    }
+
+    public void setSelectedGeoName(String name) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ConstantManager.GEO_NAME,name);
+        editor.apply();
+    }
+
+    public String getSelectedGeoName() {
+        return mSharedPreferences.getString(ConstantManager.GEO_NAME,"null");
     }
 
     public String getCachedAuthEmail() {

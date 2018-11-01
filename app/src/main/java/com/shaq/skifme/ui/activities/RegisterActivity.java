@@ -36,9 +36,6 @@ public class RegisterActivity extends BaseActivity {
         reg_email_et = (EditText) findViewById(R.id.reg_email_et);
         reg_pass_et = (EditText) findViewById(R.id.reg_pass_et);
         reg_btn = (Button) findViewById(R.id.reg_btn);
-        en_radio = (RadioButton) findViewById(R.id.en_radio_btn);
-        kz_radio = (RadioButton) findViewById(R.id.kz_radio_btn);
-        ru_radio = (RadioButton) findViewById(R.id.ru_radio_btn);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantManager.BASE_URL)
@@ -72,36 +69,6 @@ public class RegisterActivity extends BaseActivity {
             }
         });
     }
-
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.en_radio_btn:
-                if (checked){
-                    RegisterActivity.language = "en_EN";
-                    Log.d(TAG,"lang is"+language);
-                }
-                break;
-            case R.id.kz_radio_btn:
-                if (checked){
-                    RegisterActivity.language = "kz_KZ";
-                }
-                break;
-            case R.id.ru_radio_btn:
-                if (checked) {
-                    RegisterActivity.language = "ru_RU";
-                    Log.d(TAG,"lang is"+RegisterActivity.language);
-                }
-                break;
-        }
-    }
-
-
-
-
 
 
 }

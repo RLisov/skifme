@@ -1,6 +1,7 @@
 package com.shaq.skifme.ui.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -8,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -28,9 +30,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -65,12 +69,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private boolean mLocationPermissionGranted;
 
     private Location mLastKnownLocation;
-
+    private LocationManager lm;
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
-
     private DataManager mDataManager;
     private APIService mAPIService;
+    public static int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION =1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,11 +128,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+        checkLocationPermission(getActivity());
+        getDeviceLocation();
+
         fab_location = getActivity().findViewById(R.id.fab_location);
         fab_location.setOnClickListener(this);
 
+    }
 
 
+
+
+    public static boolean checkLocationPermission(Activity activity){
+        if(ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
+
+            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -182,6 +204,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            MarkerOptions mp = new MarkerOptions();
+                            mp.position(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+                            mp.icon(BitmapDescriptorFactory.fromResource(R.mipmap.my_location));
+                            mMap.clear();
+                            mMap.addMarker(mp);
+
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
@@ -238,7 +266,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
         try {
             if (mLocationPermissionGranted) {
-                mMap.setMyLocationEnabled(true);
+                mMap.setMyLocationEnabled(false);
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
             } else {
                 mMap.setMyLocationEnabled(false);

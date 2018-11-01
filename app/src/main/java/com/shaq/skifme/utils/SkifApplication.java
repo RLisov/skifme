@@ -12,7 +12,6 @@ public class SkifApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 

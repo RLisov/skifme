@@ -1,11 +1,12 @@
 package com.shaq.skifme.data.res;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GeozonesRes {
+public class GeozonesRes  {
 
     @SerializedName("id")
     @Expose
@@ -24,10 +25,30 @@ public class GeozonesRes {
     public Color color;
     @SerializedName("width")
     @Expose
-    public int width;
+    public Double width;
     @SerializedName("icon")
     @Expose
     public Icon icon;
+
+    public List<List<Float>> getGeometry() {
+        return geometry;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getWidth() {
+        return width;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 
     public class Icon {
 
@@ -87,5 +108,24 @@ public class GeozonesRes {
         @Expose
         public String valueKz;
 
+        public String getType() {
+            return type;
+        }
+
+        public String getValueRu() {
+            return valueRu;
+        }
+
+        public String getValueEn() {
+            return valueEn;
+        }
+
+        public String getValueKz() {
+            return valueKz;
+        }
+    }
+
+    public Type getType() {
+        return type;
     }
 }

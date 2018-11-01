@@ -1,8 +1,10 @@
 package com.shaq.skifme.ui.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -70,6 +73,10 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         navigation.setOnNavigationItemSelectedListener(this);
         mDataManager = DataManager.getInstance();
 
+        LinearLayout llBottomSheet = (LinearLayout) findViewById(R.id.bottom_sheet);
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
         mToolbar = (Toolbar) findViewById(R.id.top_level_toolbar);
         setupToolbar();
 
@@ -80,7 +87,6 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         fab_geozone = (FloatingActionButton) findViewById(R.id.fab_add_geozone);
         fab_device = (FloatingActionButton) findViewById(R.id.fab_add_device);
         fab_tracks = (FloatingActionButton) findViewById(R.id.fab_draw_tracks);
-
 
         fab_tracks.setOnClickListener(this);
         fab_geozone.setOnClickListener(this);
@@ -141,12 +147,15 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
             case R.id.nav_menu_map:
                 fragment = new MapFragment();
+                displayBottomSheetBehavior();
                 break;
             case R.id.nav_menu_devices:
                 fragment = new DevicesFragment();
                 break;
             case R.id.nav_menu_geo:
                 fragment = new GeozonesFragment();
+
+
                 break;
             case R.id.nav_menu_menu:
                 fragment = new MenuFragment();
@@ -193,7 +202,11 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         return true ;
     }
 
-
+    public void displayBottomSheetBehavior() {
+        Intent intent = getIntent();
+        boolean isOpen = intent.getBooleanExtra(ConstantManager.IS_OPEN_BOTTOM_SHEET,false);
+        Log.d(TAG,String.valueOf(isOpen));
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -216,6 +229,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         super.onStart();
 
         getUserInfoMe();
+        Log.d(TAG,mDataManager.getPreferencesManager().getSelectedGeoName());
     }
 
     public void setupToolbar() {
@@ -223,6 +237,8 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         ActionBar actionBar = getSupportActionBar();
 
     }
+
+
 
 
 

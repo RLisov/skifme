@@ -3,10 +3,13 @@ package com.shaq.skifme.data.managers;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
+import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.network.APIService;
+import com.shaq.skifme.network.ServiceGenerator;
 import com.shaq.skifme.utils.ConstantManager;
 import com.shaq.skifme.utils.SkifApplication;
 
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,7 +21,10 @@ public class DataManager {
     private APIService mAPIService;
 
     public DataManager() {
+
         this.mPreferencesManager = new PreferencesManager();
+        this.mAPIService = ServiceGenerator.createService(APIService.class);
+
     }
 
     public static DataManager getInstance() {
@@ -36,5 +42,9 @@ public class DataManager {
         return  mPreferencesManager;
     }
 
+    // ===============Network=============
 
+    public Call<Void> loginSubmit(LoginBody loginBody) {
+        return mAPIService.loginSubmit(loginBody);
+    }
 }
