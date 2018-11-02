@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,6 +57,7 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_geo, null);
 
+
     }
 
     @Override
@@ -70,16 +73,17 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
         mDataManager = DataManager.getInstance();
 
+        setHasOptionsMenu(true);
+        getActivity().setTitle("your name");
 
-
-
+        //set Title of fragment
+        ((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Геозоны");
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.geo_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -105,6 +109,12 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
                 //TODO: make delete position Recycler view
             }
         }));
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.app_menu, menu);
     }
 
     @Override
@@ -138,8 +148,6 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent( getContext(), TopLevelActivity.class);
         intent.putExtra(ConstantManager.IS_OPEN_BOTTOM_SHEET,true);
         startActivity(intent);
-        //TODO: put Int for BottomSheet State
         mDataManager.getPreferencesManager().setSelectedGeoName(name);
-
     }
 }

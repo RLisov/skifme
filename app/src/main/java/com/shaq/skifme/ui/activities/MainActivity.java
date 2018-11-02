@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private EditText login_et, password_et;
     private TextView register_tv, forgot_pass_tv;
 
-    public static final String TAG ="MainActivity";
+    private static final String TAG ="MainActivity";
     private DataManager mDataManager;
 
 

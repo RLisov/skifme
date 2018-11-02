@@ -25,10 +25,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorAccent"
+            app:theme="@style/AppTheme.AppBarOverlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"
             app:title=" "
             app:titleTextColor="@color/white" />
 
@@ -113,7 +114,8 @@
     </com.github.clans.fab.FloatingActionMenu>
 
     <include
-        layout="@layout/bottom_sheet" />
+        layout="@layout/bottom_sheet"
+        android:layout_height="186dp" />
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         style="@style/BottomNavigationView"

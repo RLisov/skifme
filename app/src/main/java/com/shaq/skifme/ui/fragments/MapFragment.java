@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +51,7 @@ import java.util.concurrent.Executor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.content.Context.LOCATION_SERVICE;
-import static com.shaq.skifme.ui.activities.MainActivity.TAG;
+
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
@@ -75,12 +76,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private DataManager mDataManager;
     private APIService mAPIService;
     public static int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION =1;
+    private static final String TAG = "MapFragment";
+    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        //set Title of fragment
+        ((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Карта");
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -89,8 +93,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
         // Retrieve the content view that renders the map.
         //setContentView(R.layout.activity_maps);
-
-
+        LinearLayout llBottomSheet = (LinearLayout) getActivity().findViewById(R.id.bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         // Construct a FusedLocationProviderClient.
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
@@ -101,6 +106,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 .build();
 
         mAPIService = retrofit.create(APIService.class);
+
+
     }
 
     @Override
@@ -118,6 +125,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_map, null);
 
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+//        if(mDataManager.getPreferencesManager().getSelectedGeoName() !=null) {
+//            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//        }
 
     }
 
@@ -278,9 +294,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             Log.e("Exception: %s", e.getMessage());
         }
     }
-
-
-
 
 
 }

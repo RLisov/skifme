@@ -139,7 +139,6 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
 
         Fragment fragment = null;
 
@@ -147,14 +146,12 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
             case R.id.nav_menu_map:
                 fragment = new MapFragment();
-                displayBottomSheetBehavior();
                 break;
             case R.id.nav_menu_devices:
                 fragment = new DevicesFragment();
                 break;
             case R.id.nav_menu_geo:
                 fragment = new GeozonesFragment();
-
 
                 break;
             case R.id.nav_menu_menu:
@@ -193,20 +190,15 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.search_menu, menu);
+//
+//        MenuItem mSearch = menu.findItem(R.id.search);
+//
+//        return true ;
+//    }
 
-        MenuItem mSearch = menu.findItem(R.id.search);
-
-        return true ;
-    }
-
-    public void displayBottomSheetBehavior() {
-        Intent intent = getIntent();
-        boolean isOpen = intent.getBooleanExtra(ConstantManager.IS_OPEN_BOTTOM_SHEET,false);
-        Log.d(TAG,String.valueOf(isOpen));
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

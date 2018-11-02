@@ -24,6 +24,7 @@
     <string name="device_list">Устройства</string>
     <string name="title_activity_maps_geo">Map</string>
     <string name="title_activity_maps">Выберите зону</string>
+    <string name="delete_geo">Удалить геозону</string>
 
 
 
@@ -33,6 +34,10 @@
     <string name="menu_title_geozones">Геозоны</string>
     <string name="menu_title_menu">Меню</string>
     <string name="search_title">Поиск устройств и геозон</string>
+    <string name="statistic">Статистика</string>
+    <string name="settings">Настройки</string>
+    <string name="help">Помощь</string>
+    <string name="about">О приложении</string>
     <string-array name="months_array">
     <item>January</item>
     <item>February</item>

@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/file"
-        android:icon="@drawable/ic_control_point_black_24dp"
-        android:title="@string/app_title"
-        android:visible="false"
-        app:showAsAction="never">
-        <item
-            android:id="@+id/new_device"
-            android:title="@string/new_device" />
         <item
             android:id="@+id/new_geozone"
             android:title="@string/new_geozone" />
+        <item
+            android:id="@+id/delete_geo"
+            android:title="@string/delete_geo" />
 
-    </item>
+
 </menu>
