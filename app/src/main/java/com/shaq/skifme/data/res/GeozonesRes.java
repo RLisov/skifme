@@ -19,7 +19,7 @@ public class GeozonesRes  {
     public Type type;
     @SerializedName("geometry")
     @Expose
-    public List<List<Float>> geometry = new ArrayList<List<Float>>();
+    public List<List<Double>> geometry = new ArrayList<List<Double>>();
     @SerializedName("color")
     @Expose
     public Color color;
@@ -30,7 +30,7 @@ public class GeozonesRes  {
     @Expose
     public Icon icon;
 
-    public List<List<Float>> getGeometry() {
+    public List<List<Double>> getGeometry() {
         return geometry;
     }
 

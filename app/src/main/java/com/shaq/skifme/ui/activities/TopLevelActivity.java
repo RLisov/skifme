@@ -41,6 +41,10 @@ import com.shaq.skifme.ui.fragments.MapFragment;
 import com.shaq.skifme.ui.fragments.MenuFragment;
 import com.shaq.skifme.utils.ConstantManager;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,6 +150,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
             case R.id.nav_menu_map:
                 fragment = new MapFragment();
+
                 break;
             case R.id.nav_menu_devices:
                 fragment = new DevicesFragment();

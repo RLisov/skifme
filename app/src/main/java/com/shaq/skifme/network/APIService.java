@@ -8,6 +8,7 @@ import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.data.RegisterBody;
 import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
 import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
+import com.shaq.skifme.data.res.DevicesRes;
 import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.data.res.UserInfoMe;
 
@@ -44,4 +45,10 @@ public interface APIService {
       @Headers("Content-type: application/json")
       @GET("geozones")
       Call<List<GeozonesRes>> getGeozonesList(@Header("Cookie") String cookie);
+
+      @Headers("Content-type: application/json")
+      @GET("autos")
+      Call<List<DevicesRes>> getAllDevicesList(@Header("Cookie") String cookie);
+
+
 }

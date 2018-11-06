@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -37,14 +38,22 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.shaq.skifme.R;
+import com.shaq.skifme.data.eventbus_data.GeozonesEvent;
 import com.shaq.skifme.data.managers.DataManager;
+import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.ui.activities.TopLevelActivity;
 import com.shaq.skifme.utils.ConstantManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.concurrent.Executor;
 
@@ -59,7 +68,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     SupportMapFragment mMapFragment;
     FloatingActionButton fab_location;
 
-    private GoogleMap mMap;
+    public GoogleMap mMap;
     private CameraPosition mCameraPosition;
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -78,6 +87,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public static int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION =1;
     private static final String TAG = "MapFragment";
     private BottomSheetBehavior bottomSheetBehavior;
+    private TextView bs_title;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,9 +142,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if(mDataManager.getPreferencesManager().getSelectedGeoName() !=null) {
-//            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//        }
+
 
     }
 
@@ -142,7 +151,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         super.onStart();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
 
 
         checkLocationPermission(getActivity());
@@ -150,10 +161,37 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
         fab_location = getActivity().findViewById(R.id.fab_location);
         fab_location.setOnClickListener(this);
+        bs_title = getActivity().findViewById(R.id.bs_title);
+
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    public void onDetach() {
+        GeozonesEvent event = EventBus.getDefault().getStickyEvent(GeozonesEvent.class);
+        if (event != null) {
+            EventBus.getDefault().removeStickyEvent(event);
+        }
+        EventBus.getDefault().unregister(this);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        super.onDetach();
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(GeozonesEvent event) {
+
+        Toast.makeText(getActivity(), event.getGeodata().name, Toast.LENGTH_SHORT).show();
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        bs_title.setText(String.valueOf(event.getGeodata().name));
+
+
+    }
 
 
     public static boolean checkLocationPermission(Activity activity){
@@ -173,9 +211,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Use a custom info window adapter to handle multiple lines of text in the
-        // info window contents.
-
 
         // Prompt the user for permission.
         getLocationPermission();
@@ -192,7 +227,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_location:
-                Log.d("Button", "ClickedGeo");
                 getDeviceLocation();
                 getLocationPermission();
 
@@ -205,6 +239,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
         }
     }
+
 
     private void getDeviceLocation() {
 
@@ -223,6 +258,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                             MarkerOptions mp = new MarkerOptions();
                             mp.position(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
                             mp.icon(BitmapDescriptorFactory.fromResource(R.mipmap.my_location));
+                                                        
                             mMap.clear();
                             mMap.addMarker(mp);
 
@@ -293,6 +329,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
+
+    private void drawGeozone(GeozonesEvent geozoneBody) {
+
+        PolylineOptions options = new PolylineOptions().width(5).color(Color.RED);
+        Log.d(TAG, String.valueOf(geozoneBody.getGeodata().geometry.get(0)) );
+        for (int i = 0; i < geozoneBody.getGeodata().geometry.size() -1; i++) {
+
+                Double xPoint = geozoneBody.getGeodata().geometry.get(i).get(0);
+                Double yPoint = geozoneBody.getGeodata().geometry.get(i).get(1);
+                options.add(new LatLng(xPoint, yPoint));
+
+        }
+
+        Polyline line = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(geozoneBody.getGeodata().geometry.get(0).get(0), geozoneBody.getGeodata().geometry.get(0).get(1)), new LatLng(40.7, -74.0))
+                .width(15)
+                .color(Color.RED));
     }
 
 

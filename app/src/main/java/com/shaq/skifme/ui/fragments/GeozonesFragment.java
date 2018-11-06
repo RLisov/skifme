@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.adapters.GeoAdapter;
+import com.shaq.skifme.data.eventbus_data.GeozonesEvent;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.network.APIService;
@@ -28,6 +29,8 @@ import com.shaq.skifme.ui.activities.TopLevelActivity;
 import com.shaq.skifme.utils.ConstantManager;
 import com.shaq.skifme.utils.GeoTouchListener;
 import com.shaq.skifme.utils.MyDividerItemDecoration;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,11 +82,13 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
         //set Title of fragment
         ((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Геозоны");
 
+        EventBus myEventBus = EventBus.getDefault();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.geo_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -100,8 +105,10 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view, int position) {
                 //TODO: make startActivity with position
+                EventBus.getDefault().postSticky(new GeozonesEvent(data.get(position)));
                 startMapWithGeoId(data.get(position).name);
-                Toast.makeText(getContext(), data.get(position).name + " is selected!", Toast.LENGTH_SHORT).show();
+
+                //Toast.makeText(getContext(), data.get(position).name + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
