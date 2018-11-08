@@ -1,32 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="340dp"
     android:layout_marginBottom="56dp"
     android:background="@color/white"
-    android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="230dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <TextView
         android:id="@+id/bs_title"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_width="0dp"
+        android:layout_height="78dp"
+        android:background="@color/light_text"
         android:gravity="start"
-        android:layout_margin="@dimen/spacing_normal_16"
+        android:padding="@dimen/spacing_normal_16"
         android:text="Test"
         android:textColor="@color/colorDark"
-        android:textSize="16dp" />
+        android:textSize="@dimen/font_big_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="227dp"
         android:gravity="start"
-        android:layout_margin="@dimen/spacing_normal_16"
         android:text="Content"
-        android:textColor="@color/darker_grey" />
+        android:textColor="@color/darker_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bs_title" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="4dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_dots_menu_bs" />
+
+    <TextView
+        android:id="@+id/bs_subhead_tv"
+        android:layout_width="58dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="46dp"
+        android:text="Header"
+        android:textColor="@color/subheader_grey"
+        android:textSize="@dimen/font_small_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_rectangle_bs" />
+
+</android.support.constraint.ConstraintLayout>

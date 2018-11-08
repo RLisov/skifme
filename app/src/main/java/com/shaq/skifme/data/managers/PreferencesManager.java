@@ -50,4 +50,14 @@ public class PreferencesManager {
     public String getCachedAuthPass() {
         return mSharedPreferences.getString("CachedPass",null);
     }
+
+    public void setActionMode(boolean b) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean("isActionMode",b);
+        editor.apply();
+    }
+
+    public boolean getActionMode (){
+        return mSharedPreferences.getBoolean("isActionMode",false);
+    }
 }

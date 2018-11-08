@@ -1,10 +1,10 @@
 package com.shaq.skifme.ui.fragments;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +16,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.CheckBox;
 
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.adapters.GeoAdapter;
@@ -32,8 +31,6 @@ import com.shaq.skifme.utils.MyDividerItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,12 +45,13 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
     private DataManager mDataManager;
     private APIService mAPIService;
     Button get_geo_btn;
-
+    CheckBox geo_checkbox;
     private RecyclerView recyclerView;
     private List<GeozonesRes> data;
     private List<List<Float>> geoCoord;
     private GeoAdapter adapter;
     private static final String TAG = "geozone_fragment";
+    boolean is_in_action_mode = false;
 
     @Nullable
     @Override
@@ -96,24 +94,30 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 16));
         getGeoList();
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        geo_checkbox = (CheckBox) getActivity().findViewById(R.id.geo_check_list_item);
 
         //setting bottom sheet
-        LinearLayout llBottomSheet = (LinearLayout) getActivity().findViewById(R.id.bottom_sheet);
-        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+//        ConstraintLayout llBottomSheet = (ConstraintLayout) getActivity().findViewById(R.id.bottom_sheet);
+//        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
 
         recyclerView.addOnItemTouchListener(new GeoTouchListener(getContext(), recyclerView, new GeoTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //TODO: make startActivity with position
-                EventBus.getDefault().postSticky(new GeozonesEvent(data.get(position)));
-                startMapWithGeoId(data.get(position).name);
-
-                //Toast.makeText(getContext(), data.get(position).name + " is selected!", Toast.LENGTH_SHORT).show();
+                if (!mDataManager.getPreferencesManager().getActionMode()) {
+                    EventBus.getDefault().postSticky(new GeozonesEvent(data.get(position)));
+                    startMapWithGeoId(data.get(position).name);
+                }
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                //TODO: make delete position Recycler view
+                if (mDataManager.getPreferencesManager().getActionMode()) {
+
+                } else {
+                mDataManager.getPreferencesManager().setActionMode(true);
+                adapter.notifyDataSetChanged();
+                Log.d(TAG,"long tap");
+                }
             }
         }));
     }
@@ -133,6 +137,7 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 //        }
     }
 
+
     private void getGeoList() {
         mAPIService.getGeozonesList(mDataManager.getPreferencesManager().getCookie()).enqueue(new Callback<List<GeozonesRes>>() {
             @Override
@@ -140,8 +145,9 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
                 data = response.body();
 
-                adapter = new GeoAdapter(data);
+                adapter = new GeoAdapter(data, getContext());
                 recyclerView.setAdapter(adapter);
+
             }
 
             @Override
@@ -153,7 +159,6 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
     private void startMapWithGeoId(String name ) {
         Intent intent = new Intent( getContext(), TopLevelActivity.class);
-        intent.putExtra(ConstantManager.IS_OPEN_BOTTOM_SHEET,true);
         startActivity(intent);
         mDataManager.getPreferencesManager().setSelectedGeoName(name);
     }

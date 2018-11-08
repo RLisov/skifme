@@ -9,4 +9,5 @@
     <color name="text_color_primary">#f5f5f5</color>
     <color name="darker_grey">#4F4F4F</color>
     <color name="colorDark">#102027</color>
+    <color name="subheader_grey">#62727B</color>
 </resources>

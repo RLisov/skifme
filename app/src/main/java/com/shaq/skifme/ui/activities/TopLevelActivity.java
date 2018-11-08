@@ -3,6 +3,7 @@ package com.shaq.skifme.ui.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
@@ -77,11 +78,11 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         navigation.setOnNavigationItemSelectedListener(this);
         mDataManager = DataManager.getInstance();
 
-        LinearLayout llBottomSheet = (LinearLayout) findViewById(R.id.bottom_sheet);
+        ConstraintLayout llBottomSheet = (ConstraintLayout) findViewById(R.id.bottom_sheet);
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
-        mToolbar = (Toolbar) findViewById(R.id.top_level_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         setupToolbar();
 
         //inflate activity on 1st start
@@ -102,7 +103,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
         mAPIService = retrofit.create(APIService.class);
 
-
+        mDataManager.getPreferencesManager().setActionMode(false);
     }
 
     @Override
@@ -232,7 +233,6 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
     public void setupToolbar() {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
-
     }
 
 

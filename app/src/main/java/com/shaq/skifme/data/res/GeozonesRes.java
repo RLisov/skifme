@@ -1,5 +1,10 @@
 package com.shaq.skifme.data.res;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +22,8 @@ public class GeozonesRes  {
     @SerializedName("type")
     @Expose
     public Type type;
+
+    @Ignore
     @SerializedName("geometry")
     @Expose
     public List<List<Double>> geometry = new ArrayList<List<Double>>();
@@ -29,6 +36,44 @@ public class GeozonesRes  {
     @SerializedName("icon")
     @Expose
     public Icon icon;
+
+    public Icon getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Icon icon) {
+        this.icon = icon;
+    }
+
+    public void setWidth(Double width) {
+
+        this.width = width;
+    }
+
+    public void setGeometry(List<List<Double>> geometry) {
+
+        this.geometry = geometry;
+    }
+
+    public void setType(Type type) {
+
+        this.type = type;
+    }
+
+    public void setColor(Color color) {
+
+        this.color = color;
+    }
+
+    public void setName(String name) {
+
+        this.name = name;
+    }
+
+    public void setId(String id) {
+
+        this.id = id;
+    }
 
     public List<List<Double>> getGeometry() {
         return geometry;

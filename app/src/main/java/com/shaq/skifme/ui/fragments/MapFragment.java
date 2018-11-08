@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -87,7 +88,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public static int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION =1;
     private static final String TAG = "MapFragment";
     private BottomSheetBehavior bottomSheetBehavior;
-    private TextView bs_title;
+    private TextView bs_title, bs_subtitle;
 
 
     @Override
@@ -104,7 +105,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
         // Retrieve the content view that renders the map.
         //setContentView(R.layout.activity_maps);
-        LinearLayout llBottomSheet = (LinearLayout) getActivity().findViewById(R.id.bottom_sheet);
+        ConstraintLayout llBottomSheet = (ConstraintLayout) getActivity().findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         // Construct a FusedLocationProviderClient.
@@ -162,7 +163,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         fab_location = getActivity().findViewById(R.id.fab_location);
         fab_location.setOnClickListener(this);
         bs_title = getActivity().findViewById(R.id.bs_title);
-
+        bs_subtitle = getActivity().findViewById(R.id.bs_subhead_tv);
 
     }
 
@@ -173,23 +174,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
 
     @Override
+    public void onPause() {
+        EventBus.getDefault().unregister(this);
+        super.onPause();
+    }
+
+    @Override
     public void onDetach() {
         GeozonesEvent event = EventBus.getDefault().getStickyEvent(GeozonesEvent.class);
         if (event != null) {
             EventBus.getDefault().removeStickyEvent(event);
         }
-        EventBus.getDefault().unregister(this);
+
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         super.onDetach();
     }
 
+
+    //Event bus subscribe
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onMessageEvent(GeozonesEvent event) {
 
         Toast.makeText(getActivity(), event.getGeodata().name, Toast.LENGTH_SHORT).show();
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bs_title.setText(String.valueOf(event.getGeodata().name));
-
+        bs_subtitle.setText(String.valueOf(event.getGeodata().type.getValueRu()));
 
     }
 
@@ -258,7 +267,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                             MarkerOptions mp = new MarkerOptions();
                             mp.position(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
                             mp.icon(BitmapDescriptorFactory.fromResource(R.mipmap.my_location));
-                                                        
+
                             mMap.clear();
                             mMap.addMarker(mp);
 

@@ -40,13 +40,6 @@ public class DataManager {
         return INSTANCE;
     }
 
-    public static EventBus getBus() {
-        if (sBus == null)
-            sBus = EventBus.getDefault();
-        return sBus;
-    }
-
-
 
     //TO DO: add network service
 
