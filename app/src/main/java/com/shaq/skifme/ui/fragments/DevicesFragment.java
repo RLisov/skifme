@@ -46,7 +46,7 @@ public class DevicesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //set Title of fragment
-        ((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Устройства");
+        //((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Устройства");
         mDataManager = DataManager.getInstance();
     }
 

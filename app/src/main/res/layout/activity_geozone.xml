@@ -91,7 +91,6 @@
             android:id="@+id/fab_geo_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_geozone_add_24dp"
             fab:fab_label="Круг"
             fab:fab_size="normal" />
 
@@ -106,7 +105,6 @@
             android:id="@+id/fab_geo_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_comment_black_24dp"
             fab:fab_label="Список геозон"
             fab:fab_size="normal" />
 
@@ -124,7 +122,6 @@
         android:background="@color/white"
         android:elevation="10dp"
         android:padding="4dp"
-        android:src="@drawable/ic_geo_circle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/geozone_toolbar" />
 
@@ -140,7 +137,6 @@
         android:background="@color/white"
         android:elevation="10dp"
         android:padding="4dp"
-        android:src="@drawable/ic_check_red_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_geo_circle"
@@ -156,7 +152,6 @@
         android:background="@color/white"
         android:elevation="10dp"
         android:padding="4dp"
-        android:src="@drawable/ic_geo_baseline24px"
         app:layout_constraintStart_toStartOf="@+id/geozone_map"
         app:layout_constraintTop_toBottomOf="@+id/add_circle_iv" />
 

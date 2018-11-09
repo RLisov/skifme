@@ -19,10 +19,4 @@
         android:icon="@drawable/ic_menu_geo"
         android:title="@string/menu_title_geozones"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/nav_menu_menu"
-        android:enabled="true"
-        android:icon="@drawable/ic_menu_menu"
-        android:title="@string/menu_title_menu"
-        app:showAsAction="ifRoom" />
 </menu>

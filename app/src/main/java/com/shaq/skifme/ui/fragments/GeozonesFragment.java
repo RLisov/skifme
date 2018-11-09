@@ -2,6 +2,7 @@ package com.shaq.skifme.ui.fragments;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,11 +24,15 @@ import com.shaq.skifme.data.adapters.GeoAdapter;
 import com.shaq.skifme.data.eventbus_data.GeozonesEvent;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.res.GeozonesRes;
+import com.shaq.skifme.data.room.AppDatabase;
+import com.shaq.skifme.data.room.Geozones;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.ui.activities.TopLevelActivity;
 import com.shaq.skifme.utils.ConstantManager;
+import com.shaq.skifme.utils.GeoDao;
 import com.shaq.skifme.utils.GeoTouchListener;
 import com.shaq.skifme.utils.MyDividerItemDecoration;
+import com.shaq.skifme.utils.SkifApplication;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -52,6 +57,7 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
     private GeoAdapter adapter;
     private static final String TAG = "geozone_fragment";
     boolean is_in_action_mode = false;
+    private AppDatabase db;
 
     @Nullable
     @Override
@@ -74,11 +80,11 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
         mDataManager = DataManager.getInstance();
 
+
         setHasOptionsMenu(true);
-        getActivity().setTitle("your name");
 
         //set Title of fragment
-        ((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Геозоны");
+        //((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Геозоны");
 
         EventBus myEventBus = EventBus.getDefault();
     }
@@ -95,10 +101,9 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
         getGeoList();
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         geo_checkbox = (CheckBox) getActivity().findViewById(R.id.geo_check_list_item);
+        //db = SkifApplication.getInstance().getDatabase();
 
-        //setting bottom sheet
-//        ConstraintLayout llBottomSheet = (ConstraintLayout) getActivity().findViewById(R.id.bottom_sheet);
-//        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+
 
         recyclerView.addOnItemTouchListener(new GeoTouchListener(getContext(), recyclerView, new GeoTouchListener.ClickListener() {
             @Override
@@ -144,7 +149,6 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<List<GeozonesRes>> call, Response<List<GeozonesRes>> response) {
 
                 data = response.body();
-
                 adapter = new GeoAdapter(data, getContext());
                 recyclerView.setAdapter(adapter);
 
@@ -156,6 +160,7 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
+
 
     private void startMapWithGeoId(String name ) {
         Intent intent = new Intent( getContext(), TopLevelActivity.class);

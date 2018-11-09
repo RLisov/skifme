@@ -96,7 +96,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         super.onCreate(savedInstanceState);
 
         //set Title of fragment
-        ((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Карта");
+        //((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Карта");
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);

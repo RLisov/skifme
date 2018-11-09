@@ -1,10 +1,12 @@
 package com.shaq.skifme.data.managers;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
 import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.data.res.DevicesRes;
+import com.shaq.skifme.data.room.AppDatabase;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.network.ServiceGenerator;
 import com.shaq.skifme.utils.ConstantManager;
@@ -24,7 +26,7 @@ public class DataManager {
     private PreferencesManager mPreferencesManager;
     private static DataManager INSTANCE = null;
     private APIService mAPIService;
-    private static EventBus sBus;
+    private AppDatabase mDatabase;
 
     public DataManager() {
 
@@ -39,7 +41,6 @@ public class DataManager {
         }
         return INSTANCE;
     }
-
 
     //TO DO: add network service
 

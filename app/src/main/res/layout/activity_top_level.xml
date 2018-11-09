@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraint_layout_toplvl"
+    android:id="@+id/navigation_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.activities.TopLevelActivity">
+    tools:context=".ui.activities.TopLevelActivity"
+    android:fitsSystemWindows="true">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/constraint_layout_toplvl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:id="@+id/appBarLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="1.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent">-->
+
+        <!--<include layout="@layout/toolbar_layout"/>-->
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
+        style="@style/MaterialSearchBarLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_margin="16dp"
+        android:elevation="12dp"
+        app:mt_hint="Custom hint"
+        app:mt_maxSuggestionsCount="10"
+        app:mt_speechMode="true"
+        />
 
-        <include layout="@layout/toolbar_layout"/>
         <!--<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"-->
             <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
             <!--android:id="@+id/top_level_toolbar"-->
@@ -33,21 +51,13 @@
             <!--app:title=" "-->
             <!--app:titleTextColor="@color/white" />-->
 
-    </android.support.design.widget.AppBarLayout>
+    <!--</android.support.design.widget.AppBarLayout>-->
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="56dp"
-        android:layout_marginBottom="54dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_height="600dp"
+        android:layout_gravity="top|fill_vertical">
 
     </FrameLayout>
 
@@ -116,8 +126,8 @@
     </com.github.clans.fab.FloatingActionMenu>
 
     <include
-        layout="@layout/bottom_sheet"
-        android:layout_height="186dp" />
+        layout="@layout/bottom_sheet" />
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         style="@style/BottomNavigationView"
@@ -137,3 +147,16 @@
 
 
 </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer_menu">
+
+    </android.support.design.widget.NavigationView>
+
+
+</android.support.v4.widget.DrawerLayout>

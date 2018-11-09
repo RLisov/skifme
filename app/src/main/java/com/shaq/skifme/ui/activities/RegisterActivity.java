@@ -57,12 +57,12 @@ public class RegisterActivity extends BaseActivity {
         reg_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String email = reg_email_et.getText().toString().trim();
-//                String name = reg_name_et.getText().toString().trim();
-//                String pass = reg_pass_et.getText().toString().trim();
-                String email ="karim3vrus2@gmail.com";
-                String name ="Rus32";
-                String pass ="123321";
+                String email = reg_email_et.getText().toString().trim();
+                String name = reg_name_et.getText().toString().trim();
+                String pass = reg_pass_et.getText().toString().trim();
+//                String email ="karim3vrus2@gmail.com";
+//                String name ="Rus32";
+//                String pass ="123321";
                 String lang_key = RegisterActivity.language;
                 registrationCommit(email, name, pass,lang_key);
 

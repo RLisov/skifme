@@ -1,13 +1,13 @@
 package com.shaq.skifme.utils;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
-
+import android.support.v7.widget.RecyclerView;
 import com.shaq.skifme.data.managers.DataManager;
 
 public class GeoTouchListener implements RecyclerView.OnItemTouchListener {

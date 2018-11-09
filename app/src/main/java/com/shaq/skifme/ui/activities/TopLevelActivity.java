@@ -1,21 +1,20 @@
 package com.shaq.skifme.ui.activities;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
+import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -39,12 +38,7 @@ import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.ui.fragments.DevicesFragment;
 import com.shaq.skifme.ui.fragments.GeozonesFragment;
 import com.shaq.skifme.ui.fragments.MapFragment;
-import com.shaq.skifme.ui.fragments.MenuFragment;
 import com.shaq.skifme.utils.ConstantManager;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +58,8 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
     private ArrayList<TracksResponseModel> dataTracks;
     private DataManager mDataManager;
     private APIService mAPIService;
+    private CoordinatorLayout mCoordinatorLayout;
+    private DrawerLayout mNavigationDrawer;
     ViewPager viewPager;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton fab_geozone, fab_device, fab_tracks;
@@ -83,8 +79,9 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         mToolbar = (Toolbar) findViewById(R.id.top_toolbar);
-        setupToolbar();
-
+        mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
+        //setupToolbar();
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.constraint_layout_toplvl);
         //inflate activity on 1st start
         loadFragment(new MapFragment());
 
@@ -160,9 +157,6 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
                 fragment = new GeozonesFragment();
 
                 break;
-            case R.id.nav_menu_menu:
-                fragment = new MenuFragment();
-                break;
         }
 
         return loadFragment(fragment);
@@ -214,7 +208,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
                 Toast.makeText(getApplicationContext(),"Item 1 Selected",Toast.LENGTH_LONG).show();
                 return true;
             case android.R.id.home:
-
+                mNavigationDrawer.openDrawer(GravityCompat.START);
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -230,10 +224,14 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         Log.d(TAG,mDataManager.getPreferencesManager().getSelectedGeoName());
     }
 
-    public void setupToolbar() {
-        setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-    }
+//    public void setupToolbar() {
+//        setSupportActionBar(mToolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
+//    }
 
 
 
