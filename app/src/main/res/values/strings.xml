@@ -19,7 +19,6 @@
     <string name="new_device">Новое устройство</string>
     <string name="new_geozone">Новая геозона</string>
     <string name="geozone_title">Геозоны</string>
-    <string name="geozones">Геозоны</string>
     <string name="notifications">Уведомления</string>
     <string name="device_list">Устройства</string>
     <string name="title_activity_maps_geo">Map</string>
@@ -38,19 +37,7 @@
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
     <string name="about">О приложении</string>
-    <string-array name="months_array">
-    <item>January</item>
-    <item>February</item>
-    <item>March</item>
-    <item>April</item>
-    <item>May</item>
-    <item>June</item>
-    <item>July</item>
-    <item>August</item>
-    <item>September</item>
-    <item>October</item>
-    <item>November</item>
-    <item>December</item>
-    </string-array>
+    <string name="geozones">Геозоны</string>
+
 
 </resources>

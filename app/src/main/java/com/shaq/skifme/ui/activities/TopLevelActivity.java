@@ -17,8 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,12 +25,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.Tracks.Send.Auto;
 
 import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
-import com.shaq.skifme.data.Tracks.Send.NorthEast;
-import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
-import com.shaq.skifme.data.Tracks.Send.SouthWest;
+import com.shaq.skifme.data.req.PostTracksBody;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.ui.fragments.DevicesFragment;
@@ -61,9 +56,6 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
     private CoordinatorLayout mCoordinatorLayout;
     private DrawerLayout mNavigationDrawer;
     ViewPager viewPager;
-    FloatingActionMenu materialDesignFAM;
-    FloatingActionButton fab_geozone, fab_device, fab_tracks;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,18 +72,12 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
         mToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
+
         //setupToolbar();
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.constraint_layout_toplvl);
+
         //inflate activity on 1st start
         loadFragment(new MapFragment());
-
-        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        fab_geozone = (FloatingActionButton) findViewById(R.id.fab_add_geozone);
-        fab_device = (FloatingActionButton) findViewById(R.id.fab_add_device);
-        fab_tracks = (FloatingActionButton) findViewById(R.id.fab_draw_tracks);
-
-        fab_tracks.setOnClickListener(this);
-        fab_geozone.setOnClickListener(this);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantManager.BASE_URL)
@@ -124,12 +110,9 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
     public void onClick(View v) {
         switch (v.getId()) {
             case    R.id.fab_draw_tracks:
-                drawTracks();
-                materialDesignFAM.toggle(true);
                 break;
             case  R.id.fab_add_geozone:
-                startGeozoneActivity();
-                materialDesignFAM.toggle(true);
+
                 break;
             case R.id.fab_add_device:
                 break;
@@ -239,21 +222,14 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
     public void drawTracks () {
 
-        Auto auto = new Auto();
-        auto.setId("7659eaa7-8bb1-47c3-8435-577712371920");
-
-        NorthEast nEast = new NorthEast();
-        nEast.setLat(66.66f);
-        nEast.setLon(77.77f);
-
-        SouthWest sWest = new SouthWest();
-        sWest.setLat(33.3f);
-        sWest.setLon(55.5f);
 
         PostTracksBody postTracksBody = new PostTracksBody();
-        postTracksBody.setAuto(auto);
-        postTracksBody.setNorthEast(nEast);
-        postTracksBody.setSouthWest(sWest);
+        postTracksBody.getAuto().setId("7659eaa7-8bb1-47c3-8435-577712371920");
+
+        postTracksBody.getNorthEast().setLat(66.66f);
+        postTracksBody.getNorthEast().setLon(77.77f);
+        postTracksBody.getSouthWest().setLat(33.3f);
+        postTracksBody.getSouthWest().setLon(55.5f);
         postTracksBody.setTimeFrom("2018-10-21 09:00:00");
         postTracksBody.setTimeTo("2018-10-22 17:00:00");
         postTracksBody.setType("mobile");

@@ -6,7 +6,7 @@ package com.shaq.skifme.network;
 import com.shaq.skifme.data.LoginBody;
 
 import com.shaq.skifme.data.RegisterBody;
-import com.shaq.skifme.data.Tracks.Send.PostTracksBody;
+import com.shaq.skifme.data.req.PostTracksBody;
 import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
 import com.shaq.skifme.data.res.DevicesRes;
 import com.shaq.skifme.data.res.GeozonesRes;

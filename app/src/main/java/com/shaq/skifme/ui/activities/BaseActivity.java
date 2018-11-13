@@ -86,10 +86,6 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void startMapsActivity () {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-    }
 
     public void startGeozoneActivity() {
         Intent intent = new Intent(this, GeozoneActivity.class);

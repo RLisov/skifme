@@ -1,16 +1,15 @@
 package com.shaq.skifme.ui.fragments;
 
-import android.Manifest;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Criteria;
+
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -22,8 +21,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,26 +34,24 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
+
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.eventbus_data.GeozonesEvent;
 import com.shaq.skifme.data.managers.DataManager;
-import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.network.APIService;
-import com.shaq.skifme.ui.activities.TopLevelActivity;
 import com.shaq.skifme.utils.ConstantManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.concurrent.Executor;
+import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -89,7 +84,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private static final String TAG = "MapFragment";
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView bs_title, bs_subtitle;
-
+    private List<String> lastSearches;
+    private MaterialSearchBar searchBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,15 +99,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
 
-        // Retrieve the content view that renders the map.
-        //setContentView(R.layout.activity_maps);
+
         ConstraintLayout llBottomSheet = (ConstraintLayout) getActivity().findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         // Construct a FusedLocationProviderClient.
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        // Build the map.
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantManager.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -123,7 +117,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         if (mMap != null) {
             outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
             outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
@@ -155,6 +149,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+
+        searchBar = (MaterialSearchBar) getActivity().findViewById(R.id.searchBar);
 
 
         checkLocationPermission(getActivity());
@@ -199,7 +195,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bs_title.setText(String.valueOf(event.getGeodata().name));
         bs_subtitle.setText(String.valueOf(event.getGeodata().type.getValueRu()));
-
     }
 
 
@@ -352,10 +347,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
         }
 
-        Polyline line = mMap.addPolyline(new PolylineOptions()
-                .add(new LatLng(geozoneBody.getGeodata().geometry.get(0).get(0), geozoneBody.getGeodata().geometry.get(0).get(1)), new LatLng(40.7, -74.0))
-                .width(15)
-                .color(Color.RED));
+        Polyline line = mMap.addPolyline(options);
+        CameraPosition cameraPosition;
+        cameraPosition = new CameraPosition.Builder().target(new LatLng(geozoneBody.getGeodata().geometry.get(0).get(0), geozoneBody.getGeodata().geometry.get(0).get(1))).zoom(12).build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
 

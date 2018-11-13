@@ -1,11 +1,8 @@
 
-package com.shaq.skifme.data.Tracks.Send;
+package com.shaq.skifme.data.req;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.shaq.skifme.data.Tracks.Send.Auto;
-import com.shaq.skifme.data.Tracks.Send.NorthEast;
-import com.shaq.skifme.data.Tracks.Send.SouthWest;
 
 public class PostTracksBody {
 
@@ -98,5 +95,75 @@ public class PostTracksBody {
                 ", southWest=" + southWest +
                 ", northEast=" + northEast +
                 '}';
+    }
+
+    public class SouthWest {
+
+        @SerializedName("lat")
+        @Expose
+        private Float lat;
+        @SerializedName("lon")
+        @Expose
+        private Float lon;
+
+        public Float getLat() {
+            return lat;
+        }
+
+        public void setLat(Float lat) {
+            this.lat = lat;
+        }
+
+        public Float getLon() {
+            return lon;
+        }
+
+        public void setLon(Float lon) {
+            this.lon = lon;
+        }
+
+    }
+
+    public class NorthEast {
+
+        @SerializedName("lat")
+        @Expose
+        private Float lat;
+        @SerializedName("lon")
+        @Expose
+        private Float lon;
+
+        public Float getLat() {
+            return lat;
+        }
+
+        public void setLat(Float lat) {
+            this.lat = lat;
+        }
+
+        public Float getLon() {
+            return lon;
+        }
+
+        public void setLon(Float lon) {
+            this.lon = lon;
+        }
+
+    }
+
+    public class Auto {
+
+        @SerializedName("id")
+        @Expose
+        private String id;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
     }
 }
