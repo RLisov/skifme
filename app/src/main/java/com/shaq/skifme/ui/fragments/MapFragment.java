@@ -161,6 +161,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         bs_title = getActivity().findViewById(R.id.bs_title);
         bs_subtitle = getActivity().findViewById(R.id.bs_subhead_tv);
 
+
     }
 
     @Override
@@ -195,6 +196,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bs_title.setText(String.valueOf(event.getGeodata().name));
         bs_subtitle.setText(String.valueOf(event.getGeodata().type.getValueRu()));
+    }
+
+    public void drawGeo() {
+
+            PolylineOptions options = new PolylineOptions().width(5).color(Color.RED);
+
+            options.add(new LatLng(55.70731817593897, 37.5894320011139));
+            options.add(new LatLng(55.708396445635806, 37.5913417339325));
+            options.add(new LatLng(55.70676691415676, 37.594774961471565));
+            options.add(new LatLng(55.70560984479542, 37.593755722045906));
+
+            Polyline line = mMap.addPolyline(options);
+
+            CameraPosition cameraPosition;
+            cameraPosition = new CameraPosition.Builder().target(new LatLng(55.70731817593897, 37.5894320011139)).zoom(12).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
     }
 
 
@@ -233,6 +251,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             case R.id.fab_location:
                 getDeviceLocation();
                 getLocationPermission();
+                drawGeo();
 
                 break;
             case R.id.fab_add_geozone:
@@ -335,23 +354,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
     }
 
-    private void drawGeozone(GeozonesEvent geozoneBody) {
-
-        PolylineOptions options = new PolylineOptions().width(5).color(Color.RED);
-        Log.d(TAG, String.valueOf(geozoneBody.getGeodata().geometry.get(0)) );
-        for (int i = 0; i < geozoneBody.getGeodata().geometry.size() -1; i++) {
-
-                Double xPoint = geozoneBody.getGeodata().geometry.get(i).get(0);
-                Double yPoint = geozoneBody.getGeodata().geometry.get(i).get(1);
-                options.add(new LatLng(xPoint, yPoint));
-
-        }
-
-        Polyline line = mMap.addPolyline(options);
-        CameraPosition cameraPosition;
-        cameraPosition = new CameraPosition.Builder().target(new LatLng(geozoneBody.getGeodata().geometry.get(0).get(0), geozoneBody.getGeodata().geometry.get(0).get(1))).zoom(12).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
+//    private void drawGeozone(GeozonesEvent geozoneBody) {
+//
+//        PolylineOptions options = new PolylineOptions().width(5).color(Color.RED);
+//        Log.d(TAG, String.valueOf(geozoneBody.getGeodata().geometry.get(0)) );
+//        for (int i = 0; i < geozoneBody.getGeodata().geometry.size() -1; i++) {
+//
+//                Double xPoint = geozoneBody.getGeodata().geometry.get(i).get(0);
+//                Double yPoint = geozoneBody.getGeodata().geometry.get(i).get(1);
+//                options.add(new LatLng(xPoint, yPoint));
+//
+//        }
+//
+//        Polyline line = mMap.addPolyline(options);
+//        CameraPosition cameraPosition;
+//        cameraPosition = new CameraPosition.Builder().target(new LatLng(geozoneBody.getGeodata().geometry.get(0).get(0), geozoneBody.getGeodata().geometry.get(0).get(1))).zoom(12).build();
+//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//    }
 
 
 }

@@ -21,7 +21,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.device_name);
-            type = (TextView) view.findViewById(R.id.device_type);
+            //type = (TextView) view.findViewById(R.id.device_type);
 
         }
     }
@@ -43,7 +43,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, int position) {
         DevicesRes devicesRes = devicesList.get(position);
         holder.title.setText(devicesRes.getCarrier().getName());
-        holder.type.setText(devicesRes.getAutoModel());
+        //holder.type.setText(devicesRes.getAutoModel());
     }
 
     @Override

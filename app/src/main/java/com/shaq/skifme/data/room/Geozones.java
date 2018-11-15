@@ -4,14 +4,18 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity
+@Entity( tableName = "geozones")
 public class Geozones {
 
     @PrimaryKey
     @NonNull
-    public String id;
+    private String id;
 
-    public String name;
+    private String name;
+
+    private String geotype;
+
+    private String color;
 
     public String getName() {
         return name;
@@ -28,5 +32,21 @@ public class Geozones {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getGeotype() {
+        return geotype;
+    }
+
+    public void setGeotype(String geotype) {
+        this.geotype = geotype;
     }
 }

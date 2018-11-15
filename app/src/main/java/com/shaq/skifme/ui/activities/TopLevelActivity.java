@@ -54,6 +54,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
     private DataManager mDataManager;
     private APIService mAPIService;
     private CoordinatorLayout mCoordinatorLayout;
+    private BottomSheetBehavior mBottomSheetBehavior;
     private DrawerLayout mNavigationDrawer;
     ViewPager viewPager;
 
@@ -66,9 +67,10 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         navigation.setOnNavigationItemSelectedListener(this);
         mDataManager = DataManager.getInstance();
 
+
         ConstraintLayout llBottomSheet = (ConstraintLayout) findViewById(R.id.bottom_sheet);
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        mBottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         mToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
@@ -138,6 +140,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
                 break;
             case R.id.nav_menu_geo:
                 fragment = new GeozonesFragment();
+
 
                 break;
         }

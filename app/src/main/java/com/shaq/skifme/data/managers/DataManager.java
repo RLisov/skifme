@@ -57,4 +57,6 @@ public class DataManager {
     public Call<List<DevicesRes>> getDevicesList(String cookie) {
         return  mAPIService.getAllDevicesList(cookie);
     }
+
+
 }
