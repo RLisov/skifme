@@ -36,6 +36,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -196,18 +198,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bs_title.setText(String.valueOf(event.getGeodata().name));
         bs_subtitle.setText(String.valueOf(event.getGeodata().type.getValueRu()));
+
     }
 
     public void drawGeo() {
 
-            PolylineOptions options = new PolylineOptions().width(5).color(Color.RED);
+            PolygonOptions options = new PolygonOptions().strokeColor(Color.DKGRAY).fillColor(Color.LTGRAY);
 
             options.add(new LatLng(55.70731817593897, 37.5894320011139));
             options.add(new LatLng(55.708396445635806, 37.5913417339325));
             options.add(new LatLng(55.70676691415676, 37.594774961471565));
             options.add(new LatLng(55.70560984479542, 37.593755722045906));
 
-            Polyline line = mMap.addPolyline(options);
+            Polygon polygon = mMap.addPolygon(options);
 
             CameraPosition cameraPosition;
             cameraPosition = new CameraPosition.Builder().target(new LatLng(55.70731817593897, 37.5894320011139)).zoom(12).build();
@@ -252,7 +255,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 getDeviceLocation();
                 getLocationPermission();
                 drawGeo();
-
                 break;
             case R.id.fab_add_geozone:
 
@@ -282,7 +284,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                             mp.position(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
                             mp.icon(BitmapDescriptorFactory.fromResource(R.mipmap.my_location));
 
-                            mMap.clear();
+                            //mMap.clear();
                             mMap.addMarker(mp);
 
                         } else {

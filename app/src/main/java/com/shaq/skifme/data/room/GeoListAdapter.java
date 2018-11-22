@@ -12,14 +12,14 @@ import com.shaq.skifme.R;
 
 import java.util.List;
 
-public class GeoListAdapter extends RecyclerView.Adapter<GeoListAdapter.WordViewHolder> {
+public class GeoListAdapter extends RecyclerView.Adapter<GeoListAdapter.GeoViewHolder> {
 
-    class WordViewHolder extends RecyclerView.ViewHolder {
+    class GeoViewHolder extends RecyclerView.ViewHolder {
         private final TextView geoItemView;
 
-        private WordViewHolder(View itemView) {
+        private GeoViewHolder(View itemView) {
             super(itemView);
-            geoItemView = itemView.findViewById(R.id.textView);
+            geoItemView = itemView.findViewById(R.id.geo_name);
         }
     }
 
@@ -30,13 +30,13 @@ public class GeoListAdapter extends RecyclerView.Adapter<GeoListAdapter.WordView
 
     @NonNull
     @Override
-    public WordViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+    public GeoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.geo_rv, parent, false);
-        return new WordViewHolder(itemView);
+        return new GeoViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(WordViewHolder holder, int position) {
+    public void onBindViewHolder(GeoViewHolder holder, int position) {
         if (mGeozones != null) {
             Geozones current = mGeozones.get(position);
             holder.geoItemView.setText(current.getName());

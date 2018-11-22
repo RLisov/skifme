@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 if(!TextUtils.isEmpty(email)) {
                     showProgress();
                     signIn(email,pass);
+                    hideProgress();
                     //loginCommit(email, pass);
 
 

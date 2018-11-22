@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.data.res.DevicesRes;
+import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.data.room.AppDatabase;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.network.ServiceGenerator;
@@ -56,6 +57,10 @@ public class DataManager {
 
     public Call<List<DevicesRes>> getDevicesList(String cookie) {
         return  mAPIService.getAllDevicesList(cookie);
+    }
+
+    public Call<List<GeozonesRes>> getGeozonesList(String cookie) {
+        return mAPIService.getGeozonesList(cookie);
     }
 
 

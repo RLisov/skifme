@@ -1,5 +1,6 @@
 package com.shaq.skifme.data.room;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -9,44 +10,19 @@ public class Geozones {
 
     @PrimaryKey
     @NonNull
-    private String id;
+    @ColumnInfo(name = "name")
+    private String mName;
 
-    private String name;
+    public Geozones(@NonNull String name) {
+        this.mName = name;
+    }
 
-    private String geotype;
-
-    private String color;
-
+    @NonNull
     public String getName() {
-        return name;
+        return mName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getId() {
-
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getGeotype() {
-        return geotype;
-    }
-
-    public void setGeotype(String geotype) {
-        this.geotype = geotype;
+    public void setName(@NonNull String name) {
+        this.mName = name;
     }
 }

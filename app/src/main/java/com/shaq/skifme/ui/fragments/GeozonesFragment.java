@@ -65,7 +65,7 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
     private RecyclerView recyclerView;
     private List<GeozonesRes> data;
     private List<List<Float>> geoCoord;
-    private GeoAdapter adapter;
+    private GeoListAdapter adapter;
     private static final String TAG = "geozone_fragment";
     boolean is_in_action_mode = false;
     private AppDatabase db;
@@ -117,7 +117,7 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
         final GeoListAdapter adapter = new GeoListAdapter(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 16));
-        getGeoList();
+        //getGeoList();
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
         geo_checkbox = (CheckBox) getActivity().findViewById(R.id.geo_check_list_item);
@@ -144,14 +144,16 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
 
 
-//        mGeozonesViewModel = ViewModelProviders.of(this).get(GeozonesViewModel.class);
-//        mGeozonesViewModel.getAllGeo().observe(this, new Observer<List<Geozones>>() {
-//            @Override
-//            public void onChanged(@Nullable List<Geozones> geozones) {
-//                adapter.setGeozones(geozones);
-//
-//            }
-//        });
+        mGeozonesViewModel = ViewModelProviders.of(this).get(GeozonesViewModel.class);
+        mGeozonesViewModel.getAllGeo().observe(this, new Observer<List<Geozones>>() {
+            @Override
+            public void onChanged(@Nullable List<Geozones> geozones) {
+                adapter.setGeozones(geozones);
+                Log.d(TAG,"data changed");
+
+            }
+        });
+        mGeozonesViewModel.insert();
 
         recyclerView.addOnItemTouchListener(new GeoTouchListener(getContext(), recyclerView, new GeoTouchListener.ClickListener() {
             @Override
@@ -191,40 +193,24 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Geozones geozone = new Geozones();
-            geozone.setId("333");
-            geozone.setColor("#fff");
-            geozone.setName("TEST");
-            //mGeozonesViewModel.insert(geozone);
-        } else {
-            Toast.makeText(
-                   getContext(),
-                    "Not saved",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void getGeoList() {
-        mAPIService.getGeozonesList(mDataManager.getPreferencesManager().getCookie()).enqueue(new Callback<List<GeozonesRes>>() {
-            @Override
-            public void onResponse(Call<List<GeozonesRes>> call, Response<List<GeozonesRes>> response) {
-
-                data = response.body();
-                adapter = new GeoAdapter(data, getContext());
-
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<GeozonesRes>> call, Throwable t) {
-                Log.e(TAG,t.toString());
-            }
-        });
-    }
+//    private void getGeoList() {
+//        mAPIService.getGeozonesList(mDataManager.getPreferencesManager().getCookie()).enqueue(new Callback<List<GeozonesRes>>() {
+//            @Override
+//            public void onResponse(Call<List<GeozonesRes>> call, Response<List<GeozonesRes>> response) {
+//
+//                data = response.body();
+//                //adapter = new GeoAdapter(data, getContext());
+//                Geozones geozone = new Geozones(data.get(0).name);
+//
+//                //recyclerView.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<GeozonesRes>> call, Throwable t) {
+//                Log.e(TAG,t.toString());
+//            }
+//        });
+//    }
 
 
     private void startMapWithGeoId(String name ) {

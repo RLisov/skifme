@@ -20,20 +20,23 @@ public interface GeoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Geozones... geozones);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Geozones geozones);
 
     @Update
     void update(Geozones geozones);
 
-    @Delete
-    void deleteAll(Geozones... geozones);
+    @Query("DELETE FROM geozones")
+    void deleteAll();
 
     @Delete
     void delete(Geozones geozones);
 
     @Query("SELECT * FROM geozones")
     LiveData<List<Geozones>> getAllGeozones();
+
+    @Query("SELECT * FROM geozones WHERE name = :name")
+    LiveData<List<Geozones>> getGeoName(String name);
 
 
 //

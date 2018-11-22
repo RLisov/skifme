@@ -20,8 +20,8 @@ public class GeozonesViewModel extends AndroidViewModel {
 
     public LiveData<List<Geozones>> getAllGeo() { return mAllGeo; }
 
-    public void insert(Geozones geozones) {
-        mGeozoneRepository.insert(geozones);
+    public void insert() {
+        mGeozoneRepository.insert();
     }
 
 
