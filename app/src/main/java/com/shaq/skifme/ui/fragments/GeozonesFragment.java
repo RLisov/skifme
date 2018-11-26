@@ -2,15 +2,11 @@ package com.shaq.skifme.ui.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.Room;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,12 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.adapters.GeoAdapter;
-import com.shaq.skifme.data.eventbus_data.GeozonesEvent;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.data.room.AppDatabase;
@@ -38,22 +31,15 @@ import com.shaq.skifme.data.room.GeozonesViewModel;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.ui.activities.TopLevelActivity;
 import com.shaq.skifme.utils.ConstantManager;
-import com.shaq.skifme.utils.GeoDao;
 import com.shaq.skifme.utils.GeoTouchListener;
 import com.shaq.skifme.utils.MyDividerItemDecoration;
-import com.shaq.skifme.utils.SkifApplication;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.app.Activity.RESULT_OK;
 
 public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
@@ -124,23 +110,23 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
         //Bottom sheet control
 
-        ConstraintLayout llBottomSheet = (ConstraintLayout) getActivity().findViewById(R.id.bottom_sheet_geo);
-        mBottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
-
-        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (BottomSheetBehavior.STATE_EXPANDED == newState) {
-                    mSearchBar.animate().scaleX(0).scaleY(0).setDuration(150).start();
-                } else if (BottomSheetBehavior.STATE_COLLAPSED  == newState || BottomSheetBehavior.STATE_HIDDEN == newState) {
-                    mSearchBar.animate().scaleX(1).scaleY(1).setDuration(150).start();
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            }
-        });
+//        ConstraintLayout llBottomSheet = (ConstraintLayout) getActivity().findViewById(R.id.bottom_sheet_geo);
+//        mBottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+//
+//        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+//            @Override
+//            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+//                if (BottomSheetBehavior.STATE_EXPANDED == newState) {
+//                    mSearchBar.animate().scaleX(0).scaleY(0).setDuration(150).start();
+//                } else if (BottomSheetBehavior.STATE_COLLAPSED  == newState || BottomSheetBehavior.STATE_HIDDEN == newState) {
+//                    mSearchBar.animate().scaleX(1).scaleY(1).setDuration(150).start();
+//                }
+//            }
+//
+//            @Override
+//            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+//            }
+//        });
 
 
 
@@ -150,17 +136,16 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
             public void onChanged(@Nullable List<Geozones> geozones) {
                 adapter.setGeozones(geozones);
                 Log.d(TAG,"data changed");
-
-            }
+                }
         });
-        mGeozonesViewModel.insert();
+        mGeozonesViewModel.insert(); //inflate db from net
 
         recyclerView.addOnItemTouchListener(new GeoTouchListener(getContext(), recyclerView, new GeoTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 if (!mDataManager.getPreferencesManager().getActionMode()) {
-                    EventBus.getDefault().postSticky(new GeozonesEvent(data.get(position)));
-                    startMapWithGeoId(data.get(position).name);
+                    //EventBus.getDefault().postSticky(new GeozonesEvent(data.get(position)));
+                    //startMapWithGeoId(data.get(position).name);
                 }
             }
 
@@ -180,7 +165,7 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.app_menu, menu);
+        //inflater.inflate(R.menu.device_toolbar_menu, menu);
     }
 
     @Override
@@ -193,29 +178,4 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
     }
 
 
-//    private void getGeoList() {
-//        mAPIService.getGeozonesList(mDataManager.getPreferencesManager().getCookie()).enqueue(new Callback<List<GeozonesRes>>() {
-//            @Override
-//            public void onResponse(Call<List<GeozonesRes>> call, Response<List<GeozonesRes>> response) {
-//
-//                data = response.body();
-//                //adapter = new GeoAdapter(data, getContext());
-//                Geozones geozone = new Geozones(data.get(0).name);
-//
-//                //recyclerView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<GeozonesRes>> call, Throwable t) {
-//                Log.e(TAG,t.toString());
-//            }
-//        });
-//    }
-
-
-    private void startMapWithGeoId(String name ) {
-        Intent intent = new Intent( getContext(), TopLevelActivity.class);
-        startActivity(intent);
-        mDataManager.getPreferencesManager().setSelectedGeoName(name);
-    }
 }

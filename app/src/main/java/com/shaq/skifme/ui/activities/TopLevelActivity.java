@@ -30,6 +30,7 @@ import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
 import com.shaq.skifme.data.req.PostTracksBody;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.network.APIService;
+import com.shaq.skifme.ui.fragments.ControlFragment;
 import com.shaq.skifme.ui.fragments.DevicesFragment;
 import com.shaq.skifme.ui.fragments.GeozonesFragment;
 import com.shaq.skifme.ui.fragments.MapFragment;
@@ -68,9 +69,9 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         mDataManager = DataManager.getInstance();
 
 
-        ConstraintLayout llBottomSheet = (ConstraintLayout) findViewById(R.id.bottom_sheet);
-        mBottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//        ConstraintLayout llBottomSheet = (ConstraintLayout) findViewById(R.id.bottom_sheet);
+//        mBottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+//        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         mToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
@@ -79,7 +80,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.constraint_layout_toplvl);
 
         //inflate activity on 1st start
-        loadFragment(new MapFragment());
+        loadFragment(new DevicesFragment());
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantManager.BASE_URL)
@@ -93,7 +94,9 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
-        //Disable back button
+        if (mNavigationDrawer.isDrawerOpen(GravityCompat.START)) {
+            mNavigationDrawer.closeDrawer(GravityCompat.START);
+        }
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -131,16 +134,11 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
         switch (item.getItemId()) {
 
-            case R.id.nav_menu_map:
-                fragment = new MapFragment();
-
-                break;
             case R.id.nav_menu_devices:
                 fragment = new DevicesFragment();
                 break;
             case R.id.nav_menu_geo:
-                fragment = new GeozonesFragment();
-
+                fragment = new ControlFragment();
 
                 break;
         }
@@ -190,8 +188,8 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.geozones:
-                Toast.makeText(getApplicationContext(),"Item 1 Selected",Toast.LENGTH_LONG).show();
+            case R.id.menu_map:
+                loadFragment(new MapFragment());
                 return true;
             case android.R.id.home:
                 mNavigationDrawer.openDrawer(GravityCompat.START);

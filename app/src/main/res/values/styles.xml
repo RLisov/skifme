@@ -18,6 +18,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" >
 
         <item name="android:textColorSecondary">@color/white</item>
+        <item name="spinBars">true</item>
     </style>
 
 

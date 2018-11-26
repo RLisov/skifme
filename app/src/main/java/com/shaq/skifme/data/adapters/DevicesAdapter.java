@@ -20,7 +20,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.device_name);
+            title = (TextView) view.findViewById(R.id.title);
             //type = (TextView) view.findViewById(R.id.device_type);
 
         }
@@ -34,7 +34,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.devices_rv, parent, false);
+                .inflate(R.layout.devices_card_view, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -48,8 +48,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-
-        return devicesList.size();
-
+        if (devicesList != null)
+            return devicesList.size();
+        else return 0;
     }
 }

@@ -36,6 +36,8 @@
     <string name="help">Помощь</string>
     <string name="about">О приложении</string>
     <string name="geozones">Геозоны</string>
+    <string name="objects">Объекты</string>
+    <string name="control">Контроль</string>
 
 
 </resources>

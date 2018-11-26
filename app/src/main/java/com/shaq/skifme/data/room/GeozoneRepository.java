@@ -42,8 +42,10 @@ class GeozoneRepository {
             @Override
             public void onResponse(Call<List<GeozonesRes>> call, Response<List<GeozonesRes>> response) {
                 Log.d("network call",String.valueOf(response.code()));
-                Geozones geozones = new Geozones(response.body().get(1).name);
+                for (int i = 0; i<response.body().size(); i++) {
+                Geozones geozones = new Geozones(response.body().get(i).name);
                 new insertAsyncTask(mGeoDao).execute(geozones);
+                }
             }
 
             @Override

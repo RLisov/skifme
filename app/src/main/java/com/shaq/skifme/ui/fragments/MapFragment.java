@@ -102,9 +102,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
 
 
-        ConstraintLayout llBottomSheet = (ConstraintLayout) getActivity().findViewById(R.id.bottom_sheet);
-        bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//        ConstraintLayout llBottomSheet = (ConstraintLayout) getActivity().findViewById(R.id.bottom_sheet);
+//        bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+//        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         // Construct a FusedLocationProviderClient.
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
@@ -178,16 +178,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         super.onPause();
     }
 
-    @Override
-    public void onDetach() {
-        GeozonesEvent event = EventBus.getDefault().getStickyEvent(GeozonesEvent.class);
-        if (event != null) {
-            EventBus.getDefault().removeStickyEvent(event);
-        }
-
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        super.onDetach();
-    }
+//    @Override
+//    public void onDetach() {
+//        GeozonesEvent event = EventBus.getDefault().getStickyEvent(GeozonesEvent.class);
+//        if (event != null) {
+//            EventBus.getDefault().removeStickyEvent(event);
+//        }
+//
+//        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//        super.onDetach();
+//    }
 
 
     //Event bus subscribe
