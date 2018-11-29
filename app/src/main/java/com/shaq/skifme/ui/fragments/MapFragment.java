@@ -17,6 +17,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,7 +154,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
 
         searchBar = (MaterialSearchBar) getActivity().findViewById(R.id.searchBar);
-
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.map_toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
         checkLocationPermission(getActivity());
         getDeviceLocation();
@@ -163,20 +165,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         bs_title = getActivity().findViewById(R.id.bs_title);
         bs_subtitle = getActivity().findViewById(R.id.bs_subhead_tv);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+
+            }
+        });
+
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        EventBus.getDefault().unregister(this);
-        super.onPause();
-    }
 
 //    @Override
 //    public void onDetach() {
@@ -191,15 +190,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
 
     //Event bus subscribe
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(GeozonesEvent event) {
-
-        Toast.makeText(getActivity(), event.getGeodata().name, Toast.LENGTH_SHORT).show();
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        bs_title.setText(String.valueOf(event.getGeodata().name));
-        bs_subtitle.setText(String.valueOf(event.getGeodata().type.getValueRu()));
-
-    }
+//    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(GeozonesEvent event) {
+//
+//        Toast.makeText(getActivity(), event.getGeodata().name, Toast.LENGTH_SHORT).show();
+//        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//        bs_title.setText(String.valueOf(event.getGeodata().name));
+//        bs_subtitle.setText(String.valueOf(event.getGeodata().type.getValueRu()));
+//
+//    }
 
     public void drawGeo() {
 

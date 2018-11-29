@@ -84,12 +84,7 @@ public class BaseActivity extends AppCompatActivity {
     public void startTopLevelActivity () {
         Intent intent = new Intent(this, TopLevelActivity.class);
         startActivity(intent);
-    }
 
-
-    public void startGeozoneActivity() {
-        Intent intent = new Intent(this, GeozoneActivity.class);
-        startActivity(intent);
     }
 
 
@@ -260,14 +255,6 @@ public class BaseActivity extends AppCompatActivity {
                 Log.e(TAG,t.toString());
             }
         });
-
-
-    }
-
-
-
-    public void fillTrackOptions(List<TracksResponseModel> list) {
-
 
 
     }

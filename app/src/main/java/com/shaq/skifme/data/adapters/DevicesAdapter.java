@@ -42,7 +42,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         DevicesRes devicesRes = devicesList.get(position);
-        holder.title.setText(devicesRes.getCarrier().getName());
+        holder.title.setText(devicesRes.getCurrentTerminal().getAutoNumberModel());
         //holder.type.setText(devicesRes.getAutoModel());
     }
 

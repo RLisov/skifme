@@ -38,6 +38,12 @@
     <string name="geozones">Геозоны</string>
     <string name="objects">Объекты</string>
     <string name="control">Контроль</string>
+    <string name="object_title">Объекты на карте</string>
+    <string name="add_object">Добавить объект</string>
+    <string name="object_name">Имя объекта</string>
+    <string name="sim">Номер SIM</string>
+    <string name="imei">Номер IMEI</string>
+    <string name="qr_ident">Идентификация по QR-коду</string>
 
 
 </resources>

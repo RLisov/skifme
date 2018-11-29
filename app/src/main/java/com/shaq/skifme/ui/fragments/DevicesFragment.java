@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.adapters.DevicesAdapter;
 import com.shaq.skifme.data.managers.DataManager;
@@ -34,7 +35,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DevicesFragment extends Fragment {
+import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
+
+public class DevicesFragment extends Fragment implements View.OnClickListener {
 
     DataManager mDataManager;
     View rootView;
@@ -44,11 +47,13 @@ public class DevicesFragment extends Fragment {
     private List<DevicesRes>  dataDevices;
     private DevicesAdapter adapter;
     private DrawerLayout mDrawerLayout;
+    FloatingActionButton fab_add_device;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_devices, null);
+
 
     }
 
@@ -68,7 +73,6 @@ public class DevicesFragment extends Fragment {
 
         inflateDeviceList();
 
-
         rootView = getView();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.devices_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -79,6 +83,9 @@ public class DevicesFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         mDrawerLayout = getActivity().findViewById(R.id.navigation_drawer);
 
+        fab_add_device = (FloatingActionButton) rootView.findViewById(R.id.fab_add_object);
+        fab_add_device.setOnClickListener(this);
+
         Toolbar mToolbar = (Toolbar) rootView.findViewById(R.id.device_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
         ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
@@ -88,8 +95,39 @@ public class DevicesFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        //hide show fab on scroll
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0 ||dy<0 && fab_add_device.isShown())
+                    fab_add_device.hide(true);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    fab_add_device.show(true);
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab_add_object:
+                ((TopLevelActivity) getActivity()).loadFragment(new AddObjectFragment());
+                break;
+
+            case R.id.menu_map:
+                break;
+
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -106,6 +144,8 @@ public class DevicesFragment extends Fragment {
                 dataDevices = response.body();
                 adapter = new DevicesAdapter(dataDevices);
                 recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -123,8 +163,7 @@ public class DevicesFragment extends Fragment {
                 return true;
 
             case R.id.menu_map:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+
                 return true;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -136,6 +175,20 @@ public class DevicesFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .setTransition(TRANSIT_FRAGMENT_OPEN)
+                    .replace(R.id.fragment_container,fragment)
+                    .commit();
+            return true;
+        }
+
+        return false;
     }
 
 

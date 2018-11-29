@@ -157,6 +157,10 @@ public class DevicesRes {
         @SerializedName("imei")
         @Expose
         private String imei;
+
+        @SerializedName("auto_number_model")
+        @Expose
+        private String autoNumberModel;
         @SerializedName("date_from")
         @Expose
         private String dateFrom;
@@ -193,6 +197,13 @@ public class DevicesRes {
             this.dateFrom = dateFrom;
         }
 
+        public String getAutoNumberModel() {
+            return autoNumberModel;
+        }
+
+        public void setAutoNumberModel(String autoNumberModel) {
+            this.autoNumberModel = autoNumberModel;
+        }
     }
 
     public class Terminal {

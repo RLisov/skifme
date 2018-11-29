@@ -10,4 +10,6 @@
     <color name="darker_grey">#4F4F4F</color>
     <color name="colorDark">#102027</color>
     <color name="subheader_grey">#62727B</color>
+    <color name="colorAccentLight">#ffca79</color>
+
 </resources>

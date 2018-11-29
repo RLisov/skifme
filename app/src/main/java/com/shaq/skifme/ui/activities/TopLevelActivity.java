@@ -45,6 +45,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
+
 public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback, View.OnClickListener,ViewPager.OnPageChangeListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
 
@@ -79,7 +81,7 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
         //setupToolbar();
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.constraint_layout_toplvl);
 
-        //inflate activity on 1st start
+        //inflate activity on 1st star
         loadFragment(new DevicesFragment());
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -94,15 +96,28 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
-        if (mNavigationDrawer.isDrawerOpen(GravityCompat.START)) {
-            mNavigationDrawer.closeDrawer(GravityCompat.START);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
+
+        if (drawer.isDrawerOpen(GravityCompat.START))
+            drawer.closeDrawer(GravityCompat.START);
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            Log.d(TAG,"Last backstack");
+        } else {
+            super.onBackPressed();
         }
     }
 
-    private boolean loadFragment(Fragment fragment) {
+    public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
+                    .addToBackStack(null)
+                    .setTransition(TRANSIT_FRAGMENT_OPEN)
                     .replace(R.id.fragment_container,fragment)
                     .commit();
             return true;
