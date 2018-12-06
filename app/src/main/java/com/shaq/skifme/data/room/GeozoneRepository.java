@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.shaq.skifme.data.managers.DataManager;
+import com.shaq.skifme.data.res.DevicesRes;
 import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.utils.GeoDao;
 
@@ -31,7 +32,6 @@ class GeozoneRepository {
     }
 
     LiveData<List<Geozones>> getAllGeozones() {
-        updateGeoList();
         return mAllGeozones;
     }
 
@@ -43,8 +43,8 @@ class GeozoneRepository {
             public void onResponse(Call<List<GeozonesRes>> call, Response<List<GeozonesRes>> response) {
                 Log.d("network call",String.valueOf(response.code()));
                 for (int i = 0; i<response.body().size(); i++) {
-                Geozones geozones = new Geozones(response.body().get(i).name);
-                new insertAsyncTask(mGeoDao).execute(geozones);
+                    Geozones geozones = new Geozones(response.body().get(i).name);
+                    new insertAsyncTask(mGeoDao).execute(geozones);
                 }
             }
 

@@ -4,26 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.adapters.DevicesAdapter;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.res.DevicesRes;
-import com.shaq.skifme.ui.activities.TopLevelActivity;
-import com.shaq.skifme.utils.MyDividerItemDecoration;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ControlFragment extends Fragment {
 
@@ -33,7 +23,6 @@ public class ControlFragment extends Fragment {
     private  String cookie;
     private String TAG = "DevicesFr";
     private List<DevicesRes>  dataDevices;
-    private DevicesAdapter adapter;
 
     @Nullable
     @Override

@@ -41,19 +41,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab_add_object"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="50dp"
-        android:src="@drawable/ic_add_fab_white_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        fab:fab_colorNormal="@color/colorAccent"
-        fab:fab_colorPressed="@color/colorAccentLight"
-        fab:fab_colorRipple="#66efecec"
-        fab:fab_size="normal" />
+    <!--<com.github.clans.fab.FloatingActionButton-->
+        <!--android:id="@+id/fab_add_object"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="24dp"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:layout_marginBottom="50dp"-->
+        <!--android:src="@drawable/ic_add_fab_white_24dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--fab:fab_colorNormal="@color/colorAccent"-->
+        <!--fab:fab_colorPressed="@color/colorAccentLight"-->
+        <!--fab:fab_colorRipple="#66efecec"-->
+        <!--fab:fab_size="normal" />-->
 
 </android.support.constraint.ConstraintLayout>

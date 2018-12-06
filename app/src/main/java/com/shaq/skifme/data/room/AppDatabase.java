@@ -4,6 +4,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -18,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@Database(entities = {Geozones.class /*, AnotherEntityType.class, AThirdEntityType.class */}, version = 1)
+@Database(entities = {Geozones.class /*, AnotherEntityType.class, AThirdEntityType.class */}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract GeoDao getGeoDao();
@@ -32,6 +33,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "geozones")
+                            .addMigrations(AppDatabase.MIGRATION_1_2)
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -39,6 +41,13 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(final SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE geozones ADD COLUMN controlName TEXT DEFAULT 0");
+        }
+    };
 
     private static RoomDatabase.Callback sRoomDatabaseCallback =
             new RoomDatabase.Callback(){

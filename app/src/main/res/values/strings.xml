@@ -44,6 +44,9 @@
     <string name="sim">Номер SIM</string>
     <string name="imei">Номер IMEI</string>
     <string name="qr_ident">Идентификация по QR-коду</string>
+    <string name="control_name">Бассейн</string>
+    <string name="last_time">Связь: 5 мин. назад</string>
+    <string name="battery_lvl">30%</string>
 
 
 </resources>

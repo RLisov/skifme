@@ -13,8 +13,12 @@ public class Geozones {
     @ColumnInfo(name = "name")
     private String mName;
 
+    @ColumnInfo(name = "controlName")
+    private String controlName;
+
     public Geozones(@NonNull String name) {
         this.mName = name;
+        this.controlName = controlName;
     }
 
     @NonNull
@@ -24,5 +28,13 @@ public class Geozones {
 
     public void setName(@NonNull String name) {
         this.mName = name;
+    }
+
+    public String getControlName() {
+        return controlName;
+    }
+
+    public void setControlName(String controlName) {
+        this.controlName = controlName;
     }
 }

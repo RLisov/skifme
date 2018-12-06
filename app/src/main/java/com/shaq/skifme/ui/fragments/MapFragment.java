@@ -260,7 +260,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 break;
             case R.id.fab_add_device:
                 break;
-
         }
     }
 

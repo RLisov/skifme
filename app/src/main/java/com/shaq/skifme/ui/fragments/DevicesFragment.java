@@ -1,5 +1,7 @@
 package com.shaq.skifme.ui.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +12,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,20 +21,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.adapters.DevicesAdapter;
 import com.shaq.skifme.data.managers.DataManager;
-import com.shaq.skifme.data.res.DevicesRes;
+import com.shaq.skifme.data.room.GeoListAdapter;
+import com.shaq.skifme.data.room.Geozones;
+import com.shaq.skifme.data.room.GeozonesViewModel;
 import com.shaq.skifme.ui.activities.TopLevelActivity;
-import com.shaq.skifme.utils.MyDividerItemDecoration;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
 
@@ -44,10 +42,11 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
     RecyclerView recyclerView;
     private  String cookie;
     private String TAG = "DevicesFr";
-    private List<DevicesRes>  dataDevices;
-    private DevicesAdapter adapter;
+    private GeoListAdapter adapter;
     private DrawerLayout mDrawerLayout;
     FloatingActionButton fab_add_device;
+    private GeozonesViewModel mGeozonesViewModel;
+    private ImageView add_button;
 
     @Nullable
     @Override
@@ -71,20 +70,23 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
 
         cookie = mDataManager.getPreferencesManager().getCookie();
 
-        inflateDeviceList();
-
         rootView = getView();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.devices_recycler_view);
         recyclerView.setHasFixedSize(true);
-        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
+
+        //!!!!
+        final GeoListAdapter adapter = new GeoListAdapter(getContext());
+
+        recyclerView.setAdapter(adapter);
         //recyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 16));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         mDrawerLayout = getActivity().findViewById(R.id.navigation_drawer);
 
-        fab_add_device = (FloatingActionButton) rootView.findViewById(R.id.fab_add_object);
-        fab_add_device.setOnClickListener(this);
+//        fab_add_device = (FloatingActionButton) rootView.findViewById(R.id.fab_add_object);
+//        fab_add_device.setOnClickListener(this);
+
 
         Toolbar mToolbar = (Toolbar) rootView.findViewById(R.id.device_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
@@ -95,33 +97,52 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
 
         setHasOptionsMenu(true);
 
-        //hide show fab on scroll
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        mGeozonesViewModel = ViewModelProviders.of(this).get(GeozonesViewModel.class);
+        mGeozonesViewModel.getAllGeo().observe(this, new Observer<List<Geozones>>() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-                if (dy > 0 ||dy<0 && fab_add_device.isShown())
-                    fab_add_device.hide(true);
+            public void onChanged(@Nullable List<Geozones> geozones) {
+                adapter.setGeozones(geozones);
+                Log.d(TAG,"data changed on start");
             }
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    fab_add_device.show(true);
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
         });
+
+
+
+        //hide show fab on scroll
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+//                if (dy > 0 ||dy<0 && fab_add_device.isShown())
+//                    fab_add_device.hide(true);
+//            }
+//
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+//                    fab_add_device.show(true);
+//                }
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//        });
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mGeozonesViewModel.insert();
+        Log.d(TAG,"data changed on resume");
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fab_add_object:
-                ((TopLevelActivity) getActivity()).loadFragment(new AddObjectFragment());
-                break;
+//            case R.id.add_object_cross:
+//                ((TopLevelActivity) getActivity()).loadFragment(new AddObjectFragment());
+//                break;
 
             case R.id.menu_map:
                 break;
@@ -135,25 +156,25 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         inflater.inflate(R.menu.device_toolbar_menu, menu);
     }
 
-    private void inflateDeviceList() {
-
-        mDataManager.getDevicesList(cookie).enqueue(new Callback<List<DevicesRes>>() {
-            @Override
-            public void onResponse(Call<List<DevicesRes>> call, Response<List<DevicesRes>> response) {
-                Log.d(TAG,String.valueOf(response.code()));
-                dataDevices = response.body();
-                adapter = new DevicesAdapter(dataDevices);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onFailure(Call<List<DevicesRes>> call, Throwable t) {
-                Log.e(TAG,String.valueOf(t));
-            }
-        });
-    }
+//    private void inflateDeviceList() {
+//
+//        mDataManager.getDevicesList(cookie).enqueue(new Callback<List<DevicesRes>>() {
+//            @Override
+//            public void onResponse(Call<List<DevicesRes>> call, Response<List<DevicesRes>> response) {
+//                Log.d(TAG,String.valueOf(response.code()));
+//                dataDevices = response.body();
+//                adapter = new DevicesAdapter(dataDevices);
+//                recyclerView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<DevicesRes>> call, Throwable t) {
+//                Log.e(TAG,String.valueOf(t));
+//            }
+//        });
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -177,19 +198,6 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .setTransition(TRANSIT_FRAGMENT_OPEN)
-                    .replace(R.id.fragment_container,fragment)
-                    .commit();
-            return true;
-        }
-
-        return false;
-    }
 
 
 }

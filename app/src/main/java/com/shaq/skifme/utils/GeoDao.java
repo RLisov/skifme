@@ -23,6 +23,7 @@ public interface GeoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Geozones geozones);
 
+
     @Update
     void update(Geozones geozones);
 
@@ -34,6 +35,7 @@ public interface GeoDao {
 
     @Query("SELECT * FROM geozones")
     LiveData<List<Geozones>> getAllGeozones();
+
 
     @Query("SELECT * FROM geozones WHERE name = :name")
     LiveData<List<Geozones>> getGeoName(String name);

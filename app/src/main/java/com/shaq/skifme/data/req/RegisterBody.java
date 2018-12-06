@@ -1,8 +1,10 @@
 
-package com.shaq.skifme.data;
+package com.shaq.skifme.data.req;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.shaq.skifme.data.Language;
+import com.shaq.skifme.data.Timezone;
 
 public class RegisterBody {
 

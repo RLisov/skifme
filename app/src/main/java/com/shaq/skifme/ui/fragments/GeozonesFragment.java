@@ -45,19 +45,10 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
 
     private DataManager mDataManager;
-    private APIService mAPIService;
-    Button get_geo_btn;
     CheckBox geo_checkbox;
     private RecyclerView recyclerView;
-    private List<GeozonesRes> data;
-    private List<List<Float>> geoCoord;
-    private GeoListAdapter adapter;
     private static final String TAG = "geozone_fragment";
-    boolean is_in_action_mode = false;
-    private AppDatabase db;
     private GeozonesViewModel mGeozonesViewModel;
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
-    private BottomSheetBehavior mBottomSheetBehavior;
     private MaterialSearchBar mSearchBar;
 
     @Nullable
@@ -77,17 +68,9 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        mAPIService = retrofit.create(APIService.class);
 
         mDataManager = DataManager.getInstance();
-
-
         setHasOptionsMenu(true);
-
-        //set Title of fragment
-        //((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("Геозоны");
-
-        EventBus myEventBus = EventBus.getDefault();
     }
 
     @Override
@@ -138,7 +121,7 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG,"data changed");
                 }
         });
-        mGeozonesViewModel.insert(); //inflate db from net
+        //mGeozonesViewModel.insert(); //inflate db from net
 
         recyclerView.addOnItemTouchListener(new GeoTouchListener(getContext(), recyclerView, new GeoTouchListener.ClickListener() {
             @Override
