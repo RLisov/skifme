@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.room.Geozones;
+import com.shaq.skifme.data.room.Objects;
 
 import java.util.List;
 
@@ -20,14 +20,14 @@ public class ControlListAdapter extends RecyclerView.Adapter<ControlListAdapter.
 
         private ControlViewHolder(View itemView) {
             super(itemView);
-            wordItemView = itemView.findViewById(R.id.textView);
+            wordItemView = itemView.findViewById(R.id.control_name_rv);
         }
     }
 
     private final LayoutInflater mInflater;
-    private List<Geozones> mNames; // Cached copy of words
+    private List<Objects> mNames; // Cached copy of words
 
-    ControlListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public ControlListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
     @NonNull
     @Override
@@ -39,15 +39,15 @@ public class ControlListAdapter extends RecyclerView.Adapter<ControlListAdapter.
     @Override
     public void onBindViewHolder(ControlViewHolder holder, int position) {
         if (mNames != null) {
-            Geozones current = mNames.get(position);
-            holder.wordItemView.setText(current.getControlName());
+            Objects current = mNames.get(position);
+            holder.wordItemView.setText(current.getName());
         } else {
             // Covers the case of data not being ready yet.
             holder.wordItemView.setText("No Word");
         }
     }
 
-    void setWords(List<Geozones> names){
+    public void setWords(List<Objects> names){
         mNames = names;
         notifyDataSetChanged();
     }

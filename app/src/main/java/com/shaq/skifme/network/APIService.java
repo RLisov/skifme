@@ -8,8 +8,8 @@ import com.shaq.skifme.data.LoginBody;
 import com.shaq.skifme.data.req.RegisterBody;
 import com.shaq.skifme.data.req.PostTracksBody;
 import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
-import com.shaq.skifme.data.res.DevicesRes;
-import com.shaq.skifme.data.res.GeozonesRes;
+import com.shaq.skifme.data.res.ControlRes;
+import com.shaq.skifme.data.res.ObjectsRes;
 import com.shaq.skifme.data.res.UserInfoMe;
 
 import java.util.List;
@@ -42,13 +42,19 @@ public interface APIService {
       @GET("me")
       Call<UserInfoMe> getUserInfo(@Header("Cookie") String cookie);
 
-      @Headers("Content-type: application/json")
-      @GET("geozones")
-      Call<List<GeozonesRes>> getGeozonesList(@Header("Cookie") String cookie);
+//      @Headers("Content-type: application/json")
+//      @GET("geozones")
+//      Call<List<GeozonesRes>> getGeozonesList(@Header("Cookie") String cookie);
+
+//      @Headers("Content-type: application/json")
+//      @GET("autos")
+//      Call<List<DevicesRes>> getAllDevicesList(@Header("Cookie") String cookie);
 
       @Headers("Content-type: application/json")
-      @GET("autos")
-      Call<List<DevicesRes>> getAllDevicesList(@Header("Cookie") String cookie);
+      @GET("objects")
+      Call<List<ObjectsRes>> getAllObjects();
+
+
 
 
 }

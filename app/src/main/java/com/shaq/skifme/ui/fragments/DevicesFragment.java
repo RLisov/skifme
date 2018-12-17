@@ -26,14 +26,12 @@ import android.widget.ImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.managers.DataManager;
-import com.shaq.skifme.data.room.GeoListAdapter;
-import com.shaq.skifme.data.room.Geozones;
-import com.shaq.skifme.data.room.GeozonesViewModel;
+import com.shaq.skifme.data.adapters.ObjectsListAdapter;
+import com.shaq.skifme.data.room.Objects;
+import com.shaq.skifme.data.room.ObjectsListViewModel;
 import com.shaq.skifme.ui.activities.TopLevelActivity;
 
 import java.util.List;
-
-import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
 
 public class DevicesFragment extends Fragment implements View.OnClickListener {
 
@@ -42,10 +40,10 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
     RecyclerView recyclerView;
     private  String cookie;
     private String TAG = "DevicesFr";
-    private GeoListAdapter adapter;
+    private ObjectsListAdapter adapter;
     private DrawerLayout mDrawerLayout;
     FloatingActionButton fab_add_device;
-    private GeozonesViewModel mGeozonesViewModel;
+    private ObjectsListViewModel mObjectsViewModel;
     private ImageView add_button;
 
     @Nullable
@@ -77,7 +75,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
 
         //!!!!
-        final GeoListAdapter adapter = new GeoListAdapter(getContext());
+        final ObjectsListAdapter adapter = new ObjectsListAdapter(getContext());
 
         recyclerView.setAdapter(adapter);
         //recyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 16));
@@ -97,10 +95,10 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
 
         setHasOptionsMenu(true);
 
-        mGeozonesViewModel = ViewModelProviders.of(this).get(GeozonesViewModel.class);
-        mGeozonesViewModel.getAllGeo().observe(this, new Observer<List<Geozones>>() {
+        mObjectsViewModel = ViewModelProviders.of(this).get(ObjectsListViewModel.class);
+        mObjectsViewModel.getAllGeo().observe(this, new Observer<List<Objects>>() {
             @Override
-            public void onChanged(@Nullable List<Geozones> geozones) {
+            public void onChanged(@Nullable List<Objects> geozones) {
                 adapter.setGeozones(geozones);
                 Log.d(TAG,"data changed on start");
             }
@@ -133,7 +131,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        mGeozonesViewModel.insert();
+        mObjectsViewModel.insertObjects();
         Log.d(TAG,"data changed on resume");
     }
 

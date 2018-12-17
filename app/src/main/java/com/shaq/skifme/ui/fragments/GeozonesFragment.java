@@ -2,11 +2,9 @@ package com.shaq.skifme.ui.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,24 +15,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.shaq.skifme.R;
 import com.shaq.skifme.data.managers.DataManager;
-import com.shaq.skifme.data.res.GeozonesRes;
-import com.shaq.skifme.data.room.AppDatabase;
-import com.shaq.skifme.data.room.GeoListAdapter;
-import com.shaq.skifme.data.room.Geozones;
-import com.shaq.skifme.data.room.GeozonesViewModel;
-import com.shaq.skifme.network.APIService;
-import com.shaq.skifme.ui.activities.TopLevelActivity;
+import com.shaq.skifme.data.adapters.ObjectsListAdapter;
+import com.shaq.skifme.data.room.Objects;
 import com.shaq.skifme.utils.ConstantManager;
 import com.shaq.skifme.utils.GeoTouchListener;
 import com.shaq.skifme.utils.MyDividerItemDecoration;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -48,7 +38,6 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
     CheckBox geo_checkbox;
     private RecyclerView recyclerView;
     private static final String TAG = "geozone_fragment";
-    private GeozonesViewModel mGeozonesViewModel;
     private MaterialSearchBar mSearchBar;
 
     @Nullable
@@ -83,13 +72,12 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.geo_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        final GeoListAdapter adapter = new GeoListAdapter(getContext());
+        final ObjectsListAdapter adapter = new ObjectsListAdapter(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 16));
         //getGeoList();
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        geo_checkbox = (CheckBox) getActivity().findViewById(R.id.geo_check_list_item);
 
         //Bottom sheet control
 
@@ -113,14 +101,14 @@ public class GeozonesFragment extends Fragment implements View.OnClickListener {
 
 
 
-        mGeozonesViewModel = ViewModelProviders.of(this).get(GeozonesViewModel.class);
-        mGeozonesViewModel.getAllGeo().observe(this, new Observer<List<Geozones>>() {
-            @Override
-            public void onChanged(@Nullable List<Geozones> geozones) {
-                adapter.setGeozones(geozones);
-                Log.d(TAG,"data changed");
-                }
-        });
+//        mGeozonesViewModel = ViewModelProviders.of(this).get(GeozonesViewModel.class);
+//        mGeozonesViewModel.getAllGeo().observe(this, new Observer<List<Objects>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Objects> geozones) {
+//                adapter.setGeozones(geozones);
+//                Log.d(TAG,"data changed");
+//                }
+//        });
         //mGeozonesViewModel.insert(); //inflate db from net
 
         recyclerView.addOnItemTouchListener(new GeoTouchListener(getContext(), recyclerView, new GeoTouchListener.ClickListener() {

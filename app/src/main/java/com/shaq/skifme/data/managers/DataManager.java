@@ -1,25 +1,17 @@
 package com.shaq.skifme.data.managers;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 import com.shaq.skifme.data.LoginBody;
-import com.shaq.skifme.data.res.DevicesRes;
-import com.shaq.skifme.data.res.GeozonesRes;
+import com.shaq.skifme.data.res.ControlRes;
+import com.shaq.skifme.data.res.ObjectsRes;
 import com.shaq.skifme.data.room.AppDatabase;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.network.ServiceGenerator;
-import com.shaq.skifme.utils.ConstantManager;
-import com.shaq.skifme.utils.SkifApplication;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DataManager {
 
@@ -55,12 +47,8 @@ public class DataManager {
         return mAPIService.loginSubmit(loginBody);
     }
 
-    public Call<List<DevicesRes>> getDevicesList(String cookie) {
-        return  mAPIService.getAllDevicesList(cookie);
-    }
-
-    public Call<List<GeozonesRes>> getGeozonesList(String cookie) {
-        return mAPIService.getGeozonesList(cookie);
+    public Call<List<ObjectsRes>> getObjects() {
+        return mAPIService.getAllObjects();
     }
 
 

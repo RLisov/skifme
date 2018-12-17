@@ -18,7 +18,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="160dp"
-            android:layout_height="160dp">
+            android:layout_height="150dp">
 
             <ImageView
                 android:id="@+id/avatar"
@@ -62,10 +62,10 @@
                 android:id="@+id/battery_lvl_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
+                android:layout_marginStart="27dp"
+                android:layout_marginLeft="27dp"
                 android:layout_marginTop="8dp"
-                android:text="37%"
+                android:text="%d"
                 android:textSize="@dimen/font_small_14"
                 card_view:layout_constraintStart_toEndOf="@+id/avatar"
                 card_view:layout_constraintTop_toBottomOf="@+id/battery_img" />

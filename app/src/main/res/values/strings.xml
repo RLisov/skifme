@@ -35,7 +35,6 @@
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
     <string name="about">О приложении</string>
-    <string name="geozones">Геозоны</string>
     <string name="objects">Объекты</string>
     <string name="control">Контроль</string>
     <string name="object_title">Объекты на карте</string>
@@ -47,6 +46,22 @@
     <string name="control_name">Бассейн</string>
     <string name="last_time">Связь: 5 мин. назад</string>
     <string name="battery_lvl">30%</string>
+    <string name="control_name_hint">Название</string>
+    <string name="object_add">Объект</string>
+    <string name="add_control">Добавить контроль</string>
+    <string name="address_hint">Адрес</string>
+    <string name="week_days">Дни контроля</string>
+    <string name="control_start_day">Начало контроля</string>
+    <string name="object">Объект</string>
+
+    <string-array name="objects_item">
+        <item>Петя</item>
+        <item>Маша</item>
+        <item>Катя</item>
+        <item>Света</item>
+        <item>Бобик</item>
+        <item>Аня</item>
+    </string-array>
 
 
 </resources>

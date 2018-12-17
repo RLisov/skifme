@@ -1,18 +1,26 @@
 package com.shaq.skifme.ui.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shaq.skifme.R;
+import com.shaq.skifme.data.adapters.ControlListAdapter;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.res.DevicesRes;
+import com.shaq.skifme.data.room.ControlListViewModel;
+import com.shaq.skifme.data.room.Objects;
+import com.shaq.skifme.utils.MyDividerItemDecoration;
 
 import java.util.List;
 
@@ -24,6 +32,7 @@ public class ObjectFragment extends Fragment {
     private  String cookie;
     private String TAG = "DevicesFr";
     private List<DevicesRes>  dataDevices;
+    private ControlListViewModel mControlViewModel;
 
     @Nullable
     @Override
@@ -54,6 +63,27 @@ public class ObjectFragment extends Fragment {
                 //TODO: make dialog confirm for leave screen
 
             }
+        });
+
+        rootView = getView();
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.object_list_rv);
+        recyclerView.setHasFixedSize(true);
+        final ControlListAdapter adapter = new ControlListAdapter(getContext());
+
+        recyclerView.setAdapter(adapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),1,false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 24));
+
+        mControlViewModel = ViewModelProviders.of(this).get(ControlListViewModel.class);
+        mControlViewModel.getAllGeo().observe(this, new Observer<List<Objects>>() {
+            @Override
+            public void onChanged(@Nullable List<Objects> geozones) {
+                adapter.setWords(geozones);
+                Log.d(TAG,"data changed on start CONTROL LIST");
+            }
+
+
         });
 
     }

@@ -9,36 +9,39 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 
-import com.shaq.skifme.data.room.Geozones;
+import com.shaq.skifme.data.room.Controls;
+import com.shaq.skifme.data.room.Objects;
 
 import java.util.List;
 
 @Dao
-public interface GeoDao {
+public interface AppDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(Geozones... geozones);
+    void insertAll(Objects... geozones);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Geozones geozones);
+    void insertObject(Objects... objects);
 
+    @Insert
+    void insertControls(Controls controls);
 
     @Update
-    void update(Geozones geozones);
+    void update(Objects objects);
 
-    @Query("DELETE FROM geozones")
+    @Query("DELETE FROM Objects")
     void deleteAll();
 
     @Delete
-    void delete(Geozones geozones);
+    void delete(Objects objects);
 
-    @Query("SELECT * FROM geozones")
-    LiveData<List<Geozones>> getAllGeozones();
+    @Query("SELECT * FROM Objects")
+    LiveData<List<Objects>> getAllObjects();
 
 
-    @Query("SELECT * FROM geozones WHERE name = :name")
-    LiveData<List<Geozones>> getGeoName(String name);
+    @Query("SELECT * FROM Objects WHERE name = :name")
+    LiveData<List<Objects>> getGeoName(String name);
 
 
 //

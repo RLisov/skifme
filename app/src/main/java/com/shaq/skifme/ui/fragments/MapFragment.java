@@ -50,9 +50,6 @@ import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 

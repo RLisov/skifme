@@ -79,10 +79,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 String email ="karimvrus2@gmail.com";
                 String pass = "123321";
                 mDataManager.getPreferencesManager().setCachedAuthParams(email,pass);
-
+                startTopLevelActivity();
                 if(!TextUtils.isEmpty(email)) {
                     showProgress();
-                    signIn(email,pass);
+                    //signIn(email,pass);
                     hideProgress();
                     //loginCommit(email, pass);
 

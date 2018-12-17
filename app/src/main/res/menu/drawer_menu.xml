@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/geozones"
+        android:id="@+id/objects"
         android:icon="@drawable/ic_geozone_add_24dp"
-        android:title="@string/geozones" />
+        android:title="@string/objects" />
     <item
         android:id="@+id/notifications"
         android:icon="@drawable/ic_notifications_black_24dp"

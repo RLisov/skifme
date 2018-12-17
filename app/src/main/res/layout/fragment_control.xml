@@ -17,7 +17,7 @@
 
         <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/top_level_toolbar"
+            android:id="@+id/control_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorAccent"
@@ -26,19 +26,101 @@
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/AppTheme.AppBarOverlay"
             app:theme="@style/AppTheme.AppBarOverlay"
-            app:title="@string/control"
+            app:title="@string/add_control"
             app:titleTextColor="@color/white" />
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:text="Control Fragment"
-        android:textSize="20sp"
+
+
+    <EditText
+        android:id="@+id/control_name_add"
+        style="@style/LoginEditTexts"
+        android:layout_marginTop="24dp"
+        android:hint="@string/control_name_hint"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <Button
+        android:id="@+id/control_object_add"
+        style="@style/LoginEditTexts"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/control_name_add" />
+
+    <EditText
+        android:id="@+id/control_address_add"
+        style="@style/LoginEditTexts"
+        android:layout_marginTop="16dp"
+        android:drawableRight="@drawable/ic_map_grey"
+        android:hint="@string/address_hint"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/control_object_add" />
+
+    <EditText
+        android:id="@+id/control_week_days"
+        style="@style/LoginEditTexts"
+        android:layout_marginTop="16dp"
+        android:hint="@string/week_days"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/control_address_add" />
+
+    <EditText
+        android:id="@+id/control_start_day"
+        style="@style/LoginEditTexts"
+        android:layout_marginTop="16dp"
+        android:hint="@string/control_start_day"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/control_week_days" />
+
+    <TextView
+        android:id="@+id/choosen_object_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:text="@string/object"
+        app:layout_constraintBottom_toBottomOf="@+id/control_object_add"
+        app:layout_constraintStart_toStartOf="@+id/control_object_add"
+        app:layout_constraintTop_toTopOf="@+id/control_object_add" />
+
+    <Button
+        android:id="@+id/add_control_btn"
+        android:layout_width="328dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/custom_login_btn"
+        android:text="добавить"
+        android:textAllCaps="true"
+        android:textColor="@color/light_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/control_start_day" />
+
 
 </android.support.constraint.ConstraintLayout>
