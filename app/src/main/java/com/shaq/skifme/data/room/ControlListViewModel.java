@@ -10,18 +10,18 @@ public class ControlListViewModel extends AndroidViewModel {
 
     private AppRepository mRepository;
 
-    private LiveData<List<Objects>> mAllGeo;
+    private LiveData<List<Controls>> mAllControls;
 
     public ControlListViewModel(Application application) {
         super(application);
         mRepository = new AppRepository(application);
-        mAllGeo = mRepository.getAllObjects();
+        mAllControls = mRepository.getAllControls();
     }
 
-    public LiveData<List<Objects>> getAllGeo() { return mAllGeo; }
+    public LiveData<List<Controls>> getAllControls() { return mAllControls; }
 
-    public void insert() {
-        //mRepository.insert();
+    public void insertControls() {
+        mRepository.insertControls();
     }
 
 

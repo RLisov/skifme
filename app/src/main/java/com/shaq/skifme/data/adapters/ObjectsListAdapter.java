@@ -2,6 +2,7 @@ package com.shaq.skifme.data.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shaq.skifme.R;
+import com.shaq.skifme.data.res.ObjectsRes;
+import com.shaq.skifme.data.room.Controls;
 import com.shaq.skifme.data.room.Objects;
 import com.shaq.skifme.ui.activities.TopLevelActivity;
 import com.shaq.skifme.ui.fragments.AddObjectFragment;
@@ -27,28 +30,31 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int TYPE_CARD = 0;
     private static final int TYPE_BUTTON = 1;
     private final LayoutInflater mInflater;
-    private List<Objects> mObjects; // Cached copy of array
+    private List<Objects> mObjects;
+    private List<Controls> mControls; // Cached copy of array
     private Context mContext;
     private String choosenId;
 
     class CardViewHolder extends RecyclerView.ViewHolder {
-        private final TextView geoItemView;
+        private final TextView geoItemView, object_place_tv;
         private final ImageView avatar_img;
         private final TextView battery_title;
+        private final ConstraintLayout cv_wrapper;
 
         private CardViewHolder(final View itemView, final Context context) {
             super(itemView);
             geoItemView = itemView.findViewById(R.id.card_view_title);
+            object_place_tv = itemView.findViewById(R.id.object_place_tv);
             avatar_img = itemView.findViewById(R.id.avatar);
             battery_title = itemView.findViewById(R.id.battery_lvl_tv);
+            cv_wrapper = itemView.findViewById(R.id.cv_wrapper);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     if(mContext instanceof TopLevelActivity){
 
                         ((TopLevelActivity) context).loadFragment(new ObjectFragment());
-                        int position = (int) v.getTag();
-                        Toast.makeText(v.getContext(),Integer.toString(position),Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });
@@ -58,7 +64,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class ButtonViewHolder extends RecyclerView.ViewHolder {
         private final ImageView add_object_btn;
-        private final TextView geoItemView, battery_title;
+        private final TextView geoItemView, battery_title, object_place_tv;
         private final ImageView avatar_img, battery_img;
 
         private ButtonViewHolder(View itemView, final Context context) {
@@ -68,6 +74,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             geoItemView = itemView.findViewById(R.id.card_view_title);
             add_object_btn = itemView.findViewById(R.id.add_object_cross);
             battery_title = itemView.findViewById(R.id.battery_lvl_tv);
+            object_place_tv = itemView.findViewById(R.id.object_place_tv);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
@@ -88,7 +95,8 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
         int viewType;
-        if (mObjects.size() - 1 == position  ) {
+
+        if (mObjects.size() -1 == position  ) {
             viewType = TYPE_BUTTON;
 
         } else viewType=TYPE_CARD;
@@ -139,7 +147,11 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 final CardViewHolder holder = (CardViewHolder) viewHolder;
                 Objects objects = mObjects.get(position);
                 holder.geoItemView.setText(objects.getName());
+                holder.object_place_tv.setText(objects.getCurrentPlace());
                 holder.battery_title.setText(String.valueOf(objects.getBatteryLevel())+"%");
+                if(objects.isAlert()) {
+                    holder.cv_wrapper.setBackgroundResource(R.color.colorAlert);
+                }
 
                 //SETTING VIEW
                 break;
@@ -150,6 +162,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 holder1.avatar_img.setVisibility(View.INVISIBLE);
                 holder1.add_object_btn.setVisibility(View.VISIBLE);
                 holder1.battery_title.setVisibility(View.INVISIBLE);
+                holder1.object_place_tv.setVisibility((View.INVISIBLE));
                 break;
 
         }
@@ -157,7 +170,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
 
-    public void setGeozones(List<Objects> objects){
+    public void setObjects(List<Objects> objects){
         mObjects = objects;
         notifyDataSetChanged();
     }

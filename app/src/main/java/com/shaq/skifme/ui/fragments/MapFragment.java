@@ -45,7 +45,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.eventbus_data.GeozonesEvent;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.utils.ConstantManager;
@@ -197,22 +196,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 //
 //    }
 
-    public void drawGeo() {
-
-            PolygonOptions options = new PolygonOptions().strokeColor(Color.DKGRAY).fillColor(Color.LTGRAY);
-
-            options.add(new LatLng(55.70731817593897, 37.5894320011139));
-            options.add(new LatLng(55.708396445635806, 37.5913417339325));
-            options.add(new LatLng(55.70676691415676, 37.594774961471565));
-            options.add(new LatLng(55.70560984479542, 37.593755722045906));
-
-            Polygon polygon = mMap.addPolygon(options);
-
-            CameraPosition cameraPosition;
-            cameraPosition = new CameraPosition.Builder().target(new LatLng(55.70731817593897, 37.5894320011139)).zoom(12).build();
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-    }
+//    public void drawGeo() {
+//
+//            PolygonOptions options = new PolygonOptions().strokeColor(Color.DKGRAY).fillColor(Color.LTGRAY);
+//
+//            options.add(new LatLng(55.70731817593897, 37.5894320011139));
+//            options.add(new LatLng(55.708396445635806, 37.5913417339325));
+//            options.add(new LatLng(55.70676691415676, 37.594774961471565));
+//            options.add(new LatLng(55.70560984479542, 37.593755722045906));
+//
+//            Polygon polygon = mMap.addPolygon(options);
+//
+//            CameraPosition cameraPosition;
+//            cameraPosition = new CameraPosition.Builder().target(new LatLng(55.70731817593897, 37.5894320011139)).zoom(12).build();
+//            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//
+//    }
 
 
     public static boolean checkLocationPermission(Activity activity){
@@ -250,7 +249,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             case R.id.fab_location:
                 getDeviceLocation();
                 getLocationPermission();
-                drawGeo();
+                //drawGeo();
                 break;
             case R.id.fab_add_geozone:
 
@@ -277,7 +276,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                             MarkerOptions mp = new MarkerOptions();
                             mp.position(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
-                            mp.icon(BitmapDescriptorFactory.fromResource(R.mipmap.my_location));
+                            mp.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_obj_marker));
 
                             //mMap.clear();
                             mMap.addMarker(mp);

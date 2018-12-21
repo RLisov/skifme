@@ -3,8 +3,7 @@ package com.shaq.skifme.data.req;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.shaq.skifme.data.Language;
-import com.shaq.skifme.data.Timezone;
+
 
 public class RegisterBody {
 
@@ -84,6 +83,38 @@ public class RegisterBody {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public class Timezone {
+
+        @SerializedName("key")
+        @Expose
+        private String key;
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+    }
+
+    public class Language {
+
+        @SerializedName("key")
+        @Expose
+        private String key;
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
     }
 
     @Override

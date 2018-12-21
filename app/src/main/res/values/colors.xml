@@ -11,5 +11,6 @@
     <color name="colorDark">#102027</color>
     <color name="subheader_grey">#62727B</color>
     <color name="colorAccentLight">#ffca79</color>
+    <color name="colorAlert">#80EB5757</color>
 
 </resources>

@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.shaq.skifme.utils.AppDao;
 
-@Database(entities = {Objects.class , Controls.class /*, AnotherEntityType.class, AThirdEntityType.class */}, version = 4, exportSchema = false)
+@Database(entities = {Objects.class , Controls.class /*, AnotherEntityType.class, AThirdEntityType.class */}, version = 6, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AppDao getAppDao();

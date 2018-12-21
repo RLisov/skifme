@@ -1,4 +1,4 @@
-package com.shaq.skifme.data.Tracks.Response;
+package com.shaq.skifme.data.res;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

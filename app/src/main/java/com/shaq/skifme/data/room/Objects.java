@@ -29,13 +29,17 @@ public class Objects {
     @ColumnInfo(name = "last_online")
     private int mLastOnline;
 
-    public Objects(@NonNull String id, String name, String image, boolean alert, int batteryLevel, int lastOnline) {
+    @ColumnInfo(name = "current_place")
+    private String mCurrentPlace;
+
+    public Objects(@NonNull String id, String name, String image, boolean alert, int batteryLevel, int lastOnline, String currentPlace) {
         mId = id;
         mName = name;
         mImage = image;
         mAlert = alert;
         mBatteryLevel = batteryLevel;
         mLastOnline = lastOnline;
+        mCurrentPlace = currentPlace;
     }
 
     public String getName() {
@@ -86,4 +90,11 @@ public class Objects {
         mLastOnline = lastOnline;
     }
 
+    public String getCurrentPlace() {
+        return mCurrentPlace;
+    }
+
+    public void setCurrentPlace(String currentPlace) {
+        mCurrentPlace = currentPlace;
+    }
 }

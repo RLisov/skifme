@@ -2,7 +2,6 @@ package com.shaq.skifme.ui.activities;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
@@ -15,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,13 +24,12 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.shaq.skifme.R;
 
-import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
+import com.shaq.skifme.data.res.TracksResponseModel;
 import com.shaq.skifme.data.req.PostTracksBody;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.ui.fragments.ControlFragment;
 import com.shaq.skifme.ui.fragments.DevicesFragment;
-import com.shaq.skifme.ui.fragments.GeozonesFragment;
 import com.shaq.skifme.ui.fragments.MapFragment;
 import com.shaq.skifme.utils.ConstantManager;
 

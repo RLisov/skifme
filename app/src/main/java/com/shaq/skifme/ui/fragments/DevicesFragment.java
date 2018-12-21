@@ -99,41 +99,13 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         mObjectsViewModel.getAllGeo().observe(this, new Observer<List<Objects>>() {
             @Override
             public void onChanged(@Nullable List<Objects> geozones) {
-                adapter.setGeozones(geozones);
+                adapter.setObjects(geozones);
                 Log.d(TAG,"data changed on start");
             }
-
-
         });
-
-
-
-        //hide show fab on scroll
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-//                if (dy > 0 ||dy<0 && fab_add_device.isShown())
-//                    fab_add_device.hide(true);
-//            }
-//
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE){
-//                    fab_add_device.show(true);
-//                }
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//        });
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         mObjectsViewModel.insertObjects();
-        Log.d(TAG,"data changed on resume");
     }
+
 
     @Override
     public void onClick(View v) {

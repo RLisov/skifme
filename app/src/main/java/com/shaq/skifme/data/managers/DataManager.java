@@ -2,7 +2,7 @@ package com.shaq.skifme.data.managers;
 
 import android.content.Context;
 
-import com.shaq.skifme.data.LoginBody;
+import com.shaq.skifme.data.req.LoginBody;
 import com.shaq.skifme.data.res.ControlRes;
 import com.shaq.skifme.data.res.ObjectsRes;
 import com.shaq.skifme.data.room.AppDatabase;
@@ -50,6 +50,8 @@ public class DataManager {
     public Call<List<ObjectsRes>> getObjects() {
         return mAPIService.getAllObjects();
     }
+
+    public Call<List<ControlRes>> getControls() { return  mAPIService.getAllControls(); }
 
 
 }

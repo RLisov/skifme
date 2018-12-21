@@ -3,7 +3,10 @@ package com.shaq.skifme.data.room;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
+
+import java.util.List;
 
 @Entity( tableName = "controls")
 public class Controls {
@@ -13,9 +16,16 @@ public class Controls {
     @ColumnInfo(name = "name")
     private String mName;
 
+    @ColumnInfo(name = "id")
+    private String mId;
 
-    public Controls(@NonNull String name) {
+//    @ColumnInfo(name = "days")
+//    @TypeConverters({DaysConverter.class})
+//    public List<String> mDays;
+
+    public Controls(@NonNull String id, String name) {
         this.mName = name;
+        this.mId = id;
     }
 
     @NonNull
@@ -27,4 +37,13 @@ public class Controls {
         this.mName = name;
     }
 
+
+    public String getId() {
+
+        return mId;
+    }
+
+    public void setId(String id) {
+        mId = id;
+    }
 }

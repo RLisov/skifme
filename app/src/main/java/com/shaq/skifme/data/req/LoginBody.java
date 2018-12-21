@@ -1,4 +1,4 @@
-package com.shaq.skifme.data;
+package com.shaq.skifme.data.req;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

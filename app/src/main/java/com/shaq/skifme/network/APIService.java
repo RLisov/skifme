@@ -3,12 +3,12 @@ package com.shaq.skifme.network;
 
 
 
-import com.shaq.skifme.data.LoginBody;
+import com.shaq.skifme.data.req.LoginBody;
 
 import com.shaq.skifme.data.req.RegisterBody;
 import com.shaq.skifme.data.req.PostTracksBody;
-import com.shaq.skifme.data.Tracks.Response.TracksResponseModel;
 import com.shaq.skifme.data.res.ControlRes;
+import com.shaq.skifme.data.res.TracksResponseModel;
 import com.shaq.skifme.data.res.ObjectsRes;
 import com.shaq.skifme.data.res.UserInfoMe;
 
@@ -53,6 +53,10 @@ public interface APIService {
       @Headers("Content-type: application/json")
       @GET("objects")
       Call<List<ObjectsRes>> getAllObjects();
+
+      @Headers("Content-type: application/json")
+      @GET("controls")
+      Call<List<ControlRes>> getAllControls();
 
 
 

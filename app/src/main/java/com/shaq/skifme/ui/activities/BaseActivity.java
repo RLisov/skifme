@@ -14,10 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.Language;
-import com.shaq.skifme.data.LoginBody;
+import com.shaq.skifme.data.req.LoginBody;
 import com.shaq.skifme.data.req.RegisterBody;
-import com.shaq.skifme.data.Timezone;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.res.GeozonesRes;
 import com.shaq.skifme.data.res.UserInfoMe;
@@ -215,11 +213,6 @@ public class BaseActivity extends AppCompatActivity {
     //Registration
     public void registrationCommit (String email, String name, String pass, String lang_key ) {
 
-        Language lang = new Language();
-        lang.setKey(lang_key);
-
-        Timezone tzone = new Timezone();
-        tzone.setKey("UTC+3");
 
         RegisterBody registrationBody = new RegisterBody();
         registrationBody.setName(name);
@@ -227,9 +220,15 @@ public class BaseActivity extends AppCompatActivity {
         registrationBody.setProviderKey(ConstantManager.PROVIDER_KEY);
         registrationBody.setType(ConstantManager.REG_TYPE);
         registrationBody.setPassword(pass);
-        registrationBody.setLanguage(lang);
-        registrationBody.setTimezone(tzone);
-        Log.d(TAG, registrationBody.toString());
+
+        RegisterBody.Language language = new RegisterBody().new Language();
+        language.setKey(lang_key);
+
+        RegisterBody.Timezone timezone = new RegisterBody().new Timezone();
+        timezone.setKey("UTC+3");
+
+        registrationBody.setLanguage(language);
+        registrationBody.setTimezone(timezone);
 
         mAPIService.registrationSubmit(registrationBody).enqueue(new Callback<Void>() {
             @Override

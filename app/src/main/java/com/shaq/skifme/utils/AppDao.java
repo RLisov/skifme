@@ -24,11 +24,10 @@ public interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertObject(Objects... objects);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertControls(Controls controls);
 
-    @Update
-    void update(Objects objects);
+
 
     @Query("DELETE FROM Objects")
     void deleteAll();
@@ -38,6 +37,9 @@ public interface AppDao {
 
     @Query("SELECT * FROM Objects")
     LiveData<List<Objects>> getAllObjects();
+
+    @Query("SELECT * FROM Controls")
+    LiveData<List<Controls>> getAllControls();
 
 
     @Query("SELECT * FROM Objects WHERE name = :name")

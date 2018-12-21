@@ -19,10 +19,12 @@ import com.shaq.skifme.data.adapters.ControlListAdapter;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.res.DevicesRes;
 import com.shaq.skifme.data.room.ControlListViewModel;
+import com.shaq.skifme.data.room.Controls;
 import com.shaq.skifme.data.room.Objects;
 import com.shaq.skifme.utils.MyDividerItemDecoration;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class ObjectFragment extends Fragment {
 
@@ -30,7 +32,7 @@ public class ObjectFragment extends Fragment {
     View rootView;
     RecyclerView recyclerView;
     private  String cookie;
-    private String TAG = "DevicesFr";
+    private String TAG = "Detailed Object";
     private List<DevicesRes>  dataDevices;
     private ControlListViewModel mControlViewModel;
 
@@ -75,17 +77,16 @@ public class ObjectFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 24));
 
+
         mControlViewModel = ViewModelProviders.of(this).get(ControlListViewModel.class);
-        mControlViewModel.getAllGeo().observe(this, new Observer<List<Objects>>() {
+        mControlViewModel.getAllControls().observe(this, new Observer<List<Controls>>() {
             @Override
-            public void onChanged(@Nullable List<Objects> geozones) {
-                adapter.setWords(geozones);
+            public void onChanged(@Nullable List<Controls> controls) {
+                adapter.setControls(controls);
                 Log.d(TAG,"data changed on start CONTROL LIST");
             }
-
-
         });
-
+        mControlViewModel.insertControls();
     }
 
 

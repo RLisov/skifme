@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.shaq.skifme.R;
-import com.shaq.skifme.data.LoginBody;
+import com.shaq.skifme.data.req.LoginBody;
 import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.utils.ConstantManager;
 import com.shaq.skifme.utils.NetworkStatusChecker;
@@ -78,8 +78,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 //String pass = password_et.getText().toString().trim();
                 String email ="karimvrus2@gmail.com";
                 String pass = "123321";
-                mDataManager.getPreferencesManager().setCachedAuthParams(email,pass);
                 startTopLevelActivity();
+                mDataManager.getPreferencesManager().setCachedAuthParams(email,pass);
                 if(!TextUtils.isEmpty(email)) {
                     showProgress();
                     //signIn(email,pass);
@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     } else if (response.code() == 403) {
                         showToast("Неверный логин или пароль");
                     } else {
-                        showToast("Проверьте данные");
+                        //showToast("Проверьте данные");
                     }
 
                     Log.d(TAG, String.valueOf(response.code() + response.message()));

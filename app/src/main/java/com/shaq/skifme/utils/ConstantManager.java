@@ -4,7 +4,7 @@ public interface ConstantManager {
     String TAG_PREFIX = "DEV ";
     String POST_LANGUAGE = "En_en";
     String BASE_URL1 = "http://195.9.236.218:9000/api_v1/";
-    String BASE_URL = "http://192.168.0.13:8000/";
+    String BASE_URL = "http://valerysilin.ru/skif/";
     String RETROFIT_TAG = "Retrofit";
     String PROVIDER_KEY = "EMAIL_PASSWORD";
     String LANGUAGE_KEY = "kz_KZ";
