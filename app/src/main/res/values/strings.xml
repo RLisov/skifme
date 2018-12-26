@@ -53,6 +53,9 @@
     <string name="week_days">Дни контроля</string>
     <string name="control_start_day">Начало контроля</string>
     <string name="object">Объект</string>
+    <string name="end_control">Конец контроля</string>
+    <string name="notify_in">Уведомление о посещении</string>
+    <string name="notify_out">Уведомление о непосещении</string>
 
     <string-array name="objects_item">
         <item>Петя</item>

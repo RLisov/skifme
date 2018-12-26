@@ -276,7 +276,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                             MarkerOptions mp = new MarkerOptions();
                             mp.position(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
-                            mp.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_obj_marker));
+                            mp.icon(BitmapDescriptorFactory.fromResource(R.mipmap.my_location));
 
                             //mMap.clear();
                             mMap.addMarker(mp);

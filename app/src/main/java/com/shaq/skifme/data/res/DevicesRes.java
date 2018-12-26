@@ -22,7 +22,7 @@ public class DevicesRes {
     private Carrier carrier;
     @SerializedName("terminals")
     @Expose
-    private List<Terminal> terminals = new ArrayList<Terminal>();
+    private List<Terminal> terminals = new ArrayList<>();
     @SerializedName("auto_model")
     @Expose
     private String autoModel;
