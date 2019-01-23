@@ -94,7 +94,6 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         ((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("SKIF.PERSONAL");
 
         setHasOptionsMenu(true);
-
         mObjectsViewModel = ViewModelProviders.of(this).get(ObjectsListViewModel.class);
         mObjectsViewModel.getAllGeo().observe(this, new Observer<List<Objects>>() {
             @Override

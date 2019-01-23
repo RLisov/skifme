@@ -6,11 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -48,6 +54,8 @@ public class ObjectFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //set Title of fragment
         mDataManager = DataManager.getInstance();
+
+
     }
 
     @Override
@@ -62,10 +70,13 @@ public class ObjectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
-                //TODO: make dialog confirm for leave screen
 
             }
         });
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(false);
+        setHasOptionsMenu(true);
 
         rootView = getView();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.object_list_rv);
@@ -87,6 +98,28 @@ public class ObjectFragment extends Fragment {
             }
         });
         mControlViewModel.insertControls();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.object_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.tracks:
+                Log.d(TAG,"tracks click");
+                return true;
+
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 

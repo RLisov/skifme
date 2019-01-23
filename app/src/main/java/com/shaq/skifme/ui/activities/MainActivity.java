@@ -122,7 +122,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void loginSuccess ( Response<Void> response) {
-        showToast("Логин ок");
         Log.d(TAG, response.raw().headers().get(ConstantManager.COOKIES));
 
         mDataManager.getPreferencesManager().saveCookie(response.raw().headers().get(ConstantManager.COOKIES));

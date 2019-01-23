@@ -149,7 +149,7 @@ public class BaseActivity extends AppCompatActivity {
                 } else if (response.code() == 403) {
                     showToast("Неверный логин или пароль");
                 } else {
-                    showToast("Проверьте данные");
+                    //showToast("Проверьте данные");
                 }
 
                 Log.d(TAG, String.valueOf(response.code()+response.message()));

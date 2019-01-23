@@ -60,7 +60,6 @@ public class ControlListAdapter extends RecyclerView.Adapter<ControlListAdapter.
                     if(isChecked) {
                         Log.d("ControlList", String.valueOf(position));
                         //TODO: CONVERT POSITION TO ID AND SEND TO API
-
                     }
                 }
             });

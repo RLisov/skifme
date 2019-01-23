@@ -25,7 +25,7 @@ public interface AppDao {
     void insertObject(Objects... objects);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertControls(Controls controls);
+    void insertControls(Controls... controls);
 
 
 

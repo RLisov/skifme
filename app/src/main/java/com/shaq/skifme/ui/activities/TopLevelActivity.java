@@ -31,6 +31,7 @@ import com.shaq.skifme.network.APIService;
 import com.shaq.skifme.ui.fragments.ControlFragment;
 import com.shaq.skifme.ui.fragments.DevicesFragment;
 import com.shaq.skifme.ui.fragments.MapFragment;
+import com.shaq.skifme.ui.fragments.TracksFragment;
 import com.shaq.skifme.utils.ConstantManager;
 
 import java.util.ArrayList;
@@ -203,6 +204,9 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
             case R.id.menu_map:
                 loadFragment(new MapFragment());
                 return true;
+            case R.id.tracks:
+                loadFragment(new TracksFragment());
+                return true;
             case android.R.id.home:
                 mNavigationDrawer.openDrawer(GravityCompat.START);
 
@@ -237,14 +241,14 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
 
         PostTracksBody postTracksBody = new PostTracksBody();
-        postTracksBody.getAuto().setId("7659eaa7-8bb1-47c3-8435-577712371920");
+        postTracksBody.getAuto().setId("5a0010f5-b7f4-4112-a447-ac71976b804b");
 
         postTracksBody.getNorthEast().setLat(66.66f);
         postTracksBody.getNorthEast().setLon(77.77f);
         postTracksBody.getSouthWest().setLat(33.3f);
         postTracksBody.getSouthWest().setLon(55.5f);
-        postTracksBody.setTimeFrom("2018-10-21 09:00:00");
-        postTracksBody.setTimeTo("2018-10-22 17:00:00");
+        postTracksBody.setTimeFrom("2018-11-11 09:00:00");
+        postTracksBody.setTimeTo("2018-11-12 17:00:00");
         postTracksBody.setType("mobile");
         postTracksBody.setZoom(13);
 

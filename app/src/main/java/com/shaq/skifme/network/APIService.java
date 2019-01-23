@@ -8,6 +8,7 @@ import com.shaq.skifme.data.req.LoginBody;
 import com.shaq.skifme.data.req.RegisterBody;
 import com.shaq.skifme.data.req.PostTracksBody;
 import com.shaq.skifme.data.res.ControlRes;
+import com.shaq.skifme.data.res.TracksRes;
 import com.shaq.skifme.data.res.TracksResponseModel;
 import com.shaq.skifme.data.res.ObjectsRes;
 import com.shaq.skifme.data.res.UserInfoMe;
@@ -58,6 +59,9 @@ public interface APIService {
       @GET("controls")
       Call<List<ControlRes>> getAllControls();
 
+      @Headers("Content-type: application/json")
+      @GET("tracks")
+      Call<List<TracksRes>> getTracks();
 
 
 

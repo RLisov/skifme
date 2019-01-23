@@ -56,6 +56,9 @@
     <string name="end_control">Конец контроля</string>
     <string name="notify_in">Уведомление о посещении</string>
     <string name="notify_out">Уведомление о непосещении</string>
+    <string name="delete_object">Удалить</string>
+    <string name="call">Вызов</string>
+    <string name="history">История</string>
 
     <string-array name="objects_item">
         <item>Петя</item>

@@ -65,12 +65,13 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     class ButtonViewHolder extends RecyclerView.ViewHolder {
         private final ImageView add_object_btn;
         private final TextView geoItemView, battery_title, object_place_tv;
-        private final ImageView avatar_img, battery_img;
+        private final ImageView avatar_img, signal_img,battery_lvl;
 
         private ButtonViewHolder(View itemView, final Context context) {
             super(itemView);
             avatar_img = itemView.findViewById(R.id.avatar);
-            battery_img = itemView.findViewById(R.id.battery_img);
+            signal_img = itemView.findViewById(R.id.signal_iv);
+            battery_lvl = itemView.findViewById(R.id.battery_iv);
             geoItemView = itemView.findViewById(R.id.card_view_title);
             add_object_btn = itemView.findViewById(R.id.add_object_cross);
             battery_title = itemView.findViewById(R.id.battery_lvl_tv);
@@ -149,6 +150,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 holder.geoItemView.setText(objects.getName());
                 holder.object_place_tv.setText(objects.getCurrentPlace());
                 holder.battery_title.setText(String.valueOf(objects.getBatteryLevel())+"%");
+                holder.cv_wrapper.setBackgroundResource(R.color.white);
                 if(objects.isAlert()) {
                     holder.cv_wrapper.setBackgroundResource(R.color.colorAlert);
                 }
@@ -158,11 +160,12 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case TYPE_BUTTON:
                 final ButtonViewHolder holder1 = (ButtonViewHolder) viewHolder;
                 holder1.geoItemView.setVisibility(View.INVISIBLE);
-                holder1.battery_img.setVisibility(View.INVISIBLE);
+                holder1.signal_img.setVisibility(View.INVISIBLE);
                 holder1.avatar_img.setVisibility(View.INVISIBLE);
                 holder1.add_object_btn.setVisibility(View.VISIBLE);
                 holder1.battery_title.setVisibility(View.INVISIBLE);
-                holder1.object_place_tv.setVisibility((View.INVISIBLE));
+                holder1.object_place_tv.setVisibility(View.INVISIBLE);
+                holder1.battery_lvl.setVisibility(View.INVISIBLE);
                 break;
 
         }

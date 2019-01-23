@@ -14,5 +14,5 @@ public interface ConstantManager {
     String CACHED_EMAIL ="CachedEmail";
     String GEO_NAME = "GeozoneName";
     String GEO_COORD = "GeozoneCoord";
-    String IS_OPEN_BOTTOM_SHEET ="is_open_bottom_sheet";
+    String IS_OPEN_BOTTOM_SHEET = "is_open_bottom_sheet";
 }
