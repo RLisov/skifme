@@ -1,7 +1,10 @@
 package com.shaq.skifme.ui.fragments;
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,6 +45,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
     private String TAG = "DevicesFr";
     private ObjectsListAdapter adapter;
     private DrawerLayout mDrawerLayout;
+    protected ProgressDialog mProgressDialog;
     FloatingActionButton fab_add_device;
     private ObjectsListViewModel mObjectsViewModel;
     private ImageView add_button;
@@ -92,16 +96,19 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         ((TopLevelActivity) getActivity()).getSupportActionBar().setTitle("SKIF.PERSONAL");
-
         setHasOptionsMenu(true);
+
         mObjectsViewModel = ViewModelProviders.of(this).get(ObjectsListViewModel.class);
         mObjectsViewModel.getAllGeo().observe(this, new Observer<List<Objects>>() {
             @Override
             public void onChanged(@Nullable List<Objects> geozones) {
+
                 adapter.setObjects(geozones);
+
                 Log.d(TAG,"data changed on start");
             }
         });
+
         mObjectsViewModel.insertObjects();
     }
 
@@ -117,6 +124,29 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
                 break;
 
         }
+    }
+
+    public void showProgress() {
+        if (mProgressDialog==null) {
+            mProgressDialog = new ProgressDialog(getContext(), R.style.custom_dialog);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mProgressDialog.show();
+            mProgressDialog.setContentView(R.layout.progress_splash);
+        } else {
+            mProgressDialog.show();
+            mProgressDialog.setContentView(R.layout.progress_splash);
+        }
+    }
+
+    public void hideProgress() {
+
+        if(mProgressDialog != null) {
+            if(mProgressDialog.isShowing()) {
+                mProgressDialog.hide();
+            }
+        }
+
     }
 
     @Override

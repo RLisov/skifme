@@ -101,12 +101,10 @@ public class TopLevelActivity extends BaseActivity implements OnMapReadyCallback
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStackImmediate();
         } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             Log.d(TAG,"Last backstack");
-        } else {
-            super.onBackPressed();
         }
     }
 

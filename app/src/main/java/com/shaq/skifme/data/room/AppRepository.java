@@ -40,6 +40,7 @@ class AppRepository {
     LiveData<List<Controls>> getAllControls() { return mAllControls; }
 
     public void insertObjects() {
+
         Call<List<ObjectsRes>> call = mDataManager.getObjects();
         call.enqueue(new Callback<List<ObjectsRes>>() {
             @Override
@@ -52,6 +53,7 @@ class AppRepository {
                             data.get(i).getImage(),
                             data.get(i).isAlert(),
                             data.get(i).getBatteryLevel(),
+
                             data.get(i).getLastOnline(),
                             data.get(i).getControl().getTitle());
 
@@ -139,7 +141,6 @@ class AppRepository {
         @Override
         protected Void doInBackground(final Objects... geozones) {
             mAsyncTaskDao.delete(geozones[0]);
-
             return null;
         }
     }

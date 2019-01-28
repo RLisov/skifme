@@ -42,6 +42,7 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.shaq.skifme.R;
@@ -227,6 +228,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         return true;
     }
 
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -259,6 +262,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
     }
 
+    private void updateOnlineLocation () {
+
+    }
 
     private void getDeviceLocation() {
 
@@ -277,8 +283,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                             MarkerOptions mp = new MarkerOptions();
                             mp.position(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
                             mp.icon(BitmapDescriptorFactory.fromResource(R.mipmap.my_location));
+                            Log.d(TAG,(String.valueOf(mLastKnownLocation.getLatitude() + " "+ String.valueOf(mLastKnownLocation.getLongitude()))));
 
-                            //mMap.clear();
+                            mMap.clear();
                             mMap.addMarker(mp);
 
                         } else {

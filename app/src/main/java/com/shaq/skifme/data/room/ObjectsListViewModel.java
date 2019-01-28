@@ -15,10 +15,14 @@ public class ObjectsListViewModel extends AndroidViewModel {
     public ObjectsListViewModel(Application application) {
         super(application);
         mAppRepository = new AppRepository(application);
-        mAllObjects = mAppRepository.getAllObjects();
     }
 
-    public LiveData<List<Objects>> getAllGeo() { return mAllObjects; }
+    public LiveData<List<Objects>> getAllGeo() {
+        if (mAllObjects == null) {
+            mAllObjects = mAppRepository.getAllObjects();
+        }
+        return mAllObjects;
+    }
 
     public void insertObjects() {
         mAppRepository.insertObjects();

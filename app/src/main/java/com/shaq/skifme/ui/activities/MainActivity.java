@@ -1,7 +1,10 @@
 package com.shaq.skifme.ui.activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,7 +29,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private Button signIn_btn, toggle_pass_btn;
     private EditText login_et, password_et;
-    private TextView register_tv, forgot_pass_tv;
+    private TextView register_tv, forgot_pass_tv,lang_tv;
+    AlertDialog.Builder mAlertBuilder;
 
     private static final String TAG ="MainActivity";
     private DataManager mDataManager;
@@ -43,13 +47,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         register_tv = (TextView) findViewById(R.id.register_tv);
         forgot_pass_tv = (TextView) findViewById(R.id.forgot_pass_tv);
         toggle_pass_btn = (Button) findViewById(R.id.toogle_pass_btn);
-
+        lang_tv = (TextView) findViewById(R.id.lang_tv);
         signIn_btn.setOnClickListener(this);
         register_tv.setOnClickListener(this);
         login_et.setOnFocusChangeListener(this);
         password_et.setOnFocusChangeListener(this);
+        lang_tv.setOnClickListener(this);
         mDataManager = DataManager.getInstance();
 
+        settingLangDialog();
 
 
         toggle_pass_btn.setOnTouchListener(new View.OnTouchListener() {
@@ -68,6 +74,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
 
 
+    }
+
+    public void settingLangDialog () {
+        Resources res = getResources();
+        final String[] langs = res.getStringArray(R.array.langs_array);
+
+        mAlertBuilder = new AlertDialog.Builder(this);
+        mAlertBuilder.setTitle(R.string.pick_language)
+                .setItems(R.array.langs_array, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        Log.d(TAG,"Choose "+langs[which]);
+                        lang_tv.setText(String.valueOf(langs[which]));
+                    }
+                });
+        //TODO: Change UI Language
     }
 
     @Override
@@ -93,8 +116,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startRegisterActivity();
 
                 break;
+            case  R.id.lang_tv:
+                mAlertBuilder.show();
+                Log.d(TAG,"Lang CLicked");
+                break;
         }
     }
+
 
 
     @Override

@@ -59,6 +59,8 @@
     <string name="delete_object">Удалить</string>
     <string name="call">Вызов</string>
     <string name="history">История</string>
+    <string name="lang_title">Русский</string>
+    <string name="pick_language">Выберите язык</string>
 
     <string-array name="objects_item">
         <item>Петя</item>
@@ -67,6 +69,12 @@
         <item>Света</item>
         <item>Бобик</item>
         <item>Аня</item>
+    </string-array>
+
+    <string-array name="langs_array">
+        <item>Русский</item>
+        <item>Английский</item>
+        <item>Казахский</item>
     </string-array>
 
 
