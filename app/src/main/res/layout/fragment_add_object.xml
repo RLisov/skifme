@@ -30,18 +30,38 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
     <EditText
         android:id="@+id/object_name_et"
         style="@style/LoginEditTexts"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
+        android:textColorHint="@color/et_text"
         android:hint="@string/object_name"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:background="@drawable/grey_background"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tracker_type_et" />
+
+    <EditText
+        android:id="@+id/tracker_type_et"
+        style="@style/LoginEditTexts"
+        android:textColorHint="@color/et_text"
+        android:layout_marginTop="16dp"
+        android:drawableRight="@drawable/ic_expand_more_grey_24dp"
+        android:background="@drawable/grey_background"
+        android:hint="@string/tracker_type"
         android:inputType="textPersonName"
         android:padding="12dp"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+        app:layout_constraintTop_toBottomOf="@+id/add_avatar_iv" />
 
     <EditText
         android:id="@+id/sim_number_et"
@@ -49,6 +69,8 @@
         android:layout_marginTop="24dp"
         android:hint="@string/sim"
         android:inputType="number"
+        android:background="@drawable/grey_background"
+        android:textColorHint="@color/et_text"
         android:padding="12dp"
         android:selectAllOnFocus="true"
         android:singleLine="true"
@@ -63,6 +85,8 @@
         android:layout_marginTop="24dp"
         android:hint="@string/imei"
         android:inputType="number"
+        android:background="@drawable/grey_background"
+        android:textColorHint="@color/et_text"
         android:padding="12dp"
         android:selectAllOnFocus="true"
         android:singleLine="true"
@@ -71,34 +95,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sim_number_et" />
 
-    <TextView
-        android:id="@+id/qr_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="48dp"
-        android:fontFamily="sans-serif-medium"
-        android:padding="22dp"
-        android:text="@string/qr_ident"
-        android:textColor="@color/darker_grey"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imei_number_et" />
-
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/qr_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        app:layout_constraintEnd_toEndOf="@+id/qr_text"
-        app:layout_constraintTop_toBottomOf="@+id/imei_number_et"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imei_number_et"
+        app:layout_constraintTop_toTopOf="@+id/imei_number_et"
         app:srcCompat="@drawable/ic_qrcode" />
 
     <Button
         android:id="@+id/add_object_btn"
         android:layout_width="328dp"
         android:layout_height="46dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="110dp"
         android:background="@drawable/custom_login_btn"
         android:text="добавить"
@@ -106,12 +117,12 @@
         android:textColor="@color/light_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qr_text" />
+        app:layout_constraintTop_toBottomOf="@+id/imei_number_et"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/add_avatar_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"

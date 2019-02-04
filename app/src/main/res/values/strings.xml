@@ -61,6 +61,9 @@
     <string name="history">История</string>
     <string name="lang_title">Русский</string>
     <string name="pick_language">Выберите язык</string>
+    <string name="tracker_type">Тип устройства</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="pick_avatar">Аватар объекта</string>
 
     <string-array name="objects_item">
         <item>Петя</item>
@@ -76,6 +79,13 @@
         <item>Английский</item>
         <item>Казахский</item>
     </string-array>
+
+    <string-array name="avatar_methods_array">
+        <item>ВЫБРАТЬ ИЗ ГАЛЕРЕИ АВАТАРОВ</item>
+        <item>ВЫБРАТЬ НА ТЕЛЕФОНЕ</item>
+        <item>СДЕЛАТЬ ФОТО</item>
+    </string-array>
+
 
 
 </resources>

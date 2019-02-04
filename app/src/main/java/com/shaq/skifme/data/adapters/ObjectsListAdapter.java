@@ -37,7 +37,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class CardViewHolder extends RecyclerView.ViewHolder {
         private final TextView geoItemView, object_place_tv,last_time_tv;
-        private final ImageView avatar_img;
+        private final ImageView avatar_img,ellipse_back_iv;
         private final TextView battery_title;
         private final ConstraintLayout cv_wrapper;
 
@@ -49,6 +49,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             battery_title = itemView.findViewById(R.id.battery_lvl_tv);
             cv_wrapper = itemView.findViewById(R.id.cv_wrapper);
             last_time_tv = itemView.findViewById(R.id.last_time_tv);
+            ellipse_back_iv = itemView.findViewById(R.id.ellipse_back_iv);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
@@ -66,7 +67,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     class ButtonViewHolder extends RecyclerView.ViewHolder {
         private final ImageView add_object_btn;
         private final TextView geoItemView, battery_title, object_place_tv,last_time_tv;
-        private final ImageView avatar_img, signal_img,battery_lvl;
+        private final ImageView avatar_img, signal_img,battery_lvl,ellipse_back_iv;
 
         private ButtonViewHolder(View itemView, final Context context) {
             super(itemView);
@@ -78,6 +79,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             battery_title = itemView.findViewById(R.id.battery_lvl_tv);
             object_place_tv = itemView.findViewById(R.id.object_place_tv);
             last_time_tv = itemView.findViewById(R.id.last_time_tv);
+            ellipse_back_iv = itemView.findViewById(R.id.ellipse_back_iv);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     if(mContext instanceof TopLevelActivity){
@@ -151,6 +153,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 holder.geoItemView.setText(objects.getName());
                 holder.object_place_tv.setText(objects.getCurrentPlace());
                 holder.battery_title.setText(String.valueOf(objects.getBatteryLevel())+"%");
+                holder.last_time_tv.setText(String.valueOf(objects.getLastOnline()+" мин. назад"));
                 holder.cv_wrapper.setBackgroundResource(R.color.white);
                 if(objects.isAlert()) {
                     holder.cv_wrapper.setBackgroundResource(R.color.colorAlert);
@@ -168,6 +171,7 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 holder1.object_place_tv.setVisibility(View.INVISIBLE);
                 holder1.battery_lvl.setVisibility(View.INVISIBLE);
                 holder1.last_time_tv.setVisibility(View.INVISIBLE);
+                holder1.ellipse_back_iv.setVisibility(View.INVISIBLE);
                 break;
 
         }

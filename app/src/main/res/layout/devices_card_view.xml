@@ -77,25 +77,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="4dp"
                 android:textColor="@color/subheader_grey"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/card_view_title" />
 
             <ImageView
                 android:id="@+id/ellipse_back_iv"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="54dp"
                 android:layout_marginLeft="54dp"
                 android:layout_marginBottom="54dp"
                 android:elevation="12dp"
-                android:viewportWidth="43"
-                android:viewportHeight="43"
+                android:viewportWidth="48"
+                android:viewportHeight="48"
+                android:background="@drawable/battery_round_layer"
                 card_view:layout_constraintBottom_toBottomOf="@+id/avatar"
-                card_view:layout_constraintStart_toStartOf="@+id/avatar"
-                card_view:srcCompat="@drawable/ic_ellipse_back" />
+                card_view:layout_constraintStart_toStartOf="@+id/avatar"/>
+                <!--card_view:srcCompat="@drawable/ic_ellipse_back" -->
 
             <ImageView
                 android:id="@+id/signal_iv"
@@ -113,8 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
-                android:layout_marginLeft="1dp"
-                android:layout_marginBottom="18dp"
+                android:layout_marginBottom="14dp"
                 android:elevation="12dp"
                 card_view:layout_constraintBottom_toBottomOf="@+id/ellipse_back_iv"
                 card_view:layout_constraintEnd_toEndOf="@+id/ellipse_back_iv"
@@ -124,11 +122,12 @@
 
             <TextView
                 android:id="@+id/last_time_tv"
-                android:layout_width="48dp"
+                android:layout_width="55dp"
                 android:layout_height="31dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="-2sp"
-                android:text="2 мин. назад"
+                android:maxLines="2"
+                android:text="27 мин. назад"
                 android:textColor="@color/black"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/signal_iv" />

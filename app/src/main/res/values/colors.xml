@@ -13,5 +13,5 @@
     <color name="subheader_grey">#62727B</color>
     <color name="colorAccentLight">#ffca79</color>
     <color name="colorAlert">#80EB5757</color>
-
+    <color name="et_text">#99000000</color>
 </resources>

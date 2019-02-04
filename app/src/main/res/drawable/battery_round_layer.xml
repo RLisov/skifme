@@ -71,7 +71,7 @@
     <!-- Background -->
     <item>
         <shape android:shape="oval">
-            <solid android:src="@drawable/ic_history" />
+            <solid android:color="@android:color/white" />
 
             <corners android:radius="3dp" />
         </shape>
