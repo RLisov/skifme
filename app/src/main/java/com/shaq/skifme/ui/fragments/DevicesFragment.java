@@ -121,6 +121,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
 //                break;
 
             case R.id.menu_map:
+                showProgress();
                 break;
 
         }

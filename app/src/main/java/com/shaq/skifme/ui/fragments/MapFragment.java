@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -235,6 +236,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         mMap = googleMap;
 
 
+
         // Prompt the user for permission.
         getLocationPermission();
 
@@ -262,9 +264,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
     }
 
-    private void updateOnlineLocation () {
-
-    }
 
     private void getDeviceLocation() {
 
@@ -287,6 +286,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
                             mMap.clear();
                             mMap.addMarker(mp);
+                            fillMapWithObjects();
 
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
@@ -355,6 +355,56 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
+
+    private void fillMapWithObjects() {
+        LatLng valya = new LatLng(51.13823845680599, 71.42486572265626);
+        mMap.addMarker(new MarkerOptions().position(valya)
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_cv)));
+
+        LatLng anton = new LatLng(54.13823845680599, 71.42486572265626);
+        mMap.addMarker(new MarkerOptions().position(anton)
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_cv)));
+
+        LatLng misha = new LatLng(32.1823845680599, 55.42486572265626);
+        mMap.addMarker(new MarkerOptions().position(misha).title("misha")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_cv)));
+
+        LatLng vasya = new LatLng(52.13823845680599, 71.42486572265626);
+        mMap.addMarker(new MarkerOptions().position(vasya).title("vasya")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_cv)));
+
+        LatLngBounds ADELAIDE = new LatLngBounds(
+                new LatLng(51.13823845680599, 71.42486572265626), new LatLng(54.13823845680599, 71.42486572265626));
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(new LatLng(51.13823845680599, 71.42486572265626));
+        builder.include(new LatLng(54.13823845680599, 71.42486572265626));
+        builder.include(new LatLng(32.1823845680599, 55.42486572265626));
+        builder.include(new LatLng(52.13823845680599, 71.42486582265626));
+        LatLngBounds tmpBounds = builder.build();
+
+        //mMap.setLatLngBoundsForCameraTarget(tmpBounds);
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(tmpBounds, 15));
+
+ //Zoom in, animating the camera.
+        //mMap.animateCamera(CameraUpdateFactory.zoomIn());
+
+// Zoom out to zoom level 10, animating with a duration of 2 seconds.
+       // mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(tmpBounds, 50));
+
+//        CameraPosition cameraPosition = new CameraPosition.Builder()
+//                .target(vasya)      // Sets the center of the map to Mountain View
+//                .zoom(10)// Sets the zoom
+//                // Sets the orientation of the camera to east
+//                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+//                .build();                   // Creates a CameraPosition from the builder
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(tmpBounds));
+
+
+
     }
 
 //    private void drawGeozone(GeozonesEvent geozoneBody) {
