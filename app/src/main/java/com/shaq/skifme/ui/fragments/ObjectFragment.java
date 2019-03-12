@@ -27,6 +27,7 @@ import com.shaq.skifme.data.res.DevicesRes;
 import com.shaq.skifme.data.room.ControlListViewModel;
 import com.shaq.skifme.data.room.Controls;
 import com.shaq.skifme.data.room.Objects;
+import com.shaq.skifme.data.room.SharedViewModel;
 import com.shaq.skifme.utils.MyDividerItemDecoration;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class ObjectFragment extends Fragment {
     private String TAG = "Detailed Object";
     private List<DevicesRes>  dataDevices;
     private ControlListViewModel mControlViewModel;
+    private SharedViewModel mSharedViewModel;
 
     @Nullable
     @Override

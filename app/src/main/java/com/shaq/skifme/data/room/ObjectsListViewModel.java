@@ -28,6 +28,10 @@ public class ObjectsListViewModel extends AndroidViewModel {
         mAppRepository.insertObjects();
     }
 
+    public void setChoosenObject() {
+        //mAppRepository.setObject();
+    }
+
 
 
 }

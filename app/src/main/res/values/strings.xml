@@ -64,6 +64,8 @@
     <string name="tracker_type">Тип устройства</string>
     <string name="cancel">ОТМЕНА</string>
     <string name="pick_avatar">Аватар объекта</string>
+    <string name="history_fab">История</string>
+    <string name="call_tv">Вызов</string>
 
     <string-array name="objects_item">
         <item>Петя</item>

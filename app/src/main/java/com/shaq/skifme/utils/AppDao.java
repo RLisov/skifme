@@ -27,7 +27,8 @@ public interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertControls(Controls... controls);
 
-
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void  setObject(Objects object);
 
     @Query("DELETE FROM Objects")
     void deleteAll();

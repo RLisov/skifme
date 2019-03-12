@@ -35,7 +35,6 @@ public class DataManager {
         return INSTANCE;
     }
 
-    //TO DO: add network service
 
     public PreferencesManager getPreferencesManager() {
         return  mPreferencesManager;

@@ -53,7 +53,6 @@ class AppRepository {
                             data.get(i).getImage(),
                             data.get(i).isAlert(),
                             data.get(i).getBatteryLevel(),
-
                             data.get(i).getLastOnline(),
                             data.get(i).getControl().getTitle());
 

@@ -6,10 +6,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,7 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -40,16 +36,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.shaq.skifme.R;
@@ -58,9 +48,9 @@ import com.shaq.skifme.data.managers.DataManager;
 import com.shaq.skifme.data.room.ControlListViewModel;
 import com.shaq.skifme.data.room.Controls;
 import com.shaq.skifme.network.APIService;
+import com.shaq.skifme.ui.activities.TopLevelActivity;
 import com.shaq.skifme.utils.ConstantManager;
 import com.shaq.skifme.utils.MyDividerItemDecoration;
-
 
 import java.util.List;
 
@@ -68,9 +58,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-
-
-public class MapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
+public class SingleMapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
 
     SupportMapFragment mMapFragment;
     FloatingActionButton fab_location,fab_history,fab_call;
@@ -189,7 +177,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         mCoordinatorLayout = getActivity().findViewById(R.id.coordinatorLayout);
         bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        bottomSheetBehavior.setPeekHeight(380);
+        //bottomSheetBehavior.setPeekHeight(380);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -197,6 +186,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     fab_location.animate().scaleX(0).scaleY(0).setDuration(50).start();
                 } else if (BottomSheetBehavior.STATE_COLLAPSED  == newState || BottomSheetBehavior.STATE_HIDDEN == newState) {
                     fab_location.animate().scaleX(1).scaleY(1).setDuration(50).start();
+
                 }
             }
 
@@ -208,7 +198,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         checkLocationPermission(getActivity());
         getDeviceLocation();
 
-
         fab_call = getActivity().findViewById(R.id.fab_call);
         fab_history = getActivity().findViewById(R.id.fab_history);
         fab_location = getActivity().findViewById(R.id.fab_location);
@@ -217,7 +206,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         fab_call.setOnClickListener(this);
         bs_title = getActivity().findViewById(R.id.bs_title);
         bs_subtitle = getActivity().findViewById(R.id.bs_subhead_tv);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,22 +247,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 //
 //    }
 
-//    public void drawGeo() {
-//
-//            PolygonOptions options = new PolygonOptions().strokeColor(Color.DKGRAY).fillColor(Color.LTGRAY);
-//
-//            options.add(new LatLng(55.70731817593897, 37.5894320011139));
-//            options.add(new LatLng(55.708396445635806, 37.5913417339325));
-//            options.add(new LatLng(55.70676691415676, 37.594774961471565));
-//            options.add(new LatLng(55.70560984479542, 37.593755722045906));
-//
-//            Polygon polygon = mMap.addPolygon(options);
-//
-//            CameraPosition cameraPosition;
-//            cameraPosition = new CameraPosition.Builder().target(new LatLng(55.70731817593897, 37.5894320011139)).zoom(12).build();
-//            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//
-//    }
+
 
 
     public static boolean checkLocationPermission(Activity activity){
@@ -317,14 +290,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 getLocationPermission();
                 //drawGeo();
                 break;
-            case R.id.fab_add_geozone:
-
+            case R.id.fab_history:
+                startHistoryFragment();
                 break;
             case R.id.fab_add_device:
                 break;
         }
     }
 
+    public void startHistoryFragment () {
+
+         Context mContext = getContext();
+        if(mContext instanceof TopLevelActivity){
+            ((TopLevelActivity) mContext).loadFragment(new HistoryFragment());
+        }
+    }
 
     private void getDeviceLocation() {
 
@@ -347,7 +327,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
                             mMap.clear();
                             mMap.addMarker(mp);
-                            fillMapWithObjects();
+                            LatLng valya = new LatLng(51.13823845680599, 71.42486572265626);
+                            mMap.addMarker(new MarkerOptions().position(valya).title("Валя")
+                                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_cv)));
 
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
@@ -417,74 +399,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             Log.e("Exception: %s", e.getMessage());
         }
     }
-
-    private void fillMapWithObjects() {
-        LatLng valya = new LatLng(51.13823845680599, 71.42486572265626);
-        mMap.addMarker(new MarkerOptions().position(valya).title("Валя")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_cv)));
-
-        LatLng anton = new LatLng(54.13823845680599, 71.42486572265626);
-        mMap.addMarker(new MarkerOptions().position(anton).title("Антон")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_a)));
-
-        LatLng misha = new LatLng(32.1823845680599, 55.42486572265626);
-        mMap.addMarker(new MarkerOptions().position(misha).title("Миша")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_a)));
-
-        LatLng vasya = new LatLng(52.13823845680599, 71.42486572265626);
-        mMap.addMarker(new MarkerOptions().position(vasya).title("Вася")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.avatar_cv)));
-
-        LatLngBounds ADELAIDE = new LatLngBounds(
-                new LatLng(51.13823845680599, 71.42486572265626), new LatLng(54.13823845680599, 71.42486572265626));
-
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        builder.include(new LatLng(51.13823845680599, 71.42486572265626));
-        builder.include(new LatLng(54.13823845680599, 71.42486572265626));
-        builder.include(new LatLng(32.1823845680599, 55.42486572265626));
-        builder.include(new LatLng(52.13823845680599, 71.42486582265626));
-        LatLngBounds tmpBounds = builder.build();
-
-        //mMap.setLatLngBoundsForCameraTarget(tmpBounds);
-
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(tmpBounds, 15));
-
- //Zoom in, animating the camera.
-        //mMap.animateCamera(CameraUpdateFactory.zoomIn());
-
-// Zoom out to zoom level 10, animating with a duration of 2 seconds.
-       // mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(tmpBounds, 0));
-
-//        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                .target(vasya)      // Sets the center of the map to Mountain View
-//                .zoom(10)// Sets the zoom
-//                // Sets the orientation of the camera to east
-//                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-//                .build();                   // Creates a CameraPosition from the builder
-//        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(tmpBounds));
-
-
-
-    }
-
-//    private void drawGeozone(GeozonesEvent geozoneBody) {
-//
-//        PolylineOptions options = new PolylineOptions().width(5).color(Color.RED);
-//        Log.d(TAG, String.valueOf(geozoneBody.getGeodata().geometry.get(0)) );
-//        for (int i = 0; i < geozoneBody.getGeodata().geometry.size() -1; i++) {
-//
-//                Double xPoint = geozoneBody.getGeodata().geometry.get(i).get(0);
-//                Double yPoint = geozoneBody.getGeodata().geometry.get(i).get(1);
-//                options.add(new LatLng(xPoint, yPoint));
-//
-//        }
-//
-//        Polyline line = mMap.addPolyline(options);
-//        CameraPosition cameraPosition;
-//        cameraPosition = new CameraPosition.Builder().target(new LatLng(geozoneBody.getGeodata().geometry.get(0).get(0), geozoneBody.getGeodata().geometry.get(0).get(1))).zoom(12).build();
-//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//    }
-
 
 }

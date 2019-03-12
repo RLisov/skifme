@@ -17,9 +17,13 @@ import com.shaq.skifme.R;
 import com.shaq.skifme.data.res.ObjectsRes;
 import com.shaq.skifme.data.room.Controls;
 import com.shaq.skifme.data.room.Objects;
+import com.shaq.skifme.data.room.SharedViewModel;
+import com.shaq.skifme.ui.activities.BaseActivity;
 import com.shaq.skifme.ui.activities.TopLevelActivity;
 import com.shaq.skifme.ui.fragments.AddObjectFragment;
+import com.shaq.skifme.ui.fragments.MapFragment;
 import com.shaq.skifme.ui.fragments.ObjectFragment;
+import com.shaq.skifme.ui.fragments.SingleMapFragment;
 
 import java.util.List;
 
@@ -34,10 +38,11 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<Controls> mControls; // Cached copy of array
     private Context mContext;
     private String choosenId;
+    private SharedViewModel mSharedViewModel;
 
     class CardViewHolder extends RecyclerView.ViewHolder {
         private final TextView geoItemView, object_place_tv,last_time_tv;
-        private final ImageView avatar_img,ellipse_back_iv;
+        private final ImageView avatar_img,ellipse_back_iv,battery_lvl;
         private final TextView battery_title;
         private final ConstraintLayout cv_wrapper;
 
@@ -50,13 +55,14 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             cv_wrapper = itemView.findViewById(R.id.cv_wrapper);
             last_time_tv = itemView.findViewById(R.id.last_time_tv);
             ellipse_back_iv = itemView.findViewById(R.id.ellipse_back_iv);
+            battery_lvl = itemView.findViewById(R.id.battery_iv);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     if(mContext instanceof TopLevelActivity){
 
-                        ((TopLevelActivity) context).loadFragment(new ObjectFragment());
-
+                        ((TopLevelActivity) context).loadFragment(new SingleMapFragment());
+                        Log.d("POSITION",String.valueOf(getAdapterPosition()));
                     }
                 }
             });
@@ -84,7 +90,6 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override public void onClick(View v) {
                     if(mContext instanceof TopLevelActivity){
                         ((TopLevelActivity) context).loadFragment(new AddObjectFragment());
-
                     }
                 }
             });
@@ -155,6 +160,14 @@ public class ObjectsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 holder.battery_title.setText(String.valueOf(objects.getBatteryLevel())+"%");
                 holder.last_time_tv.setText(String.valueOf(objects.getLastOnline()+" мин. назад"));
                 holder.cv_wrapper.setBackgroundResource(R.color.white);
+                if (objects.getBatteryLevel() > 50) {
+                    holder.battery_lvl.setImageResource(R.drawable.ic_battery_green);
+                }   else if (objects.getBatteryLevel() <= 50 && objects.getBatteryLevel() > 20) {
+                    holder.battery_lvl.setImageResource(R.drawable.ic_yellow_battery);
+                } else if (objects.getBatteryLevel() <= 20 ) {
+                    holder.battery_lvl.setImageResource(R.drawable.ic_battery_red);
+                }
+
                 if(objects.isAlert()) {
                     holder.cv_wrapper.setBackgroundResource(R.color.colorAlert);
                 }

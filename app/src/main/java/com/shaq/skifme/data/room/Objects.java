@@ -97,4 +97,6 @@ public class Objects {
     public void setCurrentPlace(String currentPlace) {
         mCurrentPlace = currentPlace;
     }
+
+
 }
